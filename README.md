@@ -9,3 +9,8 @@
 - As categorias viram números inteiros. É bom pros embeddings de rede neural e para o LightGBM.
 - No treino, vocabulário, média e desvio vêm só do conjunto de treino, pro teste ficar “novo”. Por isso tem o código 0 nas categorias que só aparecem em validação ou teste.
 - Latitude e longitude foram normalizadas e ficam em escala parecida com as outras features, o que ajuda o treino da rede.
+
+- Na baseline a acurácia ≈ 0,853, que parece ótima e é inútil, porque o modelo nunca acerta um acidente grave ou fatal. Recall de Grave e Fatal = 0 e F1 macro ≈ 0,307.
+- PR-AUC ≈ 0,853 / 0,134 / 0,013, que são as proporções de cada classe. Esse é o PR-AUC de um modelo sem informação nenhuma, o que torna esses números a referência mínima.
+- Isso significa que a acurácia sozinha não é boa pra esse problema, e por isso as métricas escolhidas foram F1 macro, recall de classes graves e PR-AUC.
+- O desenvolvimento e comparação usam validação, e o conjunto de teste só é aberto uma vez, com o modelo escolhido.
