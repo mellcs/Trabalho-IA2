@@ -1,4 +1,8 @@
-Base final: 660.601 registros, com 85,3% leves, 13,4% graves e 1,3% fatais (cerca de 8.600 casos fatais). 
-Registros duplicados foram deletados.
-A coluna Index foi removida pois não estava ajudando na etiquetagem de acidentes.
-Os dados de 2023-2025 foram removidos, pois juntos somavam exatamente 10.000 acidentes, e preferimos não arriscar a inclusão de dados sintéticos.
+- Base final: 660.601 registros, com 85,3% leves, 13,4% graves e 1,3% fatais (cerca de 8.600 casos fatais). 
+- Registros duplicados foram deletados.
+- A coluna Index foi removida pois não estava ajudando na etiquetagem de acidentes.
+- Os dados de 2023-2025 foram removidos, pois juntos somavam exatamente 10.000 acidentes, e preferimos não arriscar a inclusão de dados sintéticos.
+- Seno e cosseno para mês e dia da semana, pra dezembro ficar perto de janeiro e domingo de segunda, o que um número simples (1 a 12) não captura.
+- stratify mantém a proporção de 1,3% de fatais nos três conjuntos, pra ajudar a avaliar a classe rara.
+- random_state=42 deixa a divisão reproduzível, de acordo com as instruções de reprodução.
+- A divisão é feita antes de qualquer aprendizado (codificação de categorias, normalização), para não vazar informação do teste.
