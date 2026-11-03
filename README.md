@@ -14,3 +14,6 @@
 - PR-AUC ≈ 0,853 / 0,134 / 0,013, que são as proporções de cada classe. Esse é o PR-AUC de um modelo sem informação nenhuma, o que torna esses números a referência mínima.
 - Isso significa que a acurácia sozinha não é boa pra esse problema, e por isso as métricas escolhidas foram F1 macro, recall de classes graves e PR-AUC.
 - O desenvolvimento e comparação usam validação, e o conjunto de teste só é aberto uma vez, com o modelo escolhido.
+- One-hot: a regressão logística não pode usar os códigos inteiros diretamente (o código 5 não é “maior” que o 2). Cada categoria vira uma coluna de 0 ou 1, e o resultado é uma matriz esparsa de cerca de 450 colunas, a maior parte vinda dos distritos.
+- class_weight="balanced": erros nas classes raras passam a custar mais, na proporção inversa da frequência. É a forma mais simples de tratar o desbalanceamento, e depois comparamos com o que a rede neural faz via função de custo.
+- O argmax das probabilidades é a previsão. Com os pesos balanceados, o modelo vai passar a prever Grave e Fatal.
