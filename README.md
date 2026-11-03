@@ -6,3 +6,6 @@
 - stratify mantém a proporção de 1,3% de fatais nos três conjuntos, pra ajudar a avaliar a classe rara.
 - random_state=42 deixa a divisão reproduzível, de acordo com as instruções de reprodução.
 - A divisão é feita antes de qualquer aprendizado (codificação de categorias, normalização), para não vazar informação do teste.
+- As categorias viram números inteiros. É bom pros embeddings de rede neural e para o LightGBM.
+- No treino, vocabulário, média e desvio vêm só do conjunto de treino, pro teste ficar “novo”. Por isso tem o código 0 nas categorias que só aparecem em validação ou teste.
+- Latitude e longitude foram normalizadas e ficam em escala parecida com as outras features, o que ajuda o treino da rede.
