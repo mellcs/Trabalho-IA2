@@ -1,0 +1,3215 @@
+{
+ "cats": [
+  "Light_Conditions",
+  "Road_Surface_Conditions",
+  "Road_Type",
+  "Urban_or_Rural_Area",
+  "Weather_Conditions",
+  "Vehicle_Type",
+  "District Area"
+ ],
+ "num": [
+  "Latitude",
+  "Longitude",
+  "month_sin",
+  "month_cos",
+  "dow_sin",
+  "dow_cos",
+  "is_weekend"
+ ],
+ "maps": {
+  "Light_Conditions": {
+   "Darkness - lighting unknown": 1,
+   "Darkness - lights lit": 2,
+   "Darkness - lights unlit": 3,
+   "Darkness - no lighting": 4,
+   "Daylight": 5
+  },
+  "Road_Surface_Conditions": {
+   "Dry": 1,
+   "Flood over 3cm. deep": 2,
+   "Frost or ice": 3,
+   "Snow": 4,
+   "Unknown": 5,
+   "Wet or damp": 6
+  },
+  "Road_Type": {
+   "Dual carriageway": 1,
+   "One way street": 2,
+   "Roundabout": 3,
+   "Single carriageway": 4,
+   "Slip road": 5,
+   "Unknown": 6
+  },
+  "Urban_or_Rural_Area": {
+   "Rural": 1,
+   "Unknown": 2,
+   "Urban": 3
+  },
+  "Weather_Conditions": {
+   "Fine + high winds": 1,
+   "Fine no high winds": 2,
+   "Fog or mist": 3,
+   "Other": 4,
+   "Raining + high winds": 5,
+   "Raining no high winds": 6,
+   "Snowing + high winds": 7,
+   "Snowing no high winds": 8,
+   "Unknown": 9
+  },
+  "Vehicle_Type": {
+   "Agricultural vehicle": 1,
+   "Bus or coach (17 or more pass seats)": 2,
+   "Car": 3,
+   "Data missing or out of range": 4,
+   "Goods 7.5 tonnes mgw and over": 5,
+   "Goods over 3.5t. and under 7.5t": 6,
+   "Minibus (8 - 16 passenger seats)": 7,
+   "Motorcycle 125cc and under": 8,
+   "Motorcycle 50cc and under": 9,
+   "Motorcycle over 125cc and up to 500cc": 10,
+   "Motorcycle over 500cc": 11,
+   "Other vehicle": 12,
+   "Pedal cycle": 13,
+   "Ridden horse": 14,
+   "Taxi/Private hire car": 15,
+   "Van / Goods 3.5 tonnes mgw or under": 16
+  },
+  "District Area": {
+   "Aberdeen City": 1,
+   "Aberdeenshire": 2,
+   "Adur": 3,
+   "Allerdale": 4,
+   "Alnwick": 5,
+   "Amber Valley": 6,
+   "Angus": 7,
+   "Argyll and Bute": 8,
+   "Arun": 9,
+   "Ashfield": 10,
+   "Ashford": 11,
+   "Aylesbury Vale": 12,
+   "Babergh": 13,
+   "Barking and Dagenham": 14,
+   "Barnet": 15,
+   "Barnsley": 16,
+   "Barrow-in-Furness": 17,
+   "Basildon": 18,
+   "Basingstoke and Deane": 19,
+   "Bassetlaw": 20,
+   "Bath and North East Somerset": 21,
+   "Bedford": 22,
+   "Berwick-upon-Tweed": 23,
+   "Bexley": 24,
+   "Birmingham": 25,
+   "Blaby": 26,
+   "Blackburn with Darwen": 27,
+   "Blackpool": 28,
+   "Blaenau Gwent": 29,
+   "Blaeu Gwent": 30,
+   "Blyth Valley": 31,
+   "Bolsover": 32,
+   "Bolton": 33,
+   "Boston": 34,
+   "Bournemouth": 35,
+   "Bracknell Forest": 36,
+   "Bradford": 37,
+   "Braintree": 38,
+   "Breckland": 39,
+   "Brent": 40,
+   "Brentwood": 41,
+   "Bridgend": 42,
+   "Bridgnorth": 43,
+   "Brighton and Hove": 44,
+   "Bristol, City of": 45,
+   "Broadland": 46,
+   "Bromley": 47,
+   "Bromsgrove": 48,
+   "Broxbourne": 49,
+   "Broxtowe": 50,
+   "Burnley": 51,
+   "Bury": 52,
+   "Caerphilly": 53,
+   "Calderdale": 54,
+   "Cambridge": 55,
+   "Camden": 56,
+   "Cannock Chase": 57,
+   "Canterbury": 58,
+   "Caradon": 59,
+   "Cardiff": 60,
+   "Carlisle": 61,
+   "Carmarthenshire": 62,
+   "Carrick": 63,
+   "Castle Morpeth": 64,
+   "Castle Point": 65,
+   "Central Bedfordshire": 66,
+   "Ceredigion": 67,
+   "Charnwood": 68,
+   "Chelmsford": 69,
+   "Cheltenham": 70,
+   "Cherwell": 71,
+   "Cheshire East": 72,
+   "Cheshire West and Chester": 73,
+   "Chester": 74,
+   "Chester-le-Street": 75,
+   "Chesterfield": 76,
+   "Chichester": 77,
+   "Chiltern": 78,
+   "Chorley": 79,
+   "Christchurch": 80,
+   "City of London": 81,
+   "Clackmannanshire": 82,
+   "Clackmannshire": 83,
+   "Colchester": 84,
+   "Congleton": 85,
+   "Conwy": 86,
+   "Copeland": 87,
+   "Corby": 88,
+   "Cornwall": 89,
+   "Cotswold": 90,
+   "County Durham": 91,
+   "Coventry": 92,
+   "Craven": 93,
+   "Crawley": 94,
+   "Crewe and Nantwich": 95,
+   "Crewe and ntwich": 96,
+   "Croydon": 97,
+   "Dacorum": 98,
+   "Darlington": 99,
+   "Dartford": 100,
+   "Daventry": 101,
+   "Denbighshire": 102,
+   "Derby": 103,
+   "Derbyshire Dales": 104,
+   "Derwentside": 105,
+   "Doncaster": 106,
+   "Dover": 107,
+   "Dudley": 108,
+   "Dumfries and Galloway": 109,
+   "Dundee City": 110,
+   "Durham": 111,
+   "Ealing": 112,
+   "Easington": 113,
+   "East Ayrshire": 114,
+   "East Cambridgeshire": 115,
+   "East Devon": 116,
+   "East Dorset": 117,
+   "East Dunbartonshire": 118,
+   "East Hampshire": 119,
+   "East Hertfordshire": 120,
+   "East Lindsey": 121,
+   "East Lothian": 122,
+   "East Northamptonshire": 123,
+   "East Renfrewshire": 124,
+   "East Riding of Yorkshire": 125,
+   "East Staffordshire": 126,
+   "Eastbourne": 127,
+   "Eastleigh": 128,
+   "Eden": 129,
+   "Edinburgh, City of": 130,
+   "Ellesmere Port and Neston": 131,
+   "Elmbridge": 132,
+   "Enfield": 133,
+   "Epping Forest": 134,
+   "Epsom and Ewell": 135,
+   "Erewash": 136,
+   "Exeter": 137,
+   "Falkirk": 138,
+   "Fareham": 139,
+   "Fenland": 140,
+   "Fife": 141,
+   "Flintshire": 142,
+   "Forest Heath": 143,
+   "Forest of Dean": 144,
+   "Fylde": 145,
+   "Gateshead": 146,
+   "Gedling": 147,
+   "Glasgow City": 148,
+   "Gloucester": 149,
+   "Gosport": 150,
+   "Gravesham": 151,
+   "Great Yarmouth": 152,
+   "Greenwich": 153,
+   "Guildford": 154,
+   "Gwynedd": 155,
+   "Hackney": 156,
+   "Halton": 157,
+   "Hambleton": 158,
+   "Hammersmith and Fulham": 159,
+   "Harborough": 160,
+   "Haringey": 161,
+   "Harlow": 162,
+   "Harrogate": 163,
+   "Harrow": 164,
+   "Hart": 165,
+   "Hartlepool": 166,
+   "Hastings": 167,
+   "Havant": 168,
+   "Havering": 169,
+   "Herefordshire, County of": 170,
+   "Hertsmere": 171,
+   "High Peak": 172,
+   "Highland": 173,
+   "Hillingdon": 174,
+   "Hinckley and Bosworth": 175,
+   "Horsham": 176,
+   "Hounslow": 177,
+   "Huntingdonshire": 178,
+   "Hyndburn": 179,
+   "Inverclyde": 180,
+   "Ipswich": 181,
+   "Isle of Anglesey": 182,
+   "Isle of Wight": 183,
+   "Islington": 184,
+   "Kennet": 185,
+   "Kensington and Chelsea": 186,
+   "Kerrier": 187,
+   "Kettering": 188,
+   "King's Lynn and West Norfolk": 189,
+   "Kingston upon Hull, City of": 190,
+   "Kingston upon Thames": 191,
+   "Kirklees": 192,
+   "Knowsley": 193,
+   "Lambeth": 194,
+   "Lancaster": 195,
+   "Leeds": 196,
+   "Leicester": 197,
+   "Lewes": 198,
+   "Lewisham": 199,
+   "Lichfield": 200,
+   "Lincoln": 201,
+   "Liverpool": 202,
+   "London Airport (Heathrow)": 203,
+   "Luton": 204,
+   "Macclesfield": 205,
+   "Maidstone": 206,
+   "Maldon": 207,
+   "Malvern Hills": 208,
+   "Manchester": 209,
+   "Mansfield": 210,
+   "Medway": 211,
+   "Melton": 212,
+   "Mendip": 213,
+   "Merthyr Tydfil": 214,
+   "Merton": 215,
+   "Mid Bedfordshire": 216,
+   "Mid Devon": 217,
+   "Mid Suffolk": 218,
+   "Mid Sussex": 219,
+   "Middlesbrough": 220,
+   "Midlothian": 221,
+   "Milton Keynes": 222,
+   "Mole Valley": 223,
+   "Monmouthshire": 224,
+   "Moray": 225,
+   "Neath Port Talbot": 226,
+   "New Forest": 227,
+   "Newark and Sherwood": 228,
+   "Newcastle upon Tyne": 229,
+   "Newcastle-under-Lyme": 230,
+   "Newham": 231,
+   "Newport": 232,
+   "North Ayrshire": 233,
+   "North Cornwall": 234,
+   "North Devon": 235,
+   "North Dorset": 236,
+   "North East Derbyshire": 237,
+   "North East Lincolnshire": 238,
+   "North Hertfordshire": 239,
+   "North Kesteven": 240,
+   "North Lanarkshire": 241,
+   "North Larkshire": 242,
+   "North Lincolnshire": 243,
+   "North Norfolk": 244,
+   "North Shropshire": 245,
+   "North Somerset": 246,
+   "North Tyneside": 247,
+   "North Warwickshire": 248,
+   "North West Leicestershire": 249,
+   "North Wiltshire": 250,
+   "Northampton": 251,
+   "Northumberland": 252,
+   "Norwich": 253,
+   "Nottingham": 254,
+   "Nuneaton and Bedworth": 255,
+   "Oadby and Wigston": 256,
+   "Oldham": 257,
+   "Orkney Islands": 258,
+   "Oswestry": 259,
+   "Oxford": 260,
+   "Pembrokeshire": 261,
+   "Pendle": 262,
+   "Penwith": 263,
+   "Perth and Kinross": 264,
+   "Peterborough": 265,
+   "Plymouth": 266,
+   "Poole": 267,
+   "Portsmouth": 268,
+   "Powys": 269,
+   "Preston": 270,
+   "Purbeck": 271,
+   "Reading": 272,
+   "Redbridge": 273,
+   "Redcar and Cleveland": 274,
+   "Redditch": 275,
+   "Reigate and Banstead": 276,
+   "Renfrewshire": 277,
+   "Restormel": 278,
+   "Rhondda, Cynon, Taff": 279,
+   "Ribble Valley": 280,
+   "Richmond upon Thames": 281,
+   "Richmondshire": 282,
+   "Rochdale": 283,
+   "Rochford": 284,
+   "Rossendale": 285,
+   "Rother": 286,
+   "Rotherham": 287,
+   "Rugby": 288,
+   "Runnymede": 289,
+   "Rushcliffe": 290,
+   "Rushmoor": 291,
+   "Rutland": 292,
+   "Ryedale": 293,
+   "Salford": 294,
+   "Salisbury": 295,
+   "Sandwell": 296,
+   "Scarborough": 297,
+   "Scottish Borders": 298,
+   "Sedgefield": 299,
+   "Sedgemoor": 300,
+   "Sefton": 301,
+   "Selby": 302,
+   "Sevenoaks": 303,
+   "Sheffield": 304,
+   "Shepway": 305,
+   "Shetland Islands": 306,
+   "Shrewsbury and Atcham": 307,
+   "Shropshire": 308,
+   "Slough": 309,
+   "Solihull": 310,
+   "South Ayrshire": 311,
+   "South Bedfordshire": 312,
+   "South Bucks": 313,
+   "South Cambridgeshire": 314,
+   "South Derbyshire": 315,
+   "South Gloucestershire": 316,
+   "South Hams": 317,
+   "South Holland": 318,
+   "South Kesteven": 319,
+   "South Lakeland": 320,
+   "South Lanarkshire": 321,
+   "South Larkshire": 322,
+   "South Norfolk": 323,
+   "South Northamptonshire": 324,
+   "South Oxfordshire": 325,
+   "South Ribble": 326,
+   "South Shropshire": 327,
+   "South Somerset": 328,
+   "South Staffordshire": 329,
+   "South Tyneside": 330,
+   "Southampton": 331,
+   "Southend-on-Sea": 332,
+   "Southwark": 333,
+   "Spelthorne": 334,
+   "St. Albans": 335,
+   "St. Edmundsbury": 336,
+   "St. Helens": 337,
+   "Stafford": 338,
+   "Staffordshire Moorlands": 339,
+   "Stevege": 340,
+   "Stevenage": 341,
+   "Stirling": 342,
+   "Stockport": 343,
+   "Stockton-on-Tees": 344,
+   "Stoke-on-Trent": 345,
+   "Stratford-upon-Avon": 346,
+   "Stroud": 347,
+   "Suffolk Coastal": 348,
+   "Sunderland": 349,
+   "Surrey Heath": 350,
+   "Sutton": 351,
+   "Swale": 352,
+   "Swansea": 353,
+   "Swindon": 354,
+   "Tameside": 355,
+   "Tamworth": 356,
+   "Tandridge": 357,
+   "Taunton Deane": 358,
+   "Teesdale": 359,
+   "Teignbridge": 360,
+   "Telford and Wrekin": 361,
+   "Tendring": 362,
+   "Test Valley": 363,
+   "Tewkesbury": 364,
+   "Thanet": 365,
+   "The Vale of Glamorgan": 366,
+   "Three Rivers": 367,
+   "Thurrock": 368,
+   "Tonbridge and Malling": 369,
+   "Torbay": 370,
+   "Torfaen": 371,
+   "Torridge": 372,
+   "Tower Hamlets": 373,
+   "Trafford": 374,
+   "Tunbridge Wells": 375,
+   "Tynedale": 376,
+   "Uttlesford": 377,
+   "Vale Royal": 378,
+   "Vale of White Horse": 379,
+   "Wakefield": 380,
+   "Walsall": 381,
+   "Waltham Forest": 382,
+   "Wandsworth": 383,
+   "Wansbeck": 384,
+   "Warrington": 385,
+   "Warwick": 386,
+   "Watford": 387,
+   "Waveney": 388,
+   "Waverley": 389,
+   "Wealden": 390,
+   "Wear Valley": 391,
+   "Wellingborough": 392,
+   "Welwyn Hatfield": 393,
+   "West Berkshire": 394,
+   "West Devon": 395,
+   "West Dorset": 396,
+   "West Dunbartonshire": 397,
+   "West Lancashire": 398,
+   "West Lindsey": 399,
+   "West Lothian": 400,
+   "West Oxfordshire": 401,
+   "West Somerset": 402,
+   "West Wiltshire": 403,
+   "Western Isles": 404,
+   "Westminster": 405,
+   "Weymouth and Portland": 406,
+   "Wigan": 407,
+   "Wiltshire": 408,
+   "Winchester": 409,
+   "Windsor and Maidenhead": 410,
+   "Wirral": 411,
+   "Woking": 412,
+   "Wokingham": 413,
+   "Wolverhampton": 414,
+   "Worcester": 415,
+   "Worthing": 416,
+   "Wrexham": 417,
+   "Wychavon": 418,
+   "Wycombe": 419,
+   "Wyre": 420,
+   "Wyre Forest": 421,
+   "York": 422
+  }
+ },
+ "mu": {
+  "Latitude": 52.554550436404135,
+  "Longitude": -1.431359783553912
+ },
+ "sd": {
+  "Latitude": 1.4073455970498217,
+  "Longitude": 1.3828010469464276
+ },
+ "vocab": [
+  6,
+  7,
+  7,
+  4,
+  10,
+  17,
+  423
+ ],
+ "cortes": [
+  0.08168266639113426,
+  0.09896048307418823,
+  0.11177926436066628,
+  0.12336687296628952,
+  0.13441281020641327,
+  0.14617229402065277,
+  0.16102099120616914,
+  0.18179055452346804,
+  0.21406340003013613
+ ],
+ "taxa_decil": {
+  "1": 0.07387223735997578,
+  "2": 0.0954687657684933,
+  "3": 0.11413866182258553,
+  "4": 0.12039559995963266,
+  "5": 0.13533151680290645,
+  "6": 0.14179029165405188,
+  "7": 0.15622161671207993,
+  "8": 0.16903824805732162,
+  "9": 0.19467151074780503,
+  "10": 0.2655161973963064
+ },
+ "media_geral": 0.14664374378270836,
+ "distritos": {
+  "Aberdeen City": {
+   "lat": 57.153093325854705,
+   "lon": -2.1281801805555554,
+   "n": 936,
+   "area_comum": "Urban"
+  },
+  "Aberdeenshire": {
+   "lat": 57.2963509873512,
+   "lon": -2.32916091889881,
+   "n": 1344,
+   "area_comum": "Rural"
+  },
+  "Adur": {
+   "lat": 50.836600317865425,
+   "lon": -0.28614578190255224,
+   "n": 431,
+   "area_comum": "Urban"
+  },
+  "Allerdale": {
+   "lat": 54.69663213299233,
+   "lon": -3.361760138107417,
+   "n": 782,
+   "area_comum": "Rural"
+  },
+  "Alnwick": {
+   "lat": 55.36256664670658,
+   "lon": -1.743901616766467,
+   "n": 167,
+   "area_comum": "Rural"
+  },
+  "Amber Valley": {
+   "lat": 53.04075012742981,
+   "lon": -1.4178893855291577,
+   "n": 926,
+   "area_comum": "Urban"
+  },
+  "Angus": {
+   "lat": 56.62166890433213,
+   "lon": -2.7485724711191337,
+   "n": 554,
+   "area_comum": "Rural"
+  },
+  "Argyll and Bute": {
+   "lat": 56.13005964358108,
+   "lon": -5.170781310810811,
+   "n": 592,
+   "area_comum": "Rural"
+  },
+  "Arun": {
+   "lat": 50.81563085040984,
+   "lon": -0.5953052756147541,
+   "n": 976,
+   "area_comum": "Urban"
+  },
+  "Ashfield": {
+   "lat": 53.093017824130875,
+   "lon": -1.2536136850715747,
+   "n": 978,
+   "area_comum": "Urban"
+  },
+  "Ashford": {
+   "lat": 51.136125864207884,
+   "lon": 0.8324446613579213,
+   "n": 1193,
+   "area_comum": "Rural"
+  },
+  "Aylesbury Vale": {
+   "lat": 51.85887057568807,
+   "lon": -0.8370658922018348,
+   "n": 1308,
+   "area_comum": "Rural"
+  },
+  "Babergh": {
+   "lat": 52.03714791689373,
+   "lon": 0.9277345667574932,
+   "n": 734,
+   "area_comum": "Rural"
+  },
+  "Barking and Dagenham": {
+   "lat": 51.54632459663192,
+   "lon": 0.12298481555733762,
+   "n": 1247,
+   "area_comum": "Urban"
+  },
+  "Barnet": {
+   "lat": 51.60328811635529,
+   "lon": -0.2138859649295313,
+   "n": 3051,
+   "area_comum": "Urban"
+  },
+  "Barnsley": {
+   "lat": 53.542797741863076,
+   "lon": -1.4649182424242424,
+   "n": 1782,
+   "area_comum": "Urban"
+  },
+  "Barrow-in-Furness": {
+   "lat": 54.12678404269663,
+   "lon": -3.216309642696629,
+   "n": 445,
+   "area_comum": "Urban"
+  },
+  "Basildon": {
+   "lat": 51.584091496228,
+   "lon": 0.47614744258172675,
+   "n": 1193,
+   "area_comum": "Urban"
+  },
+  "Basingstoke and Deane": {
+   "lat": 51.27189407028112,
+   "lon": -1.134298252008032,
+   "n": 996,
+   "area_comum": "Rural"
+  },
+  "Bassetlaw": {
+   "lat": 53.3202216118421,
+   "lon": -1.0304362199248118,
+   "n": 1064,
+   "area_comum": "Rural"
+  },
+  "Bath and North East Somerset": {
+   "lat": 51.3642692209607,
+   "lon": -2.4282084148471617,
+   "n": 1145,
+   "area_comum": "Urban"
+  },
+  "Bedford": {
+   "lat": 52.14281711157025,
+   "lon": -0.46612571487603305,
+   "n": 1210,
+   "area_comum": "Urban"
+  },
+  "Berwick-upon-Tweed": {
+   "lat": 55.677363370689655,
+   "lon": -1.9718672327586209,
+   "n": 116,
+   "area_comum": "Rural"
+  },
+  "Bexley": {
+   "lat": 51.45620200223547,
+   "lon": 0.13523468628912072,
+   "n": 1342,
+   "area_comum": "Urban"
+  },
+  "Birmingham": {
+   "lat": 52.47754445536376,
+   "lon": -1.8800589036323203,
+   "n": 9443,
+   "area_comum": "Urban"
+  },
+  "Blaby": {
+   "lat": 52.58846757275132,
+   "lon": -1.2007413597883596,
+   "n": 756,
+   "area_comum": "Urban"
+  },
+  "Blackburn with Darwen": {
+   "lat": 53.733641024408854,
+   "lon": -2.4775119389778797,
+   "n": 1311,
+   "area_comum": "Urban"
+  },
+  "Blackpool": {
+   "lat": 53.81613575658363,
+   "lon": -3.0361667423487546,
+   "n": 1405,
+   "area_comum": "Urban"
+  },
+  "Blaenau Gwent": {
+   "lat": 51.77473358549223,
+   "lon": -3.198134647668394,
+   "n": 193,
+   "area_comum": "Urban"
+  },
+  "Blaeu Gwent": {
+   "lat": 51.766558113207545,
+   "lon": -3.190685811320755,
+   "n": 159,
+   "area_comum": "Urban"
+  },
+  "Blyth Valley": {
+   "lat": 55.097343494708994,
+   "lon": -1.5550093359788362,
+   "n": 378,
+   "area_comum": "Rural"
+  },
+  "Bolsover": {
+   "lat": 53.19285834170154,
+   "lon": -1.2933129037656903,
+   "n": 717,
+   "area_comum": "Rural"
+  },
+  "Bolton": {
+   "lat": 53.57197669910626,
+   "lon": -2.4454768068520356,
+   "n": 2014,
+   "area_comum": "Urban"
+  },
+  "Boston": {
+   "lat": 52.96860694520548,
+   "lon": -0.03195053272450533,
+   "n": 657,
+   "area_comum": "Urban"
+  },
+  "Bournemouth": {
+   "lat": 50.73768164249037,
+   "lon": -1.864419932605905,
+   "n": 1558,
+   "area_comum": "Urban"
+  },
+  "Bracknell Forest": {
+   "lat": 51.40067267727931,
+   "lon": -0.7505326092619392,
+   "n": 691,
+   "area_comum": "Urban"
+  },
+  "Bradford": {
+   "lat": 53.81219794157044,
+   "lon": -1.7891528191685913,
+   "n": 4330,
+   "area_comum": "Urban"
+  },
+  "Braintree": {
+   "lat": 51.87443099568035,
+   "lon": 0.6021377321814254,
+   "n": 926,
+   "area_comum": "Rural"
+  },
+  "Breckland": {
+   "lat": 52.58015230750894,
+   "lon": 0.8514231918951133,
+   "n": 839,
+   "area_comum": "Rural"
+  },
+  "Brent": {
+   "lat": 51.554799047064776,
+   "lon": -0.2594378674089069,
+   "n": 1976,
+   "area_comum": "Urban"
+  },
+  "Brentwood": {
+   "lat": 51.62418492927632,
+   "lon": 0.30979358717105265,
+   "n": 608,
+   "area_comum": "Rural"
+  },
+  "Bridgend": {
+   "lat": 51.53429973294118,
+   "lon": -3.60445492,
+   "n": 850,
+   "area_comum": "Rural"
+  },
+  "Bridgnorth": {
+   "lat": 52.57227731983806,
+   "lon": -2.3905713036437244,
+   "n": 247,
+   "area_comum": "Rural"
+  },
+  "Brighton and Hove": {
+   "lat": 50.834722130532626,
+   "lon": -0.14544164591147787,
+   "n": 2666,
+   "area_comum": "Urban"
+  },
+  "Bristol, City of": {
+   "lat": 51.460194838988095,
+   "lon": -2.587190294345238,
+   "n": 3360,
+   "area_comum": "Urban"
+  },
+  "Broadland": {
+   "lat": 52.67875503229975,
+   "lon": 1.310854188630491,
+   "n": 774,
+   "area_comum": "Rural"
+  },
+  "Bromley": {
+   "lat": 51.392430327452,
+   "lon": 0.028585338349766478,
+   "n": 1927,
+   "area_comum": "Urban"
+  },
+  "Bromsgrove": {
+   "lat": 52.36368726799387,
+   "lon": -2.023918277182236,
+   "n": 653,
+   "area_comum": "Rural"
+  },
+  "Broxbourne": {
+   "lat": 51.72263854530478,
+   "lon": -0.03424369686985173,
+   "n": 607,
+   "area_comum": "Urban"
+  },
+  "Broxtowe": {
+   "lat": 52.96274831470231,
+   "lon": -1.2524752187120294,
+   "n": 823,
+   "area_comum": "Urban"
+  },
+  "Burnley": {
+   "lat": 53.78984639826303,
+   "lon": -2.255457042183623,
+   "n": 806,
+   "area_comum": "Urban"
+  },
+  "Bury": {
+   "lat": 53.57404450998464,
+   "lon": -2.296399242703533,
+   "n": 1302,
+   "area_comum": "Urban"
+  },
+  "Caerphilly": {
+   "lat": 51.64455074338624,
+   "lon": -3.207065167989418,
+   "n": 756,
+   "area_comum": "Urban"
+  },
+  "Calderdale": {
+   "lat": 53.7125606154367,
+   "lon": -1.882516393364929,
+   "n": 1477,
+   "area_comum": "Urban"
+  },
+  "Cambridge": {
+   "lat": 52.203229267106344,
+   "lon": 0.13454541384995877,
+   "n": 1213,
+   "area_comum": "Urban"
+  },
+  "Camden": {
+   "lat": 51.53543482437276,
+   "lon": -0.14505602016129032,
+   "n": 2232,
+   "area_comum": "Urban"
+  },
+  "Cannock Chase": {
+   "lat": 52.70427780681818,
+   "lon": -1.9948004588068182,
+   "n": 704,
+   "area_comum": "Urban"
+  },
+  "Canterbury": {
+   "lat": 51.30372957231588,
+   "lon": 1.0936175297249333,
+   "n": 1127,
+   "area_comum": "Urban"
+  },
+  "Caradon": {
+   "lat": 50.43299088010204,
+   "lon": -4.356737834183674,
+   "n": 392,
+   "area_comum": "Rural"
+  },
+  "Cardiff": {
+   "lat": 51.49723345923802,
+   "lon": -3.1870986636624337,
+   "n": 2441,
+   "area_comum": "Urban"
+  },
+  "Carlisle": {
+   "lat": 54.903265207389744,
+   "lon": -2.915246115613826,
+   "n": 839,
+   "area_comum": "Urban"
+  },
+  "Carmarthenshire": {
+   "lat": 51.81604851666666,
+   "lon": -4.168984423333334,
+   "n": 1500,
+   "area_comum": "Rural"
+  },
+  "Carrick": {
+   "lat": 50.247958938856016,
+   "lon": -5.077013467455621,
+   "n": 507,
+   "area_comum": "Rural"
+  },
+  "Castle Morpeth": {
+   "lat": 55.15637516666666,
+   "lon": -1.7145853780487805,
+   "n": 246,
+   "area_comum": "Rural"
+  },
+  "Castle Point": {
+   "lat": 51.54752594416244,
+   "lon": 0.5792631099830795,
+   "n": 591,
+   "area_comum": "Urban"
+  },
+  "Central Bedfordshire": {
+   "lat": 51.97412402283654,
+   "lon": -0.47530490504807693,
+   "n": 832,
+   "area_comum": "Rural"
+  },
+  "Ceredigion": {
+   "lat": 52.267030379573164,
+   "lon": -4.181000586890244,
+   "n": 656,
+   "area_comum": "Rural"
+  },
+  "Charnwood": {
+   "lat": 52.739310383474574,
+   "lon": -1.173886935381356,
+   "n": 944,
+   "area_comum": "Urban"
+  },
+  "Chelmsford": {
+   "lat": 51.721162381467174,
+   "lon": 0.4916837166023166,
+   "n": 1295,
+   "area_comum": "Rural"
+  },
+  "Cheltenham": {
+   "lat": 51.90029302048417,
+   "lon": -2.0869167560521413,
+   "n": 537,
+   "area_comum": "Urban"
+  },
+  "Cherwell": {
+   "lat": 51.94552290717629,
+   "lon": -1.2644668939157566,
+   "n": 1282,
+   "area_comum": "Rural"
+  },
+  "Cheshire East": {
+   "lat": 53.19131704428288,
+   "lon": -2.3409116100462657,
+   "n": 1513,
+   "area_comum": "Rural"
+  },
+  "Cheshire West and Chester": {
+   "lat": 53.22476487123746,
+   "lon": -2.758580577759197,
+   "n": 1196,
+   "area_comum": "Rural"
+  },
+  "Chester": {
+   "lat": 53.194375005788714,
+   "lon": -2.862446156295224,
+   "n": 691,
+   "area_comum": "Rural"
+  },
+  "Chester-le-Street": {
+   "lat": 54.85541505263158,
+   "lon": -1.5836038304093565,
+   "n": 171,
+   "area_comum": "Rural"
+  },
+  "Chesterfield": {
+   "lat": 53.24805638587642,
+   "lon": -1.4135065926860026,
+   "n": 793,
+   "area_comum": "Urban"
+  },
+  "Chichester": {
+   "lat": 50.88458600595829,
+   "lon": -0.7563341638530289,
+   "n": 1007,
+   "area_comum": "Rural"
+  },
+  "Chiltern": {
+   "lat": 51.670327859884836,
+   "lon": -0.6128386199616123,
+   "n": 521,
+   "area_comum": "Rural"
+  },
+  "Chorley": {
+   "lat": 53.66030903243848,
+   "lon": -2.6425623445190154,
+   "n": 894,
+   "area_comum": "Rural"
+  },
+  "Christchurch": {
+   "lat": 50.74640606266319,
+   "lon": -1.775436091383812,
+   "n": 383,
+   "area_comum": "Urban"
+  },
+  "City of London": {
+   "lat": 51.51392382006543,
+   "lon": -0.09107036750272628,
+   "n": 917,
+   "area_comum": "Urban"
+  },
+  "Clackmannanshire": {
+   "lat": 56.12963109090909,
+   "lon": -3.7773765454545454,
+   "n": 66,
+   "area_comum": "Urban"
+  },
+  "Clackmannshire": {
+   "lat": 56.135581366972474,
+   "lon": -3.7629194495412848,
+   "n": 109,
+   "area_comum": "Rural"
+  },
+  "Colchester": {
+   "lat": 51.882786294514766,
+   "lon": 0.8797745223628692,
+   "n": 1185,
+   "area_comum": "Urban"
+  },
+  "Congleton": {
+   "lat": 53.159338911111114,
+   "lon": -2.318663790123457,
+   "n": 405,
+   "area_comum": "Rural"
+  },
+  "Conwy": {
+   "lat": 53.2558945978022,
+   "lon": -3.745738142857143,
+   "n": 910,
+   "area_comum": "Rural"
+  },
+  "Copeland": {
+   "lat": 54.48940721102662,
+   "lon": -3.5079490152091255,
+   "n": 526,
+   "area_comum": "Rural"
+  },
+  "Corby": {
+   "lat": 52.48755033862434,
+   "lon": -0.7061881481481481,
+   "n": 378,
+   "area_comum": "Urban"
+  },
+  "Cornwall": {
+   "lat": 50.349165011621466,
+   "lon": -4.916585355285003,
+   "n": 1807,
+   "area_comum": "Rural"
+  },
+  "Cotswold": {
+   "lat": 51.80038972713643,
+   "lon": -1.917983487256372,
+   "n": 667,
+   "area_comum": "Rural"
+  },
+  "County Durham": {
+   "lat": 54.75669399149215,
+   "lon": -1.6045351806282724,
+   "n": 1528,
+   "area_comum": "Rural"
+  },
+  "Coventry": {
+   "lat": 52.41506073908873,
+   "lon": -1.504565068585132,
+   "n": 2085,
+   "area_comum": "Urban"
+  },
+  "Craven": {
+   "lat": 54.00124775090253,
+   "lon": -2.116933662454874,
+   "n": 554,
+   "area_comum": "Rural"
+  },
+  "Crawley": {
+   "lat": 51.12065708671329,
+   "lon": -0.17833634405594406,
+   "n": 715,
+   "area_comum": "Urban"
+  },
+  "Crewe and Nantwich": {
+   "lat": 53.089424508982034,
+   "lon": -2.4703875239520956,
+   "n": 334,
+   "area_comum": "Urban"
+  },
+  "Crewe and ntwich": {
+   "lat": 53.08246770710059,
+   "lon": -2.472857571005917,
+   "n": 338,
+   "area_comum": "Rural"
+  },
+  "Croydon": {
+   "lat": 51.37319366430539,
+   "lon": -0.09513931719795357,
+   "n": 2541,
+   "area_comum": "Urban"
+  },
+  "Dacorum": {
+   "lat": 51.764200387413965,
+   "lon": -0.4965366283185841,
+   "n": 1017,
+   "area_comum": "Urban"
+  },
+  "Darlington": {
+   "lat": 54.536217529107375,
+   "lon": -1.5533213868046571,
+   "n": 773,
+   "area_comum": "Urban"
+  },
+  "Dartford": {
+   "lat": 51.435105328020136,
+   "lon": 0.2447807953020134,
+   "n": 1192,
+   "area_comum": "Rural"
+  },
+  "Daventry": {
+   "lat": 52.30426899842022,
+   "lon": -1.0688953728278041,
+   "n": 633,
+   "area_comum": "Rural"
+  },
+  "Denbighshire": {
+   "lat": 53.21343214536928,
+   "lon": -3.398765827667057,
+   "n": 853,
+   "area_comum": "Rural"
+  },
+  "Derby": {
+   "lat": 52.91269631535088,
+   "lon": -1.4704390789473682,
+   "n": 2280,
+   "area_comum": "Urban"
+  },
+  "Derbyshire Dales": {
+   "lat": 53.132244183080815,
+   "lon": -1.6671433636363635,
+   "n": 792,
+   "area_comum": "Rural"
+  },
+  "Derwentside": {
+   "lat": 54.85601145588235,
+   "lon": -1.7610424470588233,
+   "n": 340,
+   "area_comum": "Rural"
+  },
+  "Doncaster": {
+   "lat": 53.52746844670407,
+   "lon": -1.1248925420757363,
+   "n": 2852,
+   "area_comum": "Urban"
+  },
+  "Dover": {
+   "lat": 51.18275198894349,
+   "lon": 1.309676187960688,
+   "n": 814,
+   "area_comum": "Rural"
+  },
+  "Dudley": {
+   "lat": 52.489020661942256,
+   "lon": -2.1034001401574804,
+   "n": 1905,
+   "area_comum": "Urban"
+  },
+  "Dumfries and Galloway": {
+   "lat": 55.04960847285068,
+   "lon": -3.8027429524886878,
+   "n": 884,
+   "area_comum": "Rural"
+  },
+  "Dundee City": {
+   "lat": 56.4733553045045,
+   "lon": -2.9684265927927926,
+   "n": 555,
+   "area_comum": "Urban"
+  },
+  "Durham": {
+   "lat": 54.77198220235294,
+   "lon": -1.5612500964705882,
+   "n": 425,
+   "area_comum": "Rural"
+  },
+  "Ealing": {
+   "lat": 51.52081946214643,
+   "lon": -0.3287087995008319,
+   "n": 2404,
+   "area_comum": "Urban"
+  },
+  "Easington": {
+   "lat": 54.777477809090904,
+   "lon": -1.3577890272727273,
+   "n": 330,
+   "area_comum": "Rural"
+  },
+  "East Ayrshire": {
+   "lat": 55.552347195121946,
+   "lon": -4.41927130894309,
+   "n": 492,
+   "area_comum": "Rural"
+  },
+  "East Cambridgeshire": {
+   "lat": 52.34300233003301,
+   "lon": 0.2929933481848185,
+   "n": 606,
+   "area_comum": "Rural"
+  },
+  "East Devon": {
+   "lat": 50.72642201975851,
+   "lon": -3.250093442371021,
+   "n": 911,
+   "area_comum": "Rural"
+  },
+  "East Dorset": {
+   "lat": 50.82300057863501,
+   "lon": -1.9268161008902078,
+   "n": 674,
+   "area_comum": "Rural"
+  },
+  "East Dunbartonshire": {
+   "lat": 55.93077639490446,
+   "lon": -4.236471468152866,
+   "n": 314,
+   "area_comum": "Urban"
+  },
+  "East Hampshire": {
+   "lat": 51.06477835368956,
+   "lon": -0.9397654516539441,
+   "n": 786,
+   "area_comum": "Rural"
+  },
+  "East Hertfordshire": {
+   "lat": 51.83866603864169,
+   "lon": 0.005489872365339579,
+   "n": 854,
+   "area_comum": "Rural"
+  },
+  "East Lindsey": {
+   "lat": 53.23679299009901,
+   "lon": 0.07715698868458275,
+   "n": 1414,
+   "area_comum": "Rural"
+  },
+  "East Lothian": {
+   "lat": 55.95501981296758,
+   "lon": -2.8727817680798005,
+   "n": 401,
+   "area_comum": "Rural"
+  },
+  "East Northamptonshire": {
+   "lat": 52.37344871296296,
+   "lon": -0.5658892060185186,
+   "n": 432,
+   "area_comum": "Rural"
+  },
+  "East Renfrewshire": {
+   "lat": 55.78378516455697,
+   "lon": -4.3476352658227855,
+   "n": 237,
+   "area_comum": "Urban"
+  },
+  "East Riding of Yorkshire": {
+   "lat": 53.84703035314685,
+   "lon": -0.4831996673951049,
+   "n": 2288,
+   "area_comum": "Rural"
+  },
+  "East Staffordshire": {
+   "lat": 52.82920095479705,
+   "lon": -1.7056447998154982,
+   "n": 1084,
+   "area_comum": "Urban"
+  },
+  "Eastbourne": {
+   "lat": 50.78153028632479,
+   "lon": 0.2842296638176638,
+   "n": 702,
+   "area_comum": "Urban"
+  },
+  "Eastleigh": {
+   "lat": 50.94238672560975,
+   "lon": -1.3416106209349594,
+   "n": 984,
+   "area_comum": "Urban"
+  },
+  "Eden": {
+   "lat": 54.63626150574713,
+   "lon": -2.669650041050903,
+   "n": 609,
+   "area_comum": "Rural"
+  },
+  "Edinburgh, City of": {
+   "lat": 55.94256903180474,
+   "lon": -3.218521605769231,
+   "n": 2704,
+   "area_comum": "Urban"
+  },
+  "Ellesmere Port and Neston": {
+   "lat": 53.27745850458716,
+   "lon": -2.9361530458715595,
+   "n": 327,
+   "area_comum": "Urban"
+  },
+  "Elmbridge": {
+   "lat": 51.36467419295154,
+   "lon": -0.3927554308370044,
+   "n": 1135,
+   "area_comum": "Urban"
+  },
+  "Enfield": {
+   "lat": 51.63880783928571,
+   "lon": -0.0788729295112782,
+   "n": 2128,
+   "area_comum": "Urban"
+  },
+  "Epping Forest": {
+   "lat": 51.68105117254314,
+   "lon": 0.09670868717179294,
+   "n": 1333,
+   "area_comum": "Rural"
+  },
+  "Epsom and Ewell": {
+   "lat": 51.343785554216865,
+   "lon": -0.2587253955823293,
+   "n": 498,
+   "area_comum": "Urban"
+  },
+  "Erewash": {
+   "lat": 52.93092956760204,
+   "lon": -1.323659918367347,
+   "n": 784,
+   "area_comum": "Urban"
+  },
+  "Exeter": {
+   "lat": 50.719098149899395,
+   "lon": -3.5115584788732397,
+   "n": 994,
+   "area_comum": "Urban"
+  },
+  "Falkirk": {
+   "lat": 56.0061353431677,
+   "lon": -3.7869421583850933,
+   "n": 644,
+   "area_comum": "Urban"
+  },
+  "Fareham": {
+   "lat": 50.8539713255814,
+   "lon": -1.205090073871409,
+   "n": 731,
+   "area_comum": "Urban"
+  },
+  "Fenland": {
+   "lat": 52.59698442723005,
+   "lon": 0.0811596115023474,
+   "n": 852,
+   "area_comum": "Rural"
+  },
+  "Fife": {
+   "lat": 56.16785008044164,
+   "lon": -3.191513746056782,
+   "n": 1268,
+   "area_comum": "Rural"
+  },
+  "Flintshire": {
+   "lat": 53.2047689730669,
+   "lon": -3.0991233579496087,
+   "n": 1151,
+   "area_comum": "Rural"
+  },
+  "Forest Heath": {
+   "lat": 52.33401486055046,
+   "lon": 0.5153749816513762,
+   "n": 545,
+   "area_comum": "Rural"
+  },
+  "Forest of Dean": {
+   "lat": 51.823477201886796,
+   "lon": -2.498506324528302,
+   "n": 530,
+   "area_comum": "Rural"
+  },
+  "Fylde": {
+   "lat": 53.782267303595205,
+   "lon": -2.942412985352863,
+   "n": 751,
+   "area_comum": "Rural"
+  },
+  "Gateshead": {
+   "lat": 54.94204564661654,
+   "lon": -1.6276220526315788,
+   "n": 1729,
+   "area_comum": "Urban"
+  },
+  "Gedling": {
+   "lat": 53.00520026034713,
+   "lon": -1.115273702269693,
+   "n": 749,
+   "area_comum": "Urban"
+  },
+  "Glasgow City": {
+   "lat": 55.858323129746836,
+   "lon": -4.261848889528193,
+   "n": 3476,
+   "area_comum": "Urban"
+  },
+  "Gloucester": {
+   "lat": 51.85495263509749,
+   "lon": -2.23592486908078,
+   "n": 718,
+   "area_comum": "Urban"
+  },
+  "Gosport": {
+   "lat": 50.805420924180325,
+   "lon": -1.1566139303278689,
+   "n": 488,
+   "area_comum": "Urban"
+  },
+  "Gravesham": {
+   "lat": 51.423267141041926,
+   "lon": 0.3751293634053367,
+   "n": 787,
+   "area_comum": "Urban"
+  },
+  "Great Yarmouth": {
+   "lat": 52.6098781392405,
+   "lon": 1.7024814068716094,
+   "n": 553,
+   "area_comum": "Urban"
+  },
+  "Greenwich": {
+   "lat": 51.475217945641525,
+   "lon": 0.047690337414299705,
+   "n": 2042,
+   "area_comum": "Urban"
+  },
+  "Guildford": {
+   "lat": 51.25472649332592,
+   "lon": -0.5778369688542825,
+   "n": 1798,
+   "area_comum": "Rural"
+  },
+  "Gwynedd": {
+   "lat": 52.97539079008438,
+   "lon": -4.0847748396624475,
+   "n": 948,
+   "area_comum": "Rural"
+  },
+  "Hackney": {
+   "lat": 51.549691497779754,
+   "lon": -0.0685088903197158,
+   "n": 2252,
+   "area_comum": "Urban"
+  },
+  "Halton": {
+   "lat": 53.348388925,
+   "lon": -2.720214056818182,
+   "n": 880,
+   "area_comum": "Urban"
+  },
+  "Hambleton": {
+   "lat": 54.30079008031088,
+   "lon": -1.3654453873056995,
+   "n": 772,
+   "area_comum": "Rural"
+  },
+  "Hammersmith and Fulham": {
+   "lat": 51.49249333161217,
+   "lon": -0.21782242226047047,
+   "n": 1743,
+   "area_comum": "Urban"
+  },
+  "Harborough": {
+   "lat": 52.501424623188406,
+   "lon": -1.0800045603864734,
+   "n": 621,
+   "area_comum": "Rural"
+  },
+  "Haringey": {
+   "lat": 51.59054118694977,
+   "lon": -0.0974634355256344,
+   "n": 1931,
+   "area_comum": "Urban"
+  },
+  "Harlow": {
+   "lat": 51.76783067810027,
+   "lon": 0.10699475197889183,
+   "n": 379,
+   "area_comum": "Urban"
+  },
+  "Harrogate": {
+   "lat": 54.025008933431955,
+   "lon": -1.5061896065088758,
+   "n": 1352,
+   "area_comum": "Rural"
+  },
+  "Harrow": {
+   "lat": 51.592101936663695,
+   "lon": -0.3376629491525424,
+   "n": 1121,
+   "area_comum": "Urban"
+  },
+  "Hart": {
+   "lat": 51.296660782534246,
+   "lon": -0.8696224400684932,
+   "n": 584,
+   "area_comum": "Rural"
+  },
+  "Hartlepool": {
+   "lat": 54.68010951487415,
+   "lon": -1.230261123569794,
+   "n": 437,
+   "area_comum": "Urban"
+  },
+  "Hastings": {
+   "lat": 50.86527983862069,
+   "lon": 0.56664312,
+   "n": 725,
+   "area_comum": "Urban"
+  },
+  "Havant": {
+   "lat": 50.857854558546435,
+   "lon": -1.0003490888290714,
+   "n": 743,
+   "area_comum": "Urban"
+  },
+  "Havering": {
+   "lat": 51.56915035011186,
+   "lon": 0.2093801979865772,
+   "n": 1788,
+   "area_comum": "Urban"
+  },
+  "Herefordshire, County of": {
+   "lat": 52.07055722147198,
+   "lon": -2.694779665766374,
+   "n": 1481,
+   "area_comum": "Rural"
+  },
+  "Hertsmere": {
+   "lat": 51.67420442011834,
+   "lon": -0.2746052268244576,
+   "n": 1014,
+   "area_comum": "Rural"
+  },
+  "High Peak": {
+   "lat": 53.36005250899032,
+   "lon": -1.9138485656984785,
+   "n": 723,
+   "area_comum": "Rural"
+  },
+  "Highland": {
+   "lat": 57.52592094748048,
+   "lon": -4.415757788502484,
+   "n": 1409,
+   "area_comum": "Rural"
+  },
+  "Hillingdon": {
+   "lat": 51.5316340088249,
+   "lon": -0.43783576126335344,
+   "n": 2153,
+   "area_comum": "Urban"
+  },
+  "Hinckley and Bosworth": {
+   "lat": 52.59605029469274,
+   "lon": -1.3464415335195532,
+   "n": 716,
+   "area_comum": "Rural"
+  },
+  "Horsham": {
+   "lat": 51.009740425334705,
+   "lon": -0.35355962203913494,
+   "n": 971,
+   "area_comum": "Rural"
+  },
+  "Hounslow": {
+   "lat": 51.47380313479924,
+   "lon": -0.3557528169216061,
+   "n": 2092,
+   "area_comum": "Urban"
+  },
+  "Huntingdonshire": {
+   "lat": 52.35493448255431,
+   "lon": -0.1966658341013825,
+   "n": 1519,
+   "area_comum": "Rural"
+  },
+  "Hyndburn": {
+   "lat": 53.75829205603448,
+   "lon": -2.3874678520114943,
+   "n": 696,
+   "area_comum": "Urban"
+  },
+  "Inverclyde": {
+   "lat": 55.93807577419355,
+   "lon": -4.755387925558313,
+   "n": 403,
+   "area_comum": "Urban"
+  },
+  "Ipswich": {
+   "lat": 52.05476590228013,
+   "lon": 1.1586612975027144,
+   "n": 921,
+   "area_comum": "Urban"
+  },
+  "Isle of Anglesey": {
+   "lat": 53.277860192090394,
+   "lon": -4.347923460451978,
+   "n": 354,
+   "area_comum": "Rural"
+  },
+  "Isle of Wight": {
+   "lat": 50.688990186409555,
+   "lon": -1.253520618916437,
+   "n": 1089,
+   "area_comum": "Rural"
+  },
+  "Islington": {
+   "lat": 51.5457421375203,
+   "lon": -0.10894073091499729,
+   "n": 1847,
+   "area_comum": "Urban"
+  },
+  "Kennet": {
+   "lat": 51.3608909028777,
+   "lon": -1.828501107913669,
+   "n": 278,
+   "area_comum": "Rural"
+  },
+  "Kensington and Chelsea": {
+   "lat": 51.497874944247336,
+   "lon": -0.18736332336543335,
+   "n": 1973,
+   "area_comum": "Urban"
+  },
+  "Kerrier": {
+   "lat": 50.183811272972974,
+   "lon": -5.250729867567568,
+   "n": 370,
+   "area_comum": "Rural"
+  },
+  "Kettering": {
+   "lat": 52.4038208509532,
+   "lon": -0.7417011126516465,
+   "n": 577,
+   "area_comum": "Rural"
+  },
+  "King's Lynn and West Norfolk": {
+   "lat": 52.72927320740019,
+   "lon": 0.4304155394352483,
+   "n": 1027,
+   "area_comum": "Rural"
+  },
+  "Kingston upon Hull, City of": {
+   "lat": 53.757747772306196,
+   "lon": -0.3424048956606533,
+   "n": 2051,
+   "area_comum": "Urban"
+  },
+  "Kingston upon Thames": {
+   "lat": 51.39540461546392,
+   "lon": -0.2866633494845361,
+   "n": 970,
+   "area_comum": "Urban"
+  },
+  "Kirklees": {
+   "lat": 53.670039024800985,
+   "lon": -1.7295946898346601,
+   "n": 3266,
+   "area_comum": "Urban"
+  },
+  "Knowsley": {
+   "lat": 53.42795202346939,
+   "lon": -2.845918518367347,
+   "n": 980,
+   "area_comum": "Urban"
+  },
+  "Lambeth": {
+   "lat": 51.46069360876785,
+   "lon": -0.11960812653603453,
+   "n": 3011,
+   "area_comum": "Urban"
+  },
+  "Lancaster": {
+   "lat": 54.06373976982893,
+   "lon": -2.7996646881804046,
+   "n": 1286,
+   "area_comum": "Urban"
+  },
+  "Leeds": {
+   "lat": 53.80359570048387,
+   "lon": -1.546307059354839,
+   "n": 6200,
+   "area_comum": "Urban"
+  },
+  "Leicester": {
+   "lat": 52.635360138593484,
+   "lon": -1.1270186998284735,
+   "n": 2915,
+   "area_comum": "Urban"
+  },
+  "Lewes": {
+   "lat": 50.851350252311754,
+   "lon": 0.017525690885072654,
+   "n": 757,
+   "area_comum": "Rural"
+  },
+  "Lewisham": {
+   "lat": 51.4518411373905,
+   "lon": -0.023326002305209773,
+   "n": 2169,
+   "area_comum": "Urban"
+  },
+  "Lichfield": {
+   "lat": 52.67389364873765,
+   "lon": -1.8299082305159164,
+   "n": 911,
+   "area_comum": "Rural"
+  },
+  "Lincoln": {
+   "lat": 53.22498595857988,
+   "lon": -0.5497867834319526,
+   "n": 845,
+   "area_comum": "Urban"
+  },
+  "Liverpool": {
+   "lat": 53.41148933232323,
+   "lon": -2.9343171638888887,
+   "n": 3960,
+   "area_comum": "Urban"
+  },
+  "London Airport (Heathrow)": {
+   "lat": 51.4705482265625,
+   "lon": -0.45278271875,
+   "n": 128,
+   "area_comum": "Urban"
+  },
+  "Luton": {
+   "lat": 51.89161288120196,
+   "lon": -0.4336443731656185,
+   "n": 1431,
+   "area_comum": "Urban"
+  },
+  "Macclesfield": {
+   "lat": 53.29779288941177,
+   "lon": -2.242304451764706,
+   "n": 850,
+   "area_comum": "Rural"
+  },
+  "Maidstone": {
+   "lat": 51.25994414880546,
+   "lon": 0.5514785228668941,
+   "n": 1465,
+   "area_comum": "Rural"
+  },
+  "Maldon": {
+   "lat": 51.705338850855746,
+   "lon": 0.7187955990220048,
+   "n": 409,
+   "area_comum": "Rural"
+  },
+  "Malvern Hills": {
+   "lat": 52.155223178807944,
+   "lon": -2.307097670529801,
+   "n": 604,
+   "area_comum": "Rural"
+  },
+  "Manchester": {
+   "lat": 53.46104399872774,
+   "lon": -2.2283207809584393,
+   "n": 4716,
+   "area_comum": "Urban"
+  },
+  "Mansfield": {
+   "lat": 53.15428318313253,
+   "lon": -1.1848887012048193,
+   "n": 830,
+   "area_comum": "Urban"
+  },
+  "Medway": {
+   "lat": 51.379664866705134,
+   "lon": 0.5354387247547605,
+   "n": 1733,
+   "area_comum": "Urban"
+  },
+  "Melton": {
+   "lat": 52.785563378947366,
+   "lon": -0.8885291657894736,
+   "n": 380,
+   "area_comum": "Rural"
+  },
+  "Mendip": {
+   "lat": 51.20381568366165,
+   "lon": -2.5212104426419466,
+   "n": 863,
+   "area_comum": "Rural"
+  },
+  "Merthyr Tydfil": {
+   "lat": 51.736945818991096,
+   "lon": -3.3665100949554896,
+   "n": 337,
+   "area_comum": "Urban"
+  },
+  "Merton": {
+   "lat": 51.40961887082601,
+   "lon": -0.18918461423550087,
+   "n": 1138,
+   "area_comum": "Urban"
+  },
+  "Mid Bedfordshire": {
+   "lat": 52.03817466609881,
+   "lon": -0.43320404770017035,
+   "n": 587,
+   "area_comum": "Rural"
+  },
+  "Mid Devon": {
+   "lat": 50.87033720545455,
+   "lon": -3.50558126,
+   "n": 550,
+   "area_comum": "Rural"
+  },
+  "Mid Suffolk": {
+   "lat": 52.21466021985815,
+   "lon": 1.0484961262411348,
+   "n": 705,
+   "area_comum": "Rural"
+  },
+  "Mid Sussex": {
+   "lat": 51.01734333268859,
+   "lon": -0.1262052746615087,
+   "n": 1034,
+   "area_comum": "Rural"
+  },
+  "Middlesbrough": {
+   "lat": 54.55750934323041,
+   "lon": -1.2325803503562944,
+   "n": 842,
+   "area_comum": "Urban"
+  },
+  "Midlothian": {
+   "lat": 55.86865049134199,
+   "lon": -3.107617023809524,
+   "n": 462,
+   "area_comum": "Rural"
+  },
+  "Milton Keynes": {
+   "lat": 52.04270568984492,
+   "lon": -0.7472794457228614,
+   "n": 1999,
+   "area_comum": "Urban"
+  },
+  "Mole Valley": {
+   "lat": 51.25293206221198,
+   "lon": -0.31766828456221197,
+   "n": 868,
+   "area_comum": "Rural"
+  },
+  "Monmouthshire": {
+   "lat": 51.72073350110375,
+   "lon": -2.8457481169977923,
+   "n": 453,
+   "area_comum": "Rural"
+  },
+  "Moray": {
+   "lat": 57.60967946778711,
+   "lon": -3.2498749019607844,
+   "n": 357,
+   "area_comum": "Rural"
+  },
+  "Neath Port Talbot": {
+   "lat": 51.648894792670156,
+   "lon": -3.7930897842931937,
+   "n": 955,
+   "area_comum": "Urban"
+  },
+  "New Forest": {
+   "lat": 50.849717105847525,
+   "lon": -1.5912903560325684,
+   "n": 1351,
+   "area_comum": "Rural"
+  },
+  "Newark and Sherwood": {
+   "lat": 53.108216605902776,
+   "lon": -0.9157163046875001,
+   "n": 1152,
+   "area_comum": "Rural"
+  },
+  "Newcastle upon Tyne": {
+   "lat": 54.98640948237246,
+   "lon": -1.630703022812111,
+   "n": 2411,
+   "area_comum": "Urban"
+  },
+  "Newcastle-under-Lyme": {
+   "lat": 53.027167082120584,
+   "lon": -2.260856044698545,
+   "n": 962,
+   "area_comum": "Urban"
+  },
+  "Newham": {
+   "lat": 51.532942283608755,
+   "lon": 0.03449416703885663,
+   "n": 2239,
+   "area_comum": "Urban"
+  },
+  "Newport": {
+   "lat": 51.58723094055201,
+   "lon": -2.9921113492569003,
+   "n": 942,
+   "area_comum": "Urban"
+  },
+  "North Ayrshire": {
+   "lat": 55.67662804061895,
+   "lon": -4.7335929323017405,
+   "n": 517,
+   "area_comum": "Rural"
+  },
+  "North Cornwall": {
+   "lat": 50.59641840289257,
+   "lon": -4.612605061983471,
+   "n": 484,
+   "area_comum": "Rural"
+  },
+  "North Devon": {
+   "lat": 51.08736915307583,
+   "lon": -4.02345439055794,
+   "n": 699,
+   "area_comum": "Rural"
+  },
+  "North Dorset": {
+   "lat": 50.924147771317834,
+   "lon": -2.2240475755813955,
+   "n": 516,
+   "area_comum": "Rural"
+  },
+  "North East Derbyshire": {
+   "lat": 53.22599525030826,
+   "lon": -1.4068586732429098,
+   "n": 811,
+   "area_comum": "Rural"
+  },
+  "North East Lincolnshire": {
+   "lat": 53.56052421600567,
+   "lon": -0.09608144688385269,
+   "n": 1412,
+   "area_comum": "Urban"
+  },
+  "North Hertfordshire": {
+   "lat": 51.961873021420516,
+   "lon": -0.21582327959413755,
+   "n": 887,
+   "area_comum": "Rural"
+  },
+  "North Kesteven": {
+   "lat": 53.10317946887967,
+   "lon": -0.48504666597510376,
+   "n": 964,
+   "area_comum": "Rural"
+  },
+  "North Lanarkshire": {
+   "lat": 55.8469189544808,
+   "lon": -3.9896597780938836,
+   "n": 703,
+   "area_comum": "Urban"
+  },
+  "North Larkshire": {
+   "lat": 55.8531651997226,
+   "lon": -3.981158388349515,
+   "n": 721,
+   "area_comum": "Urban"
+  },
+  "North Lincolnshire": {
+   "lat": 53.58440299934726,
+   "lon": -0.5986421592689295,
+   "n": 1532,
+   "area_comum": "Rural"
+  },
+  "North Norfolk": {
+   "lat": 52.84412297909968,
+   "lon": 1.2217742138263665,
+   "n": 622,
+   "area_comum": "Rural"
+  },
+  "North Shropshire": {
+   "lat": 52.879560124,
+   "lon": -2.663544868,
+   "n": 250,
+   "area_comum": "Rural"
+  },
+  "North Somerset": {
+   "lat": 51.385612026480835,
+   "lon": -2.8443189156794424,
+   "n": 1435,
+   "area_comum": "Rural"
+  },
+  "North Tyneside": {
+   "lat": 55.02192897236364,
+   "lon": -1.5120627076363635,
+   "n": 1375,
+   "area_comum": "Urban"
+  },
+  "North Warwickshire": {
+   "lat": 52.53895623429952,
+   "lon": -1.6349283285024154,
+   "n": 828,
+   "area_comum": "Rural"
+  },
+  "North West Leicestershire": {
+   "lat": 52.75828732914285,
+   "lon": -1.3841448731428572,
+   "n": 875,
+   "area_comum": "Rural"
+  },
+  "North Wiltshire": {
+   "lat": 51.50330078818737,
+   "lon": -2.0645503054989818,
+   "n": 491,
+   "area_comum": "Rural"
+  },
+  "Northampton": {
+   "lat": 52.245074279835386,
+   "lon": -0.8843758740740741,
+   "n": 1215,
+   "area_comum": "Urban"
+  },
+  "Northumberland": {
+   "lat": 55.17332172296694,
+   "lon": -1.7717193896336014,
+   "n": 1119,
+   "area_comum": "Rural"
+  },
+  "Norwich": {
+   "lat": 52.63371012166172,
+   "lon": 1.2834394381800198,
+   "n": 1011,
+   "area_comum": "Urban"
+  },
+  "Nottingham": {
+   "lat": 52.963261082327115,
+   "lon": -1.170074236370289,
+   "n": 2733,
+   "area_comum": "Urban"
+  },
+  "Nuneaton and Bedworth": {
+   "lat": 52.502686001216546,
+   "lon": -1.4780852530413624,
+   "n": 822,
+   "area_comum": "Urban"
+  },
+  "Oadby and Wigston": {
+   "lat": 52.592575520295206,
+   "lon": -1.0983567601476014,
+   "n": 271,
+   "area_comum": "Urban"
+  },
+  "Oldham": {
+   "lat": 53.54224120960108,
+   "lon": -2.1124668323191345,
+   "n": 1479,
+   "area_comum": "Urban"
+  },
+  "Orkney Islands": {
+   "lat": 58.99064752702703,
+   "lon": -3.0393538783783782,
+   "n": 74,
+   "area_comum": "Rural"
+  },
+  "Oswestry": {
+   "lat": 52.85460021910113,
+   "lon": -3.0277533314606746,
+   "n": 178,
+   "area_comum": "Rural"
+  },
+  "Oxford": {
+   "lat": 51.75249882451499,
+   "lon": -1.2357070705467372,
+   "n": 1134,
+   "area_comum": "Urban"
+  },
+  "Pembrokeshire": {
+   "lat": 51.78860862224449,
+   "lon": -4.898112973947896,
+   "n": 998,
+   "area_comum": "Rural"
+  },
+  "Pendle": {
+   "lat": 53.85336227527217,
+   "lon": -2.198284051321928,
+   "n": 643,
+   "area_comum": "Urban"
+  },
+  "Penwith": {
+   "lat": 50.147667457831325,
+   "lon": -5.509424162650602,
+   "n": 332,
+   "area_comum": "Rural"
+  },
+  "Perth and Kinross": {
+   "lat": 56.414653262893076,
+   "lon": -3.5192117006289307,
+   "n": 795,
+   "area_comum": "Rural"
+  },
+  "Peterborough": {
+   "lat": 52.58526074351444,
+   "lon": -0.2554490949583945,
+   "n": 2043,
+   "area_comum": "Urban"
+  },
+  "Plymouth": {
+   "lat": 50.387221891211404,
+   "lon": -4.1307633695962,
+   "n": 2105,
+   "area_comum": "Urban"
+  },
+  "Poole": {
+   "lat": 50.73476492965272,
+   "lon": -1.958928445235975,
+   "n": 1123,
+   "area_comum": "Urban"
+  },
+  "Portsmouth": {
+   "lat": 50.81433322337963,
+   "lon": -1.0748536128472221,
+   "n": 1728,
+   "area_comum": "Urban"
+  },
+  "Powys": {
+   "lat": 52.31188739082278,
+   "lon": -3.3502887966772152,
+   "n": 1264,
+   "area_comum": "Rural"
+  },
+  "Preston": {
+   "lat": 53.775700017601764,
+   "lon": -2.701462404290429,
+   "n": 1818,
+   "area_comum": "Urban"
+  },
+  "Purbeck": {
+   "lat": 50.703420314903845,
+   "lon": -2.106056201923077,
+   "n": 416,
+   "area_comum": "Rural"
+  },
+  "Reading": {
+   "lat": 51.45046695826087,
+   "lon": -0.9781605104347826,
+   "n": 1150,
+   "area_comum": "Urban"
+  },
+  "Redbridge": {
+   "lat": 51.57706630171936,
+   "lon": 0.06877922795341099,
+   "n": 1803,
+   "area_comum": "Urban"
+  },
+  "Redcar and Cleveland": {
+   "lat": 54.57283779239766,
+   "lon": -1.0706224312865498,
+   "n": 684,
+   "area_comum": "Urban"
+  },
+  "Redditch": {
+   "lat": 52.29861263205417,
+   "lon": -1.9336832686230248,
+   "n": 443,
+   "area_comum": "Urban"
+  },
+  "Reigate and Banstead": {
+   "lat": 51.25377614806378,
+   "lon": -0.1874490425208808,
+   "n": 1317,
+   "area_comum": "Urban"
+  },
+  "Renfrewshire": {
+   "lat": 55.85161602824133,
+   "lon": -4.454626003851091,
+   "n": 779,
+   "area_comum": "Urban"
+  },
+  "Restormel": {
+   "lat": 50.37345515510949,
+   "lon": -4.881888147810218,
+   "n": 548,
+   "area_comum": "Rural"
+  },
+  "Rhondda, Cynon, Taff": {
+   "lat": 51.62436066927593,
+   "lon": -3.40197873776908,
+   "n": 1533,
+   "area_comum": "Urban"
+  },
+  "Ribble Valley": {
+   "lat": 53.84653456170213,
+   "lon": -2.4356300148936167,
+   "n": 470,
+   "area_comum": "Rural"
+  },
+  "Richmond upon Thames": {
+   "lat": 51.4490773643547,
+   "lon": -0.31373330377524145,
+   "n": 1139,
+   "area_comum": "Urban"
+  },
+  "Richmondshire": {
+   "lat": 54.38889934375,
+   "lon": -1.742948685546875,
+   "n": 512,
+   "area_comum": "Rural"
+  },
+  "Rochdale": {
+   "lat": 53.60080028471737,
+   "lon": -2.167162684577809,
+   "n": 1433,
+   "area_comum": "Urban"
+  },
+  "Rochford": {
+   "lat": 51.588938675496685,
+   "lon": 0.6514310927152317,
+   "n": 453,
+   "area_comum": "Urban"
+  },
+  "Rossendale": {
+   "lat": 53.6973082844523,
+   "lon": -2.279135277385159,
+   "n": 566,
+   "area_comum": "Urban"
+  },
+  "Rother": {
+   "lat": 50.91797627569529,
+   "lon": 0.525736892382104,
+   "n": 827,
+   "area_comum": "Rural"
+  },
+  "Rotherham": {
+   "lat": 53.423431800459774,
+   "lon": -1.3182943535632183,
+   "n": 2175,
+   "area_comum": "Urban"
+  },
+  "Rugby": {
+   "lat": 52.39116342139738,
+   "lon": -1.3177031866812225,
+   "n": 916,
+   "area_comum": "Rural"
+  },
+  "Runnymede": {
+   "lat": 51.394033796771126,
+   "lon": -0.5278946752136753,
+   "n": 1053,
+   "area_comum": "Rural"
+  },
+  "Rushcliffe": {
+   "lat": 52.90912655543478,
+   "lon": -1.0780332217391304,
+   "n": 920,
+   "area_comum": "Rural"
+  },
+  "Rushmoor": {
+   "lat": 51.277896106271776,
+   "lon": -0.7603878466898955,
+   "n": 574,
+   "area_comum": "Urban"
+  },
+  "Rutland": {
+   "lat": 52.64995645263158,
+   "lon": -0.650069649122807,
+   "n": 285,
+   "area_comum": "Rural"
+  },
+  "Ryedale": {
+   "lat": 54.175631201195216,
+   "lon": -0.8208209521912351,
+   "n": 502,
+   "area_comum": "Rural"
+  },
+  "Salford": {
+   "lat": 53.49683713961407,
+   "lon": -2.3392986923950057,
+   "n": 1762,
+   "area_comum": "Urban"
+  },
+  "Salisbury": {
+   "lat": 51.10061961415929,
+   "lon": -1.8601862672566374,
+   "n": 565,
+   "area_comum": "Rural"
+  },
+  "Sandwell": {
+   "lat": 52.51113760173845,
+   "lon": -2.0063370403002767,
+   "n": 2531,
+   "area_comum": "Urban"
+  },
+  "Scarborough": {
+   "lat": 54.31912176623376,
+   "lon": -0.4798716717827627,
+   "n": 847,
+   "area_comum": "Urban"
+  },
+  "Scottish Borders": {
+   "lat": 55.62359672096129,
+   "lon": -2.7059821001335114,
+   "n": 749,
+   "area_comum": "Rural"
+  },
+  "Sedgefield": {
+   "lat": 54.65891601369863,
+   "lon": -1.5553627431506851,
+   "n": 292,
+   "area_comum": "Rural"
+  },
+  "Sedgemoor": {
+   "lat": 51.168449072826085,
+   "lon": -2.964917768478261,
+   "n": 920,
+   "area_comum": "Rural"
+  },
+  "Sefton": {
+   "lat": 53.5351563011976,
+   "lon": -2.9905456736526945,
+   "n": 1670,
+   "area_comum": "Urban"
+  },
+  "Selby": {
+   "lat": 53.79398829377713,
+   "lon": -1.1532297858176557,
+   "n": 691,
+   "area_comum": "Rural"
+  },
+  "Sevenoaks": {
+   "lat": 51.310884035911606,
+   "lon": 0.1728575349907919,
+   "n": 1086,
+   "area_comum": "Rural"
+  },
+  "Sheffield": {
+   "lat": 53.38599999327187,
+   "lon": -1.459129835534513,
+   "n": 4013,
+   "area_comum": "Urban"
+  },
+  "Shepway": {
+   "lat": 51.073915878345495,
+   "lon": 1.0892164428223845,
+   "n": 822,
+   "area_comum": "Rural"
+  },
+  "Shetland Islands": {
+   "lat": 60.19623937254902,
+   "lon": -1.219631725490196,
+   "n": 102,
+   "area_comum": "Rural"
+  },
+  "Shrewsbury and Atcham": {
+   "lat": 52.703582407809115,
+   "lon": -2.748022175704989,
+   "n": 461,
+   "area_comum": "Rural"
+  },
+  "Shropshire": {
+   "lat": 52.69667820696938,
+   "lon": -2.703707870116156,
+   "n": 947,
+   "area_comum": "Rural"
+  },
+  "Slough": {
+   "lat": 51.50963277507837,
+   "lon": -0.5892248354231975,
+   "n": 1276,
+   "area_comum": "Urban"
+  },
+  "Solihull": {
+   "lat": 52.43229268122271,
+   "lon": -1.7652934956331876,
+   "n": 1374,
+   "area_comum": "Urban"
+  },
+  "South Ayrshire": {
+   "lat": 55.43348145067698,
+   "lon": -4.634928624758221,
+   "n": 517,
+   "area_comum": "Rural"
+  },
+  "South Bedfordshire": {
+   "lat": 51.903146727739724,
+   "lon": -0.5311045565068493,
+   "n": 584,
+   "area_comum": "Rural"
+  },
+  "South Bucks": {
+   "lat": 51.55439090415336,
+   "lon": -0.5722445495207668,
+   "n": 939,
+   "area_comum": "Rural"
+  },
+  "South Cambridgeshire": {
+   "lat": 52.18939947694633,
+   "lon": 0.09236302494331065,
+   "n": 1323,
+   "area_comum": "Rural"
+  },
+  "South Derbyshire": {
+   "lat": 52.82454343852459,
+   "lon": -1.5479017581967214,
+   "n": 732,
+   "area_comum": "Rural"
+  },
+  "South Gloucestershire": {
+   "lat": 51.51445231684269,
+   "lon": -2.5030770188993885,
+   "n": 1799,
+   "area_comum": "Urban"
+  },
+  "South Hams": {
+   "lat": 50.38159226871658,
+   "lon": -3.8221096564171124,
+   "n": 748,
+   "area_comum": "Rural"
+  },
+  "South Holland": {
+   "lat": 52.78649757629256,
+   "lon": -0.06551243883984867,
+   "n": 793,
+   "area_comum": "Rural"
+  },
+  "South Kesteven": {
+   "lat": 52.83897305045871,
+   "lon": -0.5463916174311927,
+   "n": 1090,
+   "area_comum": "Rural"
+  },
+  "South Lakeland": {
+   "lat": 54.285076883765605,
+   "lon": -2.8699715312199805,
+   "n": 1041,
+   "area_comum": "Rural"
+  },
+  "South Lanarkshire": {
+   "lat": 55.76016905244755,
+   "lon": -4.05383629020979,
+   "n": 572,
+   "area_comum": "Urban"
+  },
+  "South Larkshire": {
+   "lat": 55.71965346415553,
+   "lon": -3.9726761676792224,
+   "n": 823,
+   "area_comum": "Rural"
+  },
+  "South Norfolk": {
+   "lat": 52.538565854260085,
+   "lon": 1.258380980941704,
+   "n": 892,
+   "area_comum": "Rural"
+  },
+  "South Northamptonshire": {
+   "lat": 52.12735443017657,
+   "lon": -1.0166240609951847,
+   "n": 623,
+   "area_comum": "Rural"
+  },
+  "South Oxfordshire": {
+   "lat": 51.64255832958801,
+   "lon": -1.079966515917603,
+   "n": 1068,
+   "area_comum": "Rural"
+  },
+  "South Ribble": {
+   "lat": 53.72785014471243,
+   "lon": -2.666357741187384,
+   "n": 1078,
+   "area_comum": "Rural"
+  },
+  "South Shropshire": {
+   "lat": 52.43673825,
+   "lon": -2.7772399146341464,
+   "n": 164,
+   "area_comum": "Rural"
+  },
+  "South Somerset": {
+   "lat": 50.964827245251854,
+   "lon": -2.717315004954583,
+   "n": 1211,
+   "area_comum": "Rural"
+  },
+  "South Staffordshire": {
+   "lat": 52.63177677561837,
+   "lon": -2.1288710724381628,
+   "n": 1132,
+   "area_comum": "Rural"
+  },
+  "South Tyneside": {
+   "lat": 54.97132337369034,
+   "lon": -1.4489376670547147,
+   "n": 859,
+   "area_comum": "Urban"
+  },
+  "Southampton": {
+   "lat": 50.91756037730576,
+   "lon": -1.398441923979877,
+   "n": 1789,
+   "area_comum": "Urban"
+  },
+  "Southend-on-Sea": {
+   "lat": 51.54691058921491,
+   "lon": 0.701748287073751,
+   "n": 1261,
+   "area_comum": "Urban"
+  },
+  "Southwark": {
+   "lat": 51.4812013097313,
+   "lon": -0.07985669462599855,
+   "n": 2754,
+   "area_comum": "Urban"
+  },
+  "Spelthorne": {
+   "lat": 51.42572741721133,
+   "lon": -0.4661344858387799,
+   "n": 918,
+   "area_comum": "Urban"
+  },
+  "St. Albans": {
+   "lat": 51.755776009831465,
+   "lon": -0.35065266573033704,
+   "n": 1424,
+   "area_comum": "Rural"
+  },
+  "St. Edmundsbury": {
+   "lat": 52.2251190990566,
+   "lon": 0.6742204811320754,
+   "n": 848,
+   "area_comum": "Rural"
+  },
+  "St. Helens": {
+   "lat": 53.45163336693914,
+   "lon": -2.7176277720254314,
+   "n": 1101,
+   "area_comum": "Urban"
+  },
+  "Stafford": {
+   "lat": 52.84976829309035,
+   "lon": -2.1411435846621107,
+   "n": 1317,
+   "area_comum": "Rural"
+  },
+  "Staffordshire Moorlands": {
+   "lat": 53.05262943658536,
+   "lon": -2.0303493243902437,
+   "n": 820,
+   "area_comum": "Rural"
+  },
+  "Stevege": {
+   "lat": 51.903537544186044,
+   "lon": -0.19347818139534884,
+   "n": 215,
+   "area_comum": "Urban"
+  },
+  "Stevenage": {
+   "lat": 51.905631758720936,
+   "lon": -0.19337105523255815,
+   "n": 344,
+   "area_comum": "Urban"
+  },
+  "Stirling": {
+   "lat": 56.147602459552495,
+   "lon": -4.094690712564544,
+   "n": 581,
+   "area_comum": "Rural"
+  },
+  "Stockport": {
+   "lat": 53.40064668529769,
+   "lon": -2.1549481944106925,
+   "n": 1646,
+   "area_comum": "Urban"
+  },
+  "Stockton-on-Tees": {
+   "lat": 54.57011552265193,
+   "lon": -1.3173469127071822,
+   "n": 905,
+   "area_comum": "Urban"
+  },
+  "Stoke-on-Trent": {
+   "lat": 53.01816694075079,
+   "lon": -2.1693519706015376,
+   "n": 2211,
+   "area_comum": "Urban"
+  },
+  "Stratford-upon-Avon": {
+   "lat": 52.21058365133395,
+   "lon": -1.655950314627415,
+   "n": 1087,
+   "area_comum": "Rural"
+  },
+  "Stroud": {
+   "lat": 51.734135317507416,
+   "lon": -2.272189041543027,
+   "n": 674,
+   "area_comum": "Rural"
+  },
+  "Suffolk Coastal": {
+   "lat": 52.10886785745614,
+   "lon": 1.3559669265350875,
+   "n": 912,
+   "area_comum": "Rural"
+  },
+  "Sunderland": {
+   "lat": 54.89305705725376,
+   "lon": -1.4352979010189229,
+   "n": 2061,
+   "area_comum": "Urban"
+  },
+  "Surrey Heath": {
+   "lat": 51.33629098245614,
+   "lon": -0.7036121723426213,
+   "n": 969,
+   "area_comum": "Urban"
+  },
+  "Sutton": {
+   "lat": 51.367347713559326,
+   "lon": -0.18182810423728815,
+   "n": 1180,
+   "area_comum": "Urban"
+  },
+  "Swale": {
+   "lat": 51.352934702754034,
+   "lon": 0.785596435897436,
+   "n": 1053,
+   "area_comum": "Rural"
+  },
+  "Swansea": {
+   "lat": 51.64210245783756,
+   "lon": -3.9653687723745477,
+   "n": 1933,
+   "area_comum": "Urban"
+  },
+  "Swindon": {
+   "lat": 51.567340968229956,
+   "lon": -1.7722396800302573,
+   "n": 1322,
+   "area_comum": "Urban"
+  },
+  "Tameside": {
+   "lat": 53.47454167381317,
+   "lon": -2.08940880474732,
+   "n": 1306,
+   "area_comum": "Urban"
+  },
+  "Tamworth": {
+   "lat": 52.624384081932774,
+   "lon": -1.6810979621848738,
+   "n": 476,
+   "area_comum": "Urban"
+  },
+  "Tandridge": {
+   "lat": 51.245823945054944,
+   "lon": -0.05961089652014653,
+   "n": 1092,
+   "area_comum": "Rural"
+  },
+  "Taunton Deane": {
+   "lat": 51.01019155793026,
+   "lon": -3.1157863037120364,
+   "n": 889,
+   "area_comum": "Rural"
+  },
+  "Teesdale": {
+   "lat": 54.574598127450976,
+   "lon": -1.9224588137254903,
+   "n": 102,
+   "area_comum": "Rural"
+  },
+  "Teignbridge": {
+   "lat": 50.5669736660213,
+   "lon": -3.5971351297192644,
+   "n": 1033,
+   "area_comum": "Rural"
+  },
+  "Telford and Wrekin": {
+   "lat": 52.69451823092171,
+   "lon": -2.467297435084242,
+   "n": 1009,
+   "area_comum": "Urban"
+  },
+  "Tendring": {
+   "lat": 51.847110933982684,
+   "lon": 1.130584036796537,
+   "n": 924,
+   "area_comum": "Urban"
+  },
+  "Test Valley": {
+   "lat": 51.09450844444444,
+   "lon": -1.486359775510204,
+   "n": 882,
+   "area_comum": "Rural"
+  },
+  "Tewkesbury": {
+   "lat": 51.92617264772727,
+   "lon": -2.1438422727272726,
+   "n": 616,
+   "area_comum": "Rural"
+  },
+  "Thanet": {
+   "lat": 51.36241689063948,
+   "lon": 1.381492032437442,
+   "n": 1079,
+   "area_comum": "Urban"
+  },
+  "The Vale of Glamorgan": {
+   "lat": 51.427831783549784,
+   "lon": -3.295486251082251,
+   "n": 693,
+   "area_comum": "Urban"
+  },
+  "Three Rivers": {
+   "lat": 51.65940915899582,
+   "lon": -0.44971415481171545,
+   "n": 717,
+   "area_comum": "Rural"
+  },
+  "Thurrock": {
+   "lat": 51.49792205863454,
+   "lon": 0.3293642281124498,
+   "n": 1245,
+   "area_comum": "Rural"
+  },
+  "Tonbridge and Malling": {
+   "lat": 51.27644779045092,
+   "lon": 0.3823789160035367,
+   "n": 1131,
+   "area_comum": "Rural"
+  },
+  "Torbay": {
+   "lat": 50.45233400610377,
+   "lon": -3.551590924720244,
+   "n": 983,
+   "area_comum": "Urban"
+  },
+  "Torfaen": {
+   "lat": 51.66964170607029,
+   "lon": -3.029803485623003,
+   "n": 313,
+   "area_comum": "Urban"
+  },
+  "Torridge": {
+   "lat": 50.93438133867277,
+   "lon": -4.228943372997712,
+   "n": 437,
+   "area_comum": "Rural"
+  },
+  "Tower Hamlets": {
+   "lat": 51.51823724563644,
+   "lon": -0.04225926309067689,
+   "n": 2349,
+   "area_comum": "Urban"
+  },
+  "Trafford": {
+   "lat": 53.43390928051555,
+   "lon": -2.3297829567854436,
+   "n": 1319,
+   "area_comum": "Urban"
+  },
+  "Tunbridge Wells": {
+   "lat": 51.130715378348214,
+   "lon": 0.3416829598214286,
+   "n": 896,
+   "area_comum": "Rural"
+  },
+  "Tynedale": {
+   "lat": 55.00518852150538,
+   "lon": -2.1051326962365593,
+   "n": 372,
+   "area_comum": "Rural"
+  },
+  "Uttlesford": {
+   "lat": 51.923741001766786,
+   "lon": 0.2636867049469965,
+   "n": 566,
+   "area_comum": "Rural"
+  },
+  "Vale Royal": {
+   "lat": 53.235579319775596,
+   "lon": -2.5478638962131837,
+   "n": 713,
+   "area_comum": "Rural"
+  },
+  "Vale of White Horse": {
+   "lat": 51.66141568605928,
+   "lon": -1.3579566926454447,
+   "n": 911,
+   "area_comum": "Rural"
+  },
+  "Wakefield": {
+   "lat": 53.67514179208334,
+   "lon": -1.41763937375,
+   "n": 2400,
+   "area_comum": "Urban"
+  },
+  "Walsall": {
+   "lat": 52.59361216234796,
+   "lon": -1.9877252131147543,
+   "n": 1891,
+   "area_comum": "Urban"
+  },
+  "Waltham Forest": {
+   "lat": 51.586571189977974,
+   "lon": -0.011379020925110131,
+   "n": 1816,
+   "area_comum": "Urban"
+  },
+  "Wandsworth": {
+   "lat": 51.451141552585455,
+   "lon": -0.17874312664329536,
+   "n": 2282,
+   "area_comum": "Urban"
+  },
+  "Wansbeck": {
+   "lat": 55.16407332156862,
+   "lon": -1.5667175333333334,
+   "n": 255,
+   "area_comum": "Urban"
+  },
+  "Warrington": {
+   "lat": 53.3994444195459,
+   "lon": -2.5735974595261597,
+   "n": 2026,
+   "area_comum": "Urban"
+  },
+  "Warwick": {
+   "lat": 52.297108500439755,
+   "lon": -1.5630869067722075,
+   "n": 1137,
+   "area_comum": "Urban"
+  },
+  "Watford": {
+   "lat": 51.66641289830508,
+   "lon": -0.3992158084745763,
+   "n": 590,
+   "area_comum": "Urban"
+  },
+  "Waveney": {
+   "lat": 52.4527193183432,
+   "lon": 1.6672900331360947,
+   "n": 845,
+   "area_comum": "Urban"
+  },
+  "Waverley": {
+   "lat": 51.16857032328767,
+   "lon": -0.682912897716895,
+   "n": 1095,
+   "area_comum": "Rural"
+  },
+  "Wealden": {
+   "lat": 50.935966341275936,
+   "lon": 0.20148286779400462,
+   "n": 1301,
+   "area_comum": "Rural"
+  },
+  "Wear Valley": {
+   "lat": 54.68387626174497,
+   "lon": -1.7385491073825503,
+   "n": 298,
+   "area_comum": "Rural"
+  },
+  "Wellingborough": {
+   "lat": 52.29922174623656,
+   "lon": -0.7028005462365592,
+   "n": 465,
+   "area_comum": "Rural"
+  },
+  "Welwyn Hatfield": {
+   "lat": 51.77480364331897,
+   "lon": -0.20759402155172416,
+   "n": 928,
+   "area_comum": "Urban"
+  },
+  "West Berkshire": {
+   "lat": 51.42847499208443,
+   "lon": -1.2545464705364997,
+   "n": 1137,
+   "area_comum": "Rural"
+  },
+  "West Devon": {
+   "lat": 50.62735633192389,
+   "lon": -4.076875154334038,
+   "n": 473,
+   "area_comum": "Rural"
+  },
+  "West Dorset": {
+   "lat": 50.7602653793911,
+   "lon": -2.5646319449648716,
+   "n": 854,
+   "area_comum": "Rural"
+  },
+  "West Dunbartonshire": {
+   "lat": 55.9415094739726,
+   "lon": -4.487092060273973,
+   "n": 365,
+   "area_comum": "Urban"
+  },
+  "West Lancashire": {
+   "lat": 53.58289200594648,
+   "lon": -2.846258971258672,
+   "n": 1009,
+   "area_comum": "Rural"
+  },
+  "West Lindsey": {
+   "lat": 53.3689234002181,
+   "lon": -0.532995772082879,
+   "n": 917,
+   "area_comum": "Rural"
+  },
+  "West Lothian": {
+   "lat": 55.90015172247191,
+   "lon": -3.569295484269663,
+   "n": 890,
+   "area_comum": "Rural"
+  },
+  "West Oxfordshire": {
+   "lat": 51.82161947851003,
+   "lon": -1.4947854742120343,
+   "n": 698,
+   "area_comum": "Rural"
+  },
+  "West Somerset": {
+   "lat": 51.160031414893616,
+   "lon": -3.388433294326241,
+   "n": 282,
+   "area_comum": "Rural"
+  },
+  "West Wiltshire": {
+   "lat": 51.29193219947507,
+   "lon": -2.1875486089238843,
+   "n": 381,
+   "area_comum": "Rural"
+  },
+  "Western Isles": {
+   "lat": 57.9604309,
+   "lon": -6.729858761538461,
+   "n": 130,
+   "area_comum": "Rural"
+  },
+  "Westminster": {
+   "lat": 51.51232983717472,
+   "lon": -0.15413158810408922,
+   "n": 4035,
+   "area_comum": "Urban"
+  },
+  "Weymouth and Portland": {
+   "lat": 50.61196748027842,
+   "lon": -2.4539113201856146,
+   "n": 431,
+   "area_comum": "Urban"
+  },
+  "Wigan": {
+   "lat": 53.5222996631753,
+   "lon": -2.590787481808159,
+   "n": 1814,
+   "area_comum": "Urban"
+  },
+  "Wiltshire": {
+   "lat": 51.30668920499109,
+   "lon": -1.9801569108734403,
+   "n": 1122,
+   "area_comum": "Rural"
+  },
+  "Winchester": {
+   "lat": 51.01645474766355,
+   "lon": -1.2540140526762955,
+   "n": 1177,
+   "area_comum": "Rural"
+  },
+  "Windsor and Maidenhead": {
+   "lat": 51.48993589230769,
+   "lon": -0.6877682977375565,
+   "n": 1105,
+   "area_comum": "Rural"
+  },
+  "Wirral": {
+   "lat": 53.37809982495948,
+   "lon": -3.0522629832522963,
+   "n": 1851,
+   "area_comum": "Urban"
+  },
+  "Woking": {
+   "lat": 51.3199863,
+   "lon": -0.5575591717948718,
+   "n": 780,
+   "area_comum": "Urban"
+  },
+  "Wokingham": {
+   "lat": 51.4285746962306,
+   "lon": -0.8877527028824833,
+   "n": 902,
+   "area_comum": "Rural"
+  },
+  "Wolverhampton": {
+   "lat": 52.58596852441861,
+   "lon": -2.120528166860465,
+   "n": 1720,
+   "area_comum": "Urban"
+  },
+  "Worcester": {
+   "lat": 52.19677923166667,
+   "lon": -2.2122762483333336,
+   "n": 600,
+   "area_comum": "Urban"
+  },
+  "Worthing": {
+   "lat": 50.82329996488764,
+   "lon": -0.38795815168539327,
+   "n": 712,
+   "area_comum": "Urban"
+  },
+  "Wrexham": {
+   "lat": 53.0347664746336,
+   "lon": -2.9969594475760992,
+   "n": 887,
+   "area_comum": "Urban"
+  },
+  "Wychavon": {
+   "lat": 52.178224723092995,
+   "lon": -2.0716259958202716,
+   "n": 957,
+   "area_comum": "Rural"
+  },
+  "Wycombe": {
+   "lat": 51.632277694029845,
+   "lon": -0.7666789535655059,
+   "n": 1206,
+   "area_comum": "Urban"
+  },
+  "Wyre": {
+   "lat": 53.8847931992966,
+   "lon": -2.952387351699883,
+   "n": 853,
+   "area_comum": "Urban"
+  },
+  "Wyre Forest": {
+   "lat": 52.37733607819549,
+   "lon": -2.25844549924812,
+   "n": 665,
+   "area_comum": "Urban"
+  },
+  "York": {
+   "lat": 53.9632316380459,
+   "lon": -1.0789130074019244,
+   "n": 1351,
+   "area_comum": "Urban"
+  }
+ },
+ "metricas_teste": {
+  "PR-AUC": 0.21577486823612546,
+  "ROC-AUC": 0.6159192903704324,
+  "Captura top 10%": 0.17775789691005436,
+  "Captura top 20%": 0.31642694928084786,
+  "Captura top 30%": 0.43568921615855755
+ },
+ "calibracao_teste": [
+  {
+   "faixa": 0,
+   "prevista": 0.06530000269412994,
+   "real": 0.0753
+  },
+  {
+   "faixa": 1,
+   "prevista": 0.09099999815225601,
+   "real": 0.0945
+  },
+  {
+   "faixa": 2,
+   "prevista": 0.10530000180006027,
+   "real": 0.1092
+  },
+  {
+   "faixa": 3,
+   "prevista": 0.11749999970197678,
+   "real": 0.126
+  },
+  {
+   "faixa": 4,
+   "prevista": 0.12860000133514404,
+   "real": 0.1313
+  },
+  {
+   "faixa": 5,
+   "prevista": 0.1396999955177307,
+   "real": 0.1373
+  },
+  {
+   "faixa": 6,
+   "prevista": 0.15279999375343323,
+   "real": 0.1539
+  },
+  {
+   "faixa": 7,
+   "prevista": 0.17010000348091125,
+   "real": 0.1749
+  },
+  {
+   "faixa": 8,
+   "prevista": 0.1956000030040741,
+   "real": 0.2034
+  },
+  {
+   "faixa": 9,
+   "prevista": 0.25940001010894775,
+   "real": 0.2607
+  }
+ ],
+ "historico_treino": [
+  {
+   "epoca": 1,
+   "custo_treino": 0.42211966171617726,
+   "pr_auc_val": 0.2037783497953487
+  },
+  {
+   "epoca": 2,
+   "custo_treino": 0.4124592190372259,
+   "pr_auc_val": 0.20868453137742005
+  },
+  {
+   "epoca": 3,
+   "custo_treino": 0.4107716995760477,
+   "pr_auc_val": 0.21077945246877025
+  },
+  {
+   "epoca": 4,
+   "custo_treino": 0.4098670183849203,
+   "pr_auc_val": 0.21224504599620597
+  },
+  {
+   "epoca": 5,
+   "custo_treino": 0.40881744862391634,
+   "pr_auc_val": 0.21281508526156026
+  },
+  {
+   "epoca": 6,
+   "custo_treino": 0.4083490630707564,
+   "pr_auc_val": 0.21229205380916596
+  },
+  {
+   "epoca": 7,
+   "custo_treino": 0.40750110608489604,
+   "pr_auc_val": 0.2135087801352727
+  },
+  {
+   "epoca": 8,
+   "custo_treino": 0.40739193532836154,
+   "pr_auc_val": 0.21396119542246878
+  },
+  {
+   "epoca": 9,
+   "custo_treino": 0.4068452676526558,
+   "pr_auc_val": 0.21425933207065104
+  },
+  {
+   "epoca": 10,
+   "custo_treino": 0.4065011298144484,
+   "pr_auc_val": 0.21447570941345256
+  },
+  {
+   "epoca": 11,
+   "custo_treino": 0.40615244729699035,
+   "pr_auc_val": 0.21462932799800052
+  },
+  {
+   "epoca": 12,
+   "custo_treino": 0.40595408803987376,
+   "pr_auc_val": 0.2146689900329798
+  },
+  {
+   "epoca": 13,
+   "custo_treino": 0.40575108056760134,
+   "pr_auc_val": 0.2144059955169938
+  },
+  {
+   "epoca": 14,
+   "custo_treino": 0.4055974855959083,
+   "pr_auc_val": 0.21462374623460326
+  },
+  {
+   "epoca": 15,
+   "custo_treino": 0.4050279167857912,
+   "pr_auc_val": 0.2145448485329528
+  }
+ ],
+ "deslocamento_anos": 12
+}
