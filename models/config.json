@@ -1,0 +1,37 @@
+{
+ "arquitetura": "bilstm",
+ "vocab": 5585,
+ "limiar": 0.5,
+ "limiares_prioridade": {
+  "alta": 0.974,
+  "baixa": 0.184
+ },
+ "metricas_teste": {
+  "F1 (reclamação)": 0.8950579621720561,
+  "Recall (reclamação)": 0.9226415094339623,
+  "Precisão (reclamação)": 0.8690758293838863,
+  "Acurácia": 0.9259737465031203,
+  "PR-AUC": 0.9333578286400215,
+  "ROC-AUC": 0.9713132865492744
+ },
+ "faixas_teste": {
+  "Alta": {
+   "comentarios": 956,
+   "fracao": 0.2057241230901657,
+   "taxa_reclamacao": 0.946652719665272,
+   "fracao_das_reclamacoes": 0.5691823899371069
+  },
+  "Média": {
+   "comentarios": 953,
+   "fracao": 0.20507854529804176,
+   "taxa_reclamacao": 0.6558237145855194,
+   "fracao_das_reclamacoes": 0.39308176100628933
+  },
+  "Baixa": {
+   "comentarios": 2738,
+   "fracao": 0.5891973316117926,
+   "taxa_reclamacao": 0.02191380569758948,
+   "fracao_das_reclamacoes": 0.03773584905660377
+  }
+ }
+}

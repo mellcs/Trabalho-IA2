@@ -1,9 +1,6 @@
-# dataset (174 MB) - baixar do Kaggle, ver README
 data/*.csv
-data/*.numbers
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
 .gradio/
 flagged/
-notebooks/*.png

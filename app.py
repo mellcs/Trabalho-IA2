@@ -1,338 +1,242 @@
-"""Painel de risco de acidentes graves: interface Gradio para gestores de trânsito.
+"""Fila Certa: triagem de reclamações de clientes (app de demonstração em Gradio).
 
-Uso:
-    python app.py            # abre em http://127.0.0.1:7860
-    python app.py --share    # gera também um link público temporário
+Rodar:  python app.py          (abre em http://127.0.0.1:7860)
+        python app.py --share  (gera um link público temporário)
 
-Precisa só da pasta modelos/ (gerada por `python -m src.treinar`); não precisa do dataset.
+Só lê os arquivos de models/; não precisa do dataset nem de retreinar.
 """
 import argparse
-import json
+import html
+import inspect
 import tempfile
+from collections import Counter
 from pathlib import Path
 
 import gradio as gr
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-import torch
 
-from src.modelo import RedeAcidentes
+from src.inferencia import Analisador
 
-PASTA = Path(__file__).parent / "modelos"
+AQUI = Path(__file__).parent
+A = Analisador(AQUI / "models")
 
-MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-DIAS = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
-
-PT = {
-    "Light_Conditions": {"Daylight": "Dia (luz natural)",
-                         "Darkness - lights lit": "Noite, com iluminação pública acesa",
-                         "Darkness - no lighting": "Noite, sem iluminação pública",
-                         "Darkness - lights unlit": "Noite, iluminação existente apagada",
-                         "Darkness - lighting unknown": "Noite, iluminação desconhecida"},
-    "Road_Type": {"Single carriageway": "Pista simples", "Dual carriageway": "Pista dupla",
-                  "Roundabout": "Rotatória", "One way street": "Rua de mão única",
-                  "Slip road": "Alça de acesso"},
-    "Road_Surface_Conditions": {"Dry": "Seca", "Wet or damp": "Molhada ou úmida",
-                                "Frost or ice": "Geada ou gelo", "Snow": "Neve",
-                                "Flood over 3cm. deep": "Alagada (mais de 3 cm)"},
-    "Weather_Conditions": {"Fine no high winds": "Tempo bom, sem ventos fortes",
-                           "Fine + high winds": "Tempo bom, com ventos fortes",
-                           "Raining no high winds": "Chuva, sem ventos fortes",
-                           "Raining + high winds": "Chuva com ventos fortes",
-                           "Snowing no high winds": "Neve, sem ventos fortes",
-                           "Snowing + high winds": "Neve com ventos fortes",
-                           "Fog or mist": "Neblina", "Other": "Outro"},
-    "Urban_or_Rural_Area": {"Urban": "Urbana", "Rural": "Rural"},
+CORAL, TINTA, CORPO, MUDO, LINHA = "#E4572E", "#15171C", "#4A4F57", "#878C95", "#E0DCD3"
+FAIXA = {  # cor forte, fundo, texto
+    "Alta": ("#E4572E", "#FCE4DB", "#7A2410"),
+    "Média": ("#C98500", "#FBEFD2", "#5E3E00"),
+    "Baixa": ("#1F8A5B", "#DDF1E6", "#0C4A30"),
 }
-NOME_FATOR = {"Light_Conditions": "Iluminação", "Road_Type": "Tipo de via",
-              "Road_Surface_Conditions": "Superfície da pista",
-              "Weather_Conditions": "Clima", "Urban_or_Rural_Area": "Área"}
+ACAO = {"Alta": "Responder hoje: cliente insatisfeito, risco de perder a venda e ganhar uma avaliação ruim.",
+        "Média": "Vale uma leitura humana: pode ser reclamação.",
+        "Baixa": "Sem urgência: elogio ou comentário neutro. Pode receber um agradecimento automático."}
+
+EXEMPLOS = [
+    ["Comprei faz duas semanas e até agora não chegou, ninguém responde meu e-mail"],
+    ["Produto excelente, chegou antes do prazo e muito bem embalado. Recomendo!"],
+    ["O produto é bonito, mas veio uma peça a menos e a cor é diferente da foto"],
+    ["veio quebrado o vidro do porta retrato, quero a troca"],
+    ["ok"],
+]
+
+CSS = f"""
+.gradio-container {{max-width: 1180px !important; margin: 0 auto !important;}}
+#topo {{background:{TINTA}; border-radius:18px; padding:26px 30px; color:#F6F4EF; display:flex;
+       justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap}}
+#topo h1 {{font-size:34px; margin:0; letter-spacing:-.02em; color:#F6F4EF}}
+#topo h1 span {{color:{CORAL}}}
+#topo p {{margin:6px 0 0; color:#C9CDD3; font-size:15px; max-width:620px}}
+#topo .kpis {{display:flex; gap:10px; flex-wrap:wrap}}
+#topo .kpi {{background:#1F2229; border:1px solid #2E323A; border-radius:12px; padding:10px 14px; min-width:120px}}
+#topo .kpi b {{display:block; font-size:22px; color:#fff}}
+#topo .kpi small {{color:#9097A1; font-size:12px}}
+button.primary, .primary {{background:{CORAL} !important; border-color:{CORAL} !important; color:#fff !important}}
+footer {{display:none !important}}
+"""
+
+TOPO = """
+<div id="topo">
+  <div>
+    <h1>Fila <span>Certa</span></h1>
+    <p>Cole a mensagem de um cliente (avaliação, WhatsApp, e-mail, rede social). A rede neural diz se é
+    reclamação, com que prioridade responder e qual o motivo provável.</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><b>{rec:.0%}</b><small>das reclamações encontradas</small></div>
+    <div class="kpi"><b>{alta_tx:.0%}</b><small>de acerto na prioridade alta</small></div>
+    <div class="kpi"><b>{n_te}</b><small>comentários no teste</small></div>
+  </div>
+</div>"""
 
 
-# ---------------------------------------------------------------- modelo
-class Preditor:
-    def __init__(self, pasta=PASTA):
-        self.art = json.load(open(pasta / "artefatos.json", encoding="utf-8"))
-        a = self.art
-        self.rede = RedeAcidentes(a["vocab"], n_num=len(a["num"]))
-        self.rede.load_state_dict(torch.load(pasta / "rede_final.pt", map_location="cpu"))
-        self.rede.eval()
-        self.cortes = np.array(a["cortes"])
-        self.celulas = pd.read_csv(pasta / "celulas_risco.csv")
-        self.ranking = pd.read_csv(pasta / "distritos_risco.csv")
-        self.distritos = sorted(a["distritos"])
-
-    def _linha(self, distrito, luz, via, area, superficie, clima, mes, dia):
-        a = self.art
-        loc = a["distritos"][distrito]
-        valores = {"Light_Conditions": luz, "Road_Surface_Conditions": superficie,
-                   "Road_Type": via, "Urban_or_Rural_Area": area,
-                   "Weather_Conditions": clima, "Vehicle_Type": "Car",  # sem efeito no modelo
-                   "District Area": distrito}
-        xc = [a["maps"][c].get(valores[c], 0) for c in a["cats"]]
-        m, dw = MESES.index(mes) + 1, DIAS.index(dia)
-        xn = [(loc["lat"] - a["mu"]["Latitude"]) / a["sd"]["Latitude"],
-              (loc["lon"] - a["mu"]["Longitude"]) / a["sd"]["Longitude"],
-              np.sin(2 * np.pi * m / 12), np.cos(2 * np.pi * m / 12),
-              np.sin(2 * np.pi * dw / 7), np.cos(2 * np.pi * dw / 7), float(dw >= 5)]
-        return xc, xn
-
-    @torch.no_grad()
-    def probabilidades(self, linhas):
-        xc = torch.tensor([l[0] for l in linhas], dtype=torch.long)
-        xn = torch.tensor([l[1] for l in linhas], dtype=torch.float32)
-        return torch.sigmoid(self.rede(xc, xn)).numpy()
-
-    def prob(self, *cenario):
-        return float(self.probabilidades([self._linha(*cenario)])[0])
-
-    def faixa(self, p):
-        return int(np.searchsorted(self.cortes, p)) + 1
+def topo_html():
+    m, f = A.cfg["metricas_teste"], A.cfg["faixas_teste"]
+    n_te = sum(v["comentarios"] for v in f.values())
+    return TOPO.format(rec=m["Recall (reclamação)"], alta_tx=f["Alta"]["taxa_reclamacao"],
+                       n_te=f"{n_te:,}".replace(",", "."))
 
 
-P = None
+def cartao(txt):
+    if not txt or not txt.strip():
+        return f"<div style='padding:28px;color:{MUDO};border:1px dashed {LINHA};border-radius:14px'>Digite ou cole um comentário e clique em <b>Analisar</b>.</div>"
+    r = A.analisar(txt)
+    p, pr = r["probabilidade"], r["prioridade"]
+    forte, fundo, tinta = FAIXA[pr]
+    titulo = "Reclamação" if r["reclamacao"] else "Não é reclamação"
+    chips = "".join(
+        f"<span style='display:inline-flex;align-items:center;gap:6px;margin:3px 6px 3px 0;padding:4px 10px;border-radius:12px;"
+        f"background:{'#FCE4DB' if e > 0 else '#DDF1E6'};color:{'#7A2410' if e > 0 else '#0C4A30'};font-size:14px'>"
+        f"{html.escape(w)} <b>{'+' if e > 0 else '−'}{abs(e) * 100:.0f}%</b></span>" for w, e in r["palavras"]) or \
+        f"<span style='color:{MUDO}'>texto curto demais para explicar</span>"
+    if r["reclamacao"]:
+        termos = ", ".join(sorted({html.escape(t) for _, t in r["termos"]})) or "nenhum termo-chave"
+        motivo = (f"<div style='margin-top:16px;padding:14px 16px;border-radius:12px;background:#F6F4EF'>"
+                  f"<div style='font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:{MUDO}'>Motivo provável</div>"
+                  f"<div style='font-size:20px;font-weight:700;color:{TINTA};margin-top:4px'>{html.escape(r['motivo'])}</div>"
+                  f"<div style='font-size:13px;color:{MUDO};margin-top:4px'>termos encontrados: {termos}</div></div>")
+    else:
+        motivo = ""
+    return f"""
+<div style="border:1px solid {LINHA};border-radius:16px;padding:22px 24px;background:#fff;font-family:inherit">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+    <span style="font-size:26px;font-weight:800;color:{TINTA};letter-spacing:-.02em">{titulo}</span>
+    <span style="background:{fundo};color:{tinta};padding:6px 14px;border-radius:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px">
+      <i style="width:9px;height:9px;border-radius:50%;background:{forte};display:inline-block"></i>Prioridade {pr}</span>
+  </div>
+  <div style="display:flex;align-items:baseline;gap:10px;margin-top:14px">
+    <span style="font-size:44px;font-weight:800;color:{forte};letter-spacing:-.03em">{p:.0%}</span>
+    <span style="color:{CORPO}">de chance de ser reclamação</span></div>
+  <div style="background:#EDEAE3;border-radius:6px;height:10px;overflow:hidden;margin-top:6px">
+    <div style="width:{max(p * 100, 1):.1f}%;height:10px;background:{forte}"></div></div>
+  <p style="margin:12px 0 0;color:{CORPO}">{ACAO[pr]}</p>
+  {motivo}
+  <div style="margin-top:16px;font-weight:700;color:{TINTA}">Palavras que mais pesaram
+    <span style="font-weight:400;color:{MUDO};font-size:13px">(+ empurra para reclamação, − para elogio)</span></div>
+  <div style="margin-top:6px">{chips}</div>
+</div>"""
 
 
-def preditor():
-    global P
-    if P is None:
-        P = Preditor()
-    return P
-
-
-def opcoes(coluna):
-    return [(pt, en) for en, pt in PT[coluna].items()]
-
-
-# ---------------------------------------------------------------- aba 1: consultar
-def consultar(distrito, luz, via, area, superficie, clima, mes, dia):
-    pr = preditor()
-    if not distrito:
-        return "Escolha um distrito.", None
-    cenario = [distrito, luz, via, area, superficie, clima, mes, dia]
-    p = pr.prob(*cenario)
-    fx = pr.faixa(p)
-    media = pr.art["media_geral"]
-    real = pr.art["taxa_decil"][str(fx)] if str(fx) in pr.art["taxa_decil"] else pr.art["taxa_decil"][fx]
-    nivel = "ALTO" if fx >= 9 else ("MODERADO" if fx >= 6 else "BAIXO")
-    texto = (f"## Risco {nivel}: {p:.1%} de chance de o acidente ser grave ou fatal\n"
-             f"- Média de todos os acidentes: **{media:.1%}** (este cenário é "
-             f"**{p / media:.1f}x** a média)\n"
-             f"- Faixa de risco **{fx} de 10**. Nos dados de validação, **{real:.1%}** dos "
-             f"acidentes desta faixa foram graves ou fatais.\n\n"
-             "_Estimativa de risco a partir das condições, para priorização. "
-             "Não é a previsão de um acidente específico._")
-
-    # Simulação: troca um fator por vez e mede a variação
-    pos = {"Light_Conditions": 1, "Road_Type": 2, "Urban_or_Rural_Area": 3,
-           "Road_Surface_Conditions": 4, "Weather_Conditions": 5}
-    alternativas, rotulos = [], []
-    for col, i in pos.items():
-        for en, pt in PT[col].items():
-            if en == cenario[i]:
-                continue
-            c2 = list(cenario)
-            c2[i] = en
-            alternativas.append(pr._linha(*c2))
-            rotulos.append((NOME_FATOR[col], pt))
-    ps = pr.probabilidades(alternativas)
-    sim = pd.DataFrame(rotulos, columns=["Fator", "Novo valor"])
-    sim["Risco"] = [f"{x:.1%}" for x in ps]
-    sim["Variação (p.p.)"] = np.round((ps.astype(float) - p) * 100, 1)
-    sim = sim.sort_values("Variação (p.p.)").reset_index(drop=True)
-    return texto, sim
-
-
-# ---------------------------------------------------------------- aba 2: mapa e ranking
-def mapa(distrito=None):
-    pr = preditor()
-    mp = pr.celulas
-    fig, ax = plt.subplots(figsize=(6, 7.5))
-    sc = ax.scatter(mp["lon"], mp["lat"], c=mp["taxa"] * 100, s=np.clip(np.sqrt(mp["n"]), 4, 60),
-                    cmap="YlOrRd", alpha=0.85, vmin=mp["taxa"].quantile(0.05) * 100,
-                    vmax=mp["taxa"].quantile(0.95) * 100)
-    fig.colorbar(sc, ax=ax, label="% de acidentes graves/fatais (taxa alisada)")
-    if distrito and distrito in pr.art["distritos"]:
-        loc = pr.art["distritos"][distrito]
-        ax.scatter([loc["lon"]], [loc["lat"]], marker="*", s=400, c="#1f4e79",
-                   edgecolors="white", linewidths=1.5, zorder=5, label=distrito)
-        ax.legend(loc="upper left")
-    ax.set_xlabel("longitude")
-    ax.set_ylabel("latitude")
-    ax.set_title("Onde os acidentes tendem a ser mais graves\n(células de ~5 km)", fontsize=11)
-    ax.set_aspect(1.6)
-    fig.tight_layout()
-    return fig
-
-
-def ranking(minimo, quantos):
-    r = preditor().ranking
-    r = r[r["acidentes"] >= minimo].head(int(quantos)).reset_index(drop=True)
-    r.insert(0, "Posição", range(1, len(r) + 1))
-    r["taxa_alisada"] = (r["taxa_alisada"] * 100).round(1)
-    return r.rename(columns={"District Area": "Distrito", "acidentes": "Acidentes",
-                             "graves": "Graves/fatais", "taxa_alisada": "% graves (alisada)"})
-
-
-# ---------------------------------------------------------------- aba 3: priorizar lista
-COLUNAS_LISTA = ["local", "distrito", "iluminacao", "tipo_via", "area", "superficie",
-                 "clima", "mes", "dia_semana"]
-
-
-def _valor(col, v):
-    """Aceita o valor original (inglês) ou o rótulo em português."""
-    v = str(v).strip()
-    if col in PT:
-        reverso = {pt.lower(): en for en, pt in PT[col].items()}
-        return reverso.get(v.lower(), v)
-    return v
-
-
-def priorizar(arquivo):
-    pr = preditor()
+def lote(arquivo):
     if arquivo is None:
-        return None, None, "Envie um CSV (use o modelo de exemplo)."
-    caminho = arquivo if isinstance(arquivo, str) else arquivo.name
-    lista = pd.read_csv(caminho)
-    faltando = [c for c in COLUNAS_LISTA if c not in lista.columns]
-    if faltando:
-        return None, None, f"Colunas faltando no CSV: {', '.join(faltando)}"
-    erros, linhas = [], []
-    for i, r in lista.iterrows():
-        mes = MESES[int(r["mes"]) - 1] if str(r["mes"]).isdigit() else str(r["mes"]).capitalize()
-        dia = str(r["dia_semana"]).capitalize()
-        if r["distrito"] not in pr.art["distritos"]:
-            erros.append(f"linha {i + 2}: distrito '{r['distrito']}' não encontrado")
-            continue
-        if mes not in MESES or dia not in DIAS:
-            erros.append(f"linha {i + 2}: mês ou dia inválido")
-            continue
-        linhas.append((i, pr._linha(r["distrito"], _valor("Light_Conditions", r["iluminacao"]),
-                                    _valor("Road_Type", r["tipo_via"]),
-                                    _valor("Urban_or_Rural_Area", r["area"]),
-                                    _valor("Road_Surface_Conditions", r["superficie"]),
-                                    _valor("Weather_Conditions", r["clima"]), mes, dia)))
-    if not linhas:
-        return None, None, "Nenhuma linha válida.\n" + "\n".join(erros)
-    ps = pr.probabilidades([l for _, l in linhas])
-    res = lista.loc[[i for i, _ in linhas]].copy()
-    res["risco_%"] = np.round(ps.astype(float) * 100, 1)
-    res["faixa_1a10"] = [pr.faixa(p) for p in ps]
-    res = res.sort_values("risco_%", ascending=False).reset_index(drop=True)
-    res.insert(0, "prioridade", range(1, len(res) + 1))
-    primeiras = ["prioridade", "local", "risco_%", "faixa_1a10"]
-    res = res[primeiras + [c for c in res.columns if c not in primeiras]]
-    saida = Path(tempfile.gettempdir()) / "lista_priorizada.csv"
-    res.to_csv(saida, index=False)
-    msg = f"{len(res)} itens priorizados."
-    if erros:
-        msg += " Ignorados:\n" + "\n".join(erros)
-    return res, str(saida), msg
+        return "Envie um CSV ou clique no exemplo.", None, None, None
+    df = pd.read_csv(arquivo if isinstance(arquivo, str) else arquivo.name)
+    col = next((c for c in df.columns if c.lower() in ("comentario", "comentário", "texto", "mensagem",
+                                                         "review_comment_message")), None)
+    if col is None:
+        col = df.select_dtypes("object").columns[-1]
+    df = df.dropna(subset=[col]).reset_index(drop=True)
+    res = pd.DataFrame(A.analisar_lote(df[col].tolist()))
+    res = pd.concat([df.drop(columns=[col]), res], axis=1)
+    ordem = {"Alta": 0, "Média": 1, "Baixa": 2}
+    res = res.assign(_o=res["prioridade"].map(ordem)).sort_values(["_o", "prob_reclamacao"], ascending=[True, False]).drop(columns="_o")
+    rec = res[res["reclamacao"] == "Sim"]
+    cont = Counter(rec["motivo"])
+    n_alta = int((res["prioridade"] == "Alta").sum())
+    resumo = (f"### {len(res)} mensagens analisadas\n"
+              f"**{len(rec)} parecem reclamação** ({len(rec) / max(len(res), 1):.0%}) · "
+              f"**{n_alta} com prioridade alta** para responder primeiro")
+    if cont:
+        resumo += f" · problema mais frequente: **{cont.most_common(1)[0][0]}**"
+    fig, ax = plt.subplots(figsize=(9, 2.9))
+    if cont:
+        itens = cont.most_common()[::-1]
+        ax.barh([k for k, _ in itens], [v for _, v in itens], color=CORAL, height=0.6)
+        for i, (_, v) in enumerate(itens):
+            ax.text(v + 0.05, i, str(v), va="center", color=CORPO)
+        ax.set_xticks([])
+    ax.set_title("Motivos das reclamações no lote", loc="left", fontsize=12, color=TINTA)
+    for s in ("top", "right", "bottom"):
+        ax.spines[s].set_visible(False)
+    fig.tight_layout()
+    saida = Path(tempfile.mkdtemp()) / "fila_priorizada.csv"
+    res.to_csv(saida, index=False, encoding="utf-8-sig")
+    # tabela da tela: prioridade e motivo primeiro, comentário por último (mais legível)
+    extras = [c for c in res.columns if c not in ("comentario", "prob_reclamacao", "reclamacao", "prioridade", "motivo")]
+    tabela = res[["prioridade", "prob_reclamacao", "motivo"] + extras + ["comentario"]].rename(
+        columns={"prob_reclamacao": "prob.", "comentario": "mensagem"})
+    tabela["prob."] = (tabela["prob."] * 100).round(0).astype(int).astype(str) + "%"
+    return resumo, tabela, fig, str(saida)
 
 
-# ---------------------------------------------------------------- interface
 def sobre_md():
-    a = preditor().art
-    m = a["metricas_teste"]
+    m, f = A.cfg["metricas_teste"], A.cfg["faixas_teste"]
+    voc = f"{A.cfg['vocab']:,}".replace(",", ".")
+    arq = "BiLSTM" if A.cfg["arquitetura"] == "bilstm" else "CNN 1D"
     return f"""
 ### Como funciona
-Uma **rede neural (PyTorch)** com embeddings para as variáveis categóricas foi treinada com
-cerca de 460 mil acidentes reais do Reino Unido. Ela estima a probabilidade de um acidente
-ser **grave ou fatal** a partir de: distrito e localização, iluminação, tipo de via,
-área urbana/rural, superfície da pista, clima, mês e dia da semana.
+1. O comentário é normalizado (minúsculas, sem acento) e quebrado em palavras. O "não" é mantido.
+2. Cada palavra vira um número do vocabulário ({voc} palavras aprendidas no treino) e depois um vetor (*embedding*).
+3. Uma rede **{arq}** treinada do zero lê a frase e devolve a probabilidade de ser reclamação.
+4. A probabilidade vira **prioridade**: alta (≥ {A.lim['alta']:.2f}), média e baixa (< {A.lim['baixa']:.2f}). Os limiares foram definidos na validação.
+5. Nas reclamações, regras de palavras-chave indicam o **motivo** provável.
+6. "Palavras que mais pesaram": tiramos uma palavra por vez e medimos quanto a decisão muda.
 
-### Desempenho (conjunto de teste, nunca usado no treino)
-| Métrica | Valor | Referência ao acaso |
-|---|---|---|
-| ROC-AUC | {m['ROC-AUC']:.3f} | 0,500 |
-| PR-AUC | {m['PR-AUC']:.3f} | {a['media_geral']:.3f} |
-| Graves/fatais capturados nos 10% de maior risco | {m['Captura top 10%']:.1%} | 10% |
-| Graves/fatais capturados nos 20% de maior risco | {m['Captura top 20%']:.1%} | 20% |
+### Desempenho no conjunto de teste (comentários nunca vistos no treino)
+| F1 (reclamação) | Recall | Precisão | Acurácia |
+|---|---|---|---|
+| {m['F1 (reclamação)']:.3f} | {m['Recall (reclamação)']:.3f} | {m['Precisão (reclamação)']:.3f} | {m['Acurácia']:.3f} |
 
-### Limites
-- O sinal é fraco (ROC-AUC ~0,62): o dataset não tem velocidade, idade ou uso de cinto. Serve
-  para **priorizar**, não para prever um acidente.
-- Associação não é causa: a simulação mostra como o risco estimado muda, não garante o efeito
-  de uma obra.
-- Os dados são de 2007 a 2010 (o dataset do Kaggle mostra os anos deslocados para 2019-2022).
-- A localização usada é o centro dos acidentes do distrito.
+| Prioridade | % das mensagens | % que são reclamação | % de todas as reclamações |
+|---|---|---|---|
+| Alta | {f['Alta']['fracao']:.0%} | {f['Alta']['taxa_reclamacao']:.0%} | {f['Alta']['fracao_das_reclamacoes']:.0%} |
+| Média | {f['Média']['fracao']:.0%} | {f['Média']['taxa_reclamacao']:.0%} | {f['Média']['fracao_das_reclamacoes']:.0%} |
+| Baixa | {f['Baixa']['fracao']:.0%} | {f['Baixa']['taxa_reclamacao']:.0%} | {f['Baixa']['fracao_das_reclamacoes']:.0%} |
+
+**Limitação:** treinado com avaliações de e-commerce (Olist, 2016-2018), em que a nota serve de rótulo.
+Antes de usar em SAC, WhatsApp ou redes sociais, é preciso validar com mensagens reais desses canais.
 """
 
 
+def tema():
+    return gr.themes.Soft(primary_hue="orange", neutral_hue="stone",
+                          font=[gr.themes.Font("IBM Plex Sans"), gr.themes.Font("system-ui"), gr.themes.Font("sans-serif")])
+
+
 def criar_app():
-    pr = preditor()
-    padrao = "Birmingham" if "Birmingham" in pr.distritos else pr.distritos[0]
-    with gr.Blocks(title="Risco de acidentes graves") as demo:
-        gr.Markdown("# Painel de risco de acidentes graves de trânsito\n"
-                    "Apoio à decisão para gestores de trânsito: **onde e em quais condições** "
-                    "um acidente tende a ser mais grave, para priorizar fiscalização, "
-                    "iluminação e obras.")
-        with gr.Tab("1. Consultar e simular"):
+    # Gradio 6 recebe tema e CSS no launch(); versões 4 e 5, no Blocks()
+    extra = {"css": CSS, "theme": tema()} if "css" in inspect.signature(gr.Blocks.__init__).parameters else {}
+    with gr.Blocks(title="Fila Certa: triagem de reclamações", **extra) as demo:
+        gr.HTML(topo_html())
+        with gr.Tab("1. Analisar uma mensagem"):
+            with gr.Row(equal_height=False):
+                with gr.Column(scale=5):
+                    entrada = gr.Textbox(label="Mensagem do cliente", lines=5,
+                                         placeholder="Ex.: comprei faz 15 dias e não chegou...")
+                    botao = gr.Button("Analisar", variant="primary")
+                    gr.Examples(EXEMPLOS, [entrada], label="Exemplos (clique para preencher)")
+                with gr.Column(scale=6):
+                    saida = gr.HTML(cartao(""))
+            botao.click(cartao, entrada, saida)
+            entrada.submit(cartao, entrada, saida)
+        with gr.Tab("2. Analisar um lote (CSV)"):
+            gr.Markdown("Envie um CSV com uma coluna `comentario` (ou `texto`/`mensagem`). A lista volta "
+                        "**ordenada por prioridade**, com o motivo de cada reclamação e o resumo dos problemas.")
             with gr.Row():
-                with gr.Column(scale=1):
-                    distrito = gr.Dropdown(pr.distritos, value=padrao, label="Distrito")
-                    luz = gr.Dropdown(opcoes("Light_Conditions"), value="Daylight", label="Iluminação")
-                    via = gr.Dropdown(opcoes("Road_Type"), value="Single carriageway", label="Tipo de via")
-                    area = gr.Dropdown(opcoes("Urban_or_Rural_Area"), value="Urban", label="Área")
-                    sup = gr.Dropdown(opcoes("Road_Surface_Conditions"), value="Dry",
-                                      label="Superfície da pista")
-                    clima = gr.Dropdown(opcoes("Weather_Conditions"), value="Fine no high winds",
-                                        label="Clima")
-                    mes = gr.Dropdown(MESES, value="Julho", label="Mês")
-                    dia = gr.Dropdown(DIAS, value="Terça", label="Dia da semana")
-                    botao = gr.Button("Calcular risco", variant="primary")
-                with gr.Column(scale=1):
-                    saida = gr.Markdown()
-                    gr.Markdown("#### E se mudasse um fator? (mesmo cenário, trocando um item por vez)")
-                    sim = gr.Dataframe(interactive=False)
-            entradas = [distrito, luz, via, area, sup, clima, mes, dia]
-            botao.click(consultar, entradas, [saida, sim])
-            rural = "Aberdeenshire" if "Aberdeenshire" in pr.distritos else padrao
-            gr.Examples([[rural, "Darkness - no lighting", "Single carriageway", "Rural",
-                          "Wet or damp", "Raining no high winds", "Dezembro", "Sábado"],
-                         [padrao, "Daylight", "Roundabout", "Urban", "Dry",
-                          "Fine no high winds", "Julho", "Terça"]], entradas)
-        with gr.Tab("2. Mapa e ranking de distritos"):
-            with gr.Row():
-                with gr.Column():
-                    d_mapa = gr.Dropdown(pr.distritos, value=padrao, label="Destacar distrito no mapa")
-                    fig = gr.Plot()
-                with gr.Column():
-                    minimo = gr.Slider(100, 5000, value=1000, step=100,
-                                       label="Mínimo de acidentes no distrito")
-                    quantos = gr.Slider(5, 50, value=15, step=5, label="Quantos mostrar")
-                    tab = gr.Dataframe(interactive=False)
-            d_mapa.change(mapa, d_mapa, fig)
-            minimo.change(ranking, [minimo, quantos], tab)
-            quantos.change(ranking, [minimo, quantos], tab)
-            demo.load(mapa, d_mapa, fig)
-            demo.load(ranking, [minimo, quantos], tab)
-        with gr.Tab("3. Priorizar uma lista"):
-            gr.Markdown("Envie um CSV com vários locais/situações (por exemplo, trechos que a "
-                        "prefeitura quer avaliar). O painel devolve a lista **ordenada por risco**. "
-                        "Colunas: `" + "`, `".join(COLUNAS_LISTA) + "`. "
-                        "Veja `docs/exemplo_lista.csv`.")
-            arq = gr.File(label="CSV de entrada", file_types=[".csv"])
-            exemplo = Path(__file__).parent / "docs" / "exemplo_lista.csv"
-            if exemplo.exists():
-                gr.Examples([[str(exemplo)]], [arq])
-            b2 = gr.Button("Priorizar", variant="primary")
-            msg = gr.Markdown()
-            tab2 = gr.Dataframe(interactive=False)
-            baixar = gr.File(label="Baixar lista priorizada")
-            b2.click(priorizar, arq, [tab2, baixar, msg])
-        with gr.Tab("Sobre o modelo"):
+                arq = gr.File(label="CSV de mensagens", file_types=[".csv"], scale=3)
+                with gr.Column(scale=2):
+                    exemplo = AQUI / "docs" / "exemplo_comentarios.csv"
+                    if exemplo.exists():
+                        gr.Examples([[str(exemplo)]], [arq], label="Exemplo: mensagens de WhatsApp, e-mail e Reclame Aqui")
+                    b2 = gr.Button("Analisar lote", variant="primary")
+            resumo = gr.Markdown()
+            grafico = gr.Plot(show_label=False)
+            tabela = gr.Dataframe(interactive=False, wrap=True)
+            baixar = gr.File(label="Baixar a fila priorizada (CSV)")
+            b2.click(lote, arq, [resumo, tabela, grafico, baixar])
+        with gr.Tab("Como funciona"):
             gr.Markdown(sobre_md())
+    demo._fila_extra = extra
     return demo
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--share", action="store_true", help="gera link público temporário")
+    ap.add_argument("--share", action="store_true")
     ap.add_argument("--porta", type=int, default=7860)
     a = ap.parse_args()
-    criar_app().launch(share=a.share, server_port=a.porta)
+    demo = criar_app()
+    kw = {} if demo._fila_extra else {"css": CSS, "theme": tema()}
+    demo.launch(share=a.share, server_port=a.porta, **kw)

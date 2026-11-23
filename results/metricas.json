@@ -1,0 +1,332 @@
+{
+ "etapas": [
+  {
+   "etapa": "Avaliações no arquivo",
+   "linhas": 100000
+  },
+  {
+   "etapa": "Com comentário em texto",
+   "linhas": 41726
+  },
+  {
+   "etapa": "Sem review_id repetido",
+   "linhas": 41404
+  },
+  {
+   "etapa": "Sem a nota 3 (neutra)",
+   "linhas": 37770
+  },
+  {
+   "etapa": "Sem textos com rótulos conflitantes",
+   "linhas": 34446
+  },
+  {
+   "etapa": "Sem textos duplicados (base final)",
+   "linhas": 30977
+  }
+ ],
+ "taxa_reclamacao_base": 0.3422862123510992,
+ "eda": {
+  "mediana_palavras_reclamacao": 17.0,
+  "mediana_palavras_nao_reclamacao": 9.0
+ },
+ "entrega_x_reclamacao": {
+  "Entregue no prazo": {
+   "taxa_reclamacao": 0.09556083807839018,
+   "pedidos": 90445
+  },
+  "Entregue com atraso": {
+   "taxa_reclamacao": 0.6286193233770192,
+   "pedidos": 6562
+  },
+  "Não entregue": {
+   "taxa_reclamacao": 0.7768125626461744,
+   "pedidos": 2993
+  }
+ },
+ "tres_classes_f1_baseline": {
+  "negativo": 0.787,
+  "neutro": 0.278,
+  "positivo": 0.894
+ },
+ "tamanhos": {
+  "treino": 21683,
+  "validacao": 4647,
+  "teste": 4647
+ },
+ "vocabulario": 5585,
+ "f1_validacao_por_arquitetura": {
+  "bilstm": 0.8934979565416802,
+  "cnn": 0.8892451334681558
+ },
+ "arquitetura_escolhida": "bilstm",
+ "parametros_rede": 643749,
+ "limiares_prioridade": {
+  "alta": 0.974,
+  "baixa": 0.184
+ },
+ "teste": {
+  "Rede BiLSTM": {
+   "F1 (reclamação)": [
+    0.8965002429137529,
+    0.0010266623042821446
+   ],
+   "Recall (reclamação)": [
+    0.9270440251572327,
+    0.0038769899389741983
+   ],
+   "Precisão (reclamação)": [
+    0.8679214141292847,
+    0.0019696099395070084
+   ],
+   "Acurácia": [
+    0.9267627860268274,
+    0.0005648094020523774
+   ],
+   "PR-AUC": [
+    0.9361734542028569,
+    0.002600713067540346
+   ],
+   "ROC-AUC": [
+    0.9720989185901141,
+    0.0005566234526142068
+   ]
+  },
+  "Rede CNN 1D": {
+   "F1 (reclamação)": [
+    0.8948194998136761,
+    0.0026229029579169
+   ],
+   "Recall (reclamação)": [
+    0.9308176100628932,
+    0.004108158897749564
+   ],
+   "Precisão (reclamação)": [
+    0.8615838492441673,
+    0.008318776377851184
+   ],
+   "Acurácia": [
+    0.9251129761136218,
+    0.002415530914637765
+   ],
+   "PR-AUC": [
+    0.9338543983559736,
+    0.00488484120105298
+   ],
+   "ROC-AUC": [
+    0.9721061535918869,
+    0.0012757143635814196
+   ]
+  },
+  "Baseline (TF-IDF + LR)": {
+   "F1 (reclamação)": [
+    0.8984984984984985,
+    0.0
+   ],
+   "Recall (reclamação)": [
+    0.9408805031446541,
+    0.0
+   ],
+   "Precisão (reclamação)": [
+    0.8597701149425288,
+    0.0
+   ],
+   "Acurácia": [
+    0.9272649020873682,
+    0.0
+   ],
+   "PR-AUC": [
+    0.933815063533093,
+    0.0
+   ],
+   "ROC-AUC": [
+    0.9722886745133861,
+    0.0
+   ]
+  }
+ },
+ "teste_modelo_final": {
+  "F1 (reclamação)": 0.8950579621720561,
+  "Recall (reclamação)": 0.9226415094339623,
+  "Precisão (reclamação)": 0.8690758293838863,
+  "Acurácia": 0.9259737465031203,
+  "PR-AUC": 0.9333578286400215,
+  "ROC-AUC": 0.9713132865492744
+ },
+ "teste_baseline": {
+  "F1 (reclamação)": 0.8984984984984985,
+  "Recall (reclamação)": 0.9408805031446541,
+  "Precisão (reclamação)": 0.8597701149425288,
+  "Acurácia": 0.9272649020873682,
+  "PR-AUC": 0.933815063533093,
+  "ROC-AUC": 0.9722886745133861
+ },
+ "matriz_confusao_rede": [
+  [
+   2836,
+   221
+  ],
+  [
+   123,
+   1467
+  ]
+ ],
+ "matriz_confusao_baseline": [
+  [
+   2813,
+   244
+  ],
+  [
+   94,
+   1496
+  ]
+ ],
+ "faixas_teste": {
+  "Alta": {
+   "comentarios": 956,
+   "fracao": 0.2057241230901657,
+   "taxa_reclamacao": 0.946652719665272,
+   "fracao_das_reclamacoes": 0.5691823899371069
+  },
+  "Média": {
+   "comentarios": 953,
+   "fracao": 0.20507854529804176,
+   "taxa_reclamacao": 0.6558237145855194,
+   "fracao_das_reclamacoes": 0.39308176100628933
+  },
+  "Baixa": {
+   "comentarios": 2738,
+   "fracao": 0.5891973316117926,
+   "taxa_reclamacao": 0.02191380569758948,
+   "fracao_das_reclamacoes": 0.03773584905660377
+  }
+ },
+ "fila": {
+  "fracao_lida": 0.36324510436840973,
+  "reclamacoes_encontradas": 0.9226415094339623
+ },
+ "discordancias": {
+  "rede_acerta_baseline_erra": 79,
+  "baseline_acerta_rede_erra": 85
+ },
+ "motivos": {
+  "Entrega / atraso": {
+   "comentarios": 816,
+   "fracao": 0.4834123222748815,
+   "pedido_atrasado_ou_nao_entregue": 0.5882352941176471
+  },
+  "Pedido incompleto": {
+   "comentarios": 208,
+   "fracao": 0.12322274881516587,
+   "pedido_atrasado_ou_nao_entregue": 0.1201923076923077
+  },
+  "Outros / não identificado": {
+   "comentarios": 204,
+   "fracao": 0.12085308056872038,
+   "pedido_atrasado_ou_nao_entregue": 0.20588235294117646
+  },
+  "Produto diferente / errado": {
+   "comentarios": 196,
+   "fracao": 0.11611374407582939,
+   "pedido_atrasado_ou_nao_entregue": 0.05102040816326531
+  },
+  "Atendimento / reembolso": {
+   "comentarios": 136,
+   "fracao": 0.08056872037914692,
+   "pedido_atrasado_ou_nao_entregue": 0.5
+  },
+  "Produto com defeito / qualidade": {
+   "comentarios": 128,
+   "fracao": 0.07582938388625593,
+   "pedido_atrasado_ou_nao_entregue": 0.046875
+  }
+ },
+ "entrega_falhou_entre_reclamacoes_previstas": 0.37381516587677727,
+ "historico_treino": [
+  {
+   "epoca": 1,
+   "perda_treino": 0.5622847420298536,
+   "perda_val": 0.396864652633667,
+   "f1_val": 0.8307880268784361,
+   "recall_val": 0.8548082966687618
+  },
+  {
+   "epoca": 2,
+   "perda_treino": 0.3907913727092989,
+   "perda_val": 0.34024184942245483,
+   "f1_val": 0.8592505163765123,
+   "recall_val": 0.9151477058453803
+  },
+  {
+   "epoca": 3,
+   "perda_treino": 0.33744125565671945,
+   "perda_val": 0.3191608786582947,
+   "f1_val": 0.8670384502494863,
+   "recall_val": 0.9283469516027656
+  },
+  {
+   "epoca": 4,
+   "perda_treino": 0.3107082117545628,
+   "perda_val": 0.31477728486061096,
+   "f1_val": 0.8723855713852683,
+   "recall_val": 0.9044626021370208
+  },
+  {
+   "epoca": 5,
+   "perda_treino": 0.29179541890344535,
+   "perda_val": 0.3036273121833801,
+   "f1_val": 0.8785437182930469,
+   "recall_val": 0.9252042740414833
+  },
+  {
+   "epoca": 6,
+   "perda_treino": 0.2711682811407609,
+   "perda_val": 0.3037276268005371,
+   "f1_val": 0.8828172434729812,
+   "recall_val": 0.9138906348208674
+  },
+  {
+   "epoca": 7,
+   "perda_treino": 0.26069248190353,
+   "perda_val": 0.2868925929069519,
+   "f1_val": 0.8878842676311031,
+   "recall_val": 0.9258328095537398
+  },
+  {
+   "epoca": 8,
+   "perda_treino": 0.2443833608453973,
+   "perda_val": 0.3006945550441742,
+   "f1_val": 0.8869619077113657,
+   "recall_val": 0.9000628535512256
+  },
+  {
+   "epoca": 9,
+   "perda_treino": 0.23623605215922772,
+   "perda_val": 0.29476892948150635,
+   "f1_val": 0.891477621091355,
+   "recall_val": 0.9138906348208674
+  },
+  {
+   "epoca": 10,
+   "perda_treino": 0.2295405421082518,
+   "perda_val": 0.293066143989563,
+   "f1_val": 0.890892696122633,
+   "recall_val": 0.9314896291640478
+  },
+  {
+   "epoca": 11,
+   "perda_treino": 0.21711476860517331,
+   "perda_val": 0.29503151774406433,
+   "f1_val": 0.8907870652837095,
+   "recall_val": 0.9176618478944061
+  },
+  {
+   "epoca": 12,
+   "perda_treino": 0.21064221455712975,
+   "perda_val": 0.2995981276035309,
+   "f1_val": 0.8905065210797695,
+   "recall_val": 0.9226901319924575
+  }
+ ],
+ "tempo_min": 15.482973941167195
+}

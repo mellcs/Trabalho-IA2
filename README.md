@@ -1,252 +1,223 @@
-# Painel de risco de acidentes graves de trânsito (Reino Unido)
+# Triagem de reclamações de clientes com rede neural
 
 Trabalho 2 de Inteligência Artificial II (2026/02) · Faculdade Antonio Meneghetti (AMF) · Sistemas de Informação
-Modalidade escolhida: **treinamento de rede neural**
+Modalidade: **treinamento de rede neural** (PLN em português, PyTorch)
 
 **Integrantes:** Mell Campos, Brayan Martins e Nicolas Marin.
 
-> **Atualização (23/11): estamos trocando de tema.** Com acidentes, o melhor modelo ficou em ROC-AUC 0,63, mesmo depois de juntar a base oficial do governo britânico. Por isso o grupo está migrando para um problema com impacto mais direto: identificar reclamações em avaliações de clientes de e-commerce brasileiro (PLN em português). O que foi feito, os resultados e o motivo da troca estão em **[HISTORICO_DO_PROJETO.md](HISTORICO_DO_PROJETO.md)**. Este README descreve o tema 1 (acidentes).
+> Começamos o trabalho com outro tema (gravidade de acidentes de trânsito no Reino Unido) e trocamos porque o melhor modelo ficou em ROC-AUC 0,63. O que foi feito e o motivo da troca estão em [HISTORICO_DO_PROJETO.md](HISTORICO_DO_PROJETO.md), e o código antigo está em [`tema1_acidentes/`](tema1_acidentes/).
 
-![Painel: consulta e simulação](figuras/app_consultar.png)
+![App: análise de um comentário](results/app_comentario.png)
 
 ---
 
-## 1. Problema
+## 1. O problema
 
-Gestores de trânsito têm verba limitada para fiscalização, iluminação e obras. A pergunta que o projeto responde é:
+Uma loja online com bom volume de vendas recebe dezenas ou centenas de mensagens por dia: avaliações, WhatsApp, e-mail, Instagram, Reclame Aqui. Ninguém consegue ler tudo na hora. O resultado:
 
-> Em quais condições e locais um acidente de trânsito tem maior chance de ser **grave ou fatal**?
+- a reclamação do cliente cujo pedido **não chegou** fica no meio de centenas de "amei, recomendo";
+- a resposta demora, o cliente não volta e ainda avalia mal a loja em público;
+- o lojista não enxerga **qual problema se repete**, se é entrega, defeito ou produto errado.
 
-O objetivo **não** é prever com certeza a gravidade de um acidente específico. É **priorizar risco**: ordenar situações da mais para a menos arriscada e mostrar quanto dos acidentes graves se concentra nas situações de maior risco estimado.
+**O tamanho do problema, com os dados da própria Olist** (100 mil pedidos reais, 2016-2018):
 
-## 2. Solução
+| Situação do pedido | Pedidos | Avaliações com nota 1 ou 2 |
+|---|---|---|
+| Entregue no prazo | 90.445 | **9,6%** |
+| Entregue com atraso | 6.562 | **62,9%** |
+| Não entregue | 2.993 | **77,7%** |
 
-1. Uma **rede neural (PyTorch)** com embeddings que estima a probabilidade de um acidente ser grave ou fatal a partir das condições.
-2. Uma análise de **pontos críticos (DBSCAN)** e do **risco por região**.
-3. Um **painel em Gradio** (`app.py`) para o gestor, com três funções:
-   - **Consultar e simular:** informa as condições e recebe o risco, a faixa (1 a 10) e uma tabela "e se mudasse um fator?", que mostra quanto o risco estimado muda trocando a iluminação, o tipo de via, a superfície, o clima ou a área.
-   - **Mapa e ranking:** mapa de risco por células de ~5 km e ranking dos distritos com maior proporção de acidentes graves.
-   - **Priorizar uma lista:** o usuário envia um CSV com vários locais/situações e recebe a lista ordenada por risco, pronta para baixar.
+Quando a entrega falha, a chance de reclamação fica **6,6× maior**. São exatamente essas mensagens que precisam de resposta rápida.
 
-| Mapa e ranking | Priorização de lista |
+![Atraso x reclamação](results/atraso_reclamacao.png)
+
+## 2. A solução
+
+Uma **rede neural treinada do zero** lê a mensagem do cliente em português e devolve, em menos de um segundo:
+
+1. **se é reclamação**, com a probabilidade;
+2. a **prioridade de atendimento** (alta, média ou baixa);
+3. o **motivo provável**: entrega/atraso, defeito/qualidade, produto diferente, pedido incompleto, atendimento/reembolso;
+4. **as palavras que mais pesaram** na decisão, para a equipe confiar (ou não) no resultado.
+
+Num **lote** de mensagens (CSV), o app devolve a fila ordenada por prioridade e o resumo dos problemas mais frequentes.
+
+**Valor gerado:**
+
+| Para quem | Valor |
 |---|---|
-| ![Mapa e ranking](figuras/app_mapa_ranking.png) | ![Priorizar lista](figuras/app_priorizar.png) |
+| Equipe de atendimento | Lê primeiro quem está insatisfeito. Na faixa **alta** (21% das mensagens), **95%** são reclamações de verdade. |
+| Lojista | Vê qual problema se repete e corrige a causa (trocar de transportadora, revisar fornecedor ou anúncio). |
+| Cliente | Recebe resposta mais rápida, o que reduz avaliação negativa pública e cliente perdido. |
+
+Na faixa **baixa** (59% das mensagens) só 2,2% são reclamações. São mensagens que podem esperar ou receber uma resposta automática de agradecimento.
+
+### Por que treinar com avaliações que já têm nota?
+
+No Olist, quem escreve já deu uma nota, então classificar o texto parece redundante. **A nota é usada só como rótulo de treino** (proxy do sentimento): nota 1 ou 2 conta como reclamação, nota 4 ou 5 como não reclamação. O uso pensado é em mensagens que **chegam sem nota**: SAC, WhatsApp, e-mail, redes sociais e sites de reclamação. Por isso a demonstração inclui um lote de mensagens desses canais ([`docs/exemplo_comentarios.csv`](docs/exemplo_comentarios.csv)).
+
+**Limitação:** o modelo aprendeu com avaliações de e-commerce. Antes de usar em outro canal é preciso validar com mensagens reais dele (seção 9).
 
 ## 3. Dados
 
-- **Fonte:** dataset do Kaggle [`deeplumiere/accident-analysis-dataset`](https://www.kaggle.com/datasets/deeplumiere/accident-analysis-dataset) (~174 MB, 670.679 registros).
-- **Colunas:** `Index`, `Accident_Severity`, `Accident Date`, `Latitude`, `Longitude`, `Light_Conditions`, `District Area`, `Number_of_Casualties`, `Number_of_Vehicles`, `Road_Surface_Conditions`, `Road_Type`, `Urban_or_Rural_Area`, `Weather_Conditions`, `Vehicle_Type`.
+**Brazilian E-Commerce Public Dataset by Olist** (Kaggle `olistbr/brazilian-ecommerce`). Usamos duas tabelas: avaliações (nota e comentário) e pedidos (status e datas de entrega).
 
-### Auditoria e limpeza
-
-| Achado | Decisão |
+| Etapa de limpeza | Linhas |
 |---|---|
-| `Index` aparece como `2.01E+12` (notação científica) em 239.478 linhas, o que indica corrupção por planilha | `Index` descartado; cada linha é tratada como um registro |
-| Nas 430.776 linhas com `Index` intacto, ele segue o padrão do STATS19 (dados oficiais do Reino Unido) e começa com o **ano real**: 2007, 2008, 2009 e 2010 aparecem como 2019, 2020, 2021 e 2022 | Os dados são de **2007 a 2010**, com o ano somado de 12. O **dia da semana** é calculado na data real (ver abaixo) |
-| Exatamente 10.000 linhas com data de 2023 a 2025 (contra 144 a 182 mil por ano em 2019-2022) | Bloco excluído por suspeita de ter sido acrescentado ao dataset original |
-| 52 linhas duplicadas e 26 sem coordenadas | Removidas |
-| Nulos em clima, tipo de via, superfície e área | Categoria `Unknown` |
+| Avaliações no arquivo | 100.000 |
+| Com comentário em texto | 41.726 |
+| Sem review_id repetido | 41.404 |
+| Sem a nota 3 (neutra) | 37.770 |
+| Sem textos com rótulos conflitantes | 34.446 |
+| Sem textos duplicados (base final) | 30.977 |
 
-**Por que corrigir o dia da semana:** com a data do dataset, o pico de acidentes cai no sábado e o mínimo na segunda. Voltando 12 anos, o pico vai para a sexta e o mínimo para o domingo, que é o padrão conhecido do trânsito britânico. O mês não muda. A tabela que prova o deslocamento está no notebook (seção de auditoria).
+- **Alvo `negativo`:** 1 se a nota for ≤ 2; 0 se for ≥ 4.
+- **Base final:** 34,2% de reclamações.
+- **Nota 3 fora:** num teste com três classes (TF-IDF + LR), a classe neutra ficou com F1 de **0,27** (negativo 0,78, positivo 0,89). A nota 3 mistura elogio e crítica, e o produto precisa separar o que é reclamação.
+- **Duplicados fora antes da divisão:** textos como "ótimo" aparecem centenas de vezes. Sem remover, o mesmo texto cairia no treino e no teste (vazamento). Textos iguais com notas de lados opostos (ex.: "bom" com nota 1 e com nota 5) também foram descartados.
+- **Divisão:** 70/15/15 estratificada: 21.683 treino, 4.647 validação, 4.647 teste. O teste foi usado **uma única vez**.
 
-**Base final: 660.601 registros.** Divisão estratificada 70/15/15 (`random_state=42`): 462.420 treino, 99.090 validação, 99.091 teste.
+![Análise exploratória](results/eda.png)
+![Palavras mais frequentes](results/palavras_frequentes.png)
 
-**Variável-alvo:** binária, `1` = acidente grave ou fatal (14,66% dos registros), `0` = leve. A distribuição original em três classes é 85,3% leve, 13,4% grave e 1,3% fatal.
+Reclamações são mais longas (mediana de 17 palavras contra 9). O cliente insatisfeito explica o problema, e o satisfeito escreve "ótimo".
 
-**Variáveis de entrada** (14):
-
-- 7 categóricas: iluminação, superfície da pista, tipo de via, área urbana/rural, clima, tipo de veículo e distrito (422 distritos + código para categoria desconhecida);
-- 7 numéricas: latitude e longitude (padronizadas), mês e dia da semana (seno e cosseno) e indicador de fim de semana.
-
-**Fora do modelo:** `Index`, `Number_of_Casualties` (a gravidade é definida pelas vítimas, então seria vazamento do alvo) e `Number_of_Vehicles` (só é conhecido depois do acidente; foi testado à parte, seção 6).
-
-Vocabulários, médias e desvios são aprendidos **apenas no treino**, para não vazar informação da validação e do teste.
-
-## 4. Abordagem
-
-1. **Auditoria e limpeza** (seção anterior).
-2. **Experimento inicial com 3 classes** (leve, grave, fatal). A classe fatal (1,3%) mostrou sinal muito fraco (PR-AUC de 0,03 para fatal), o que motivou o alvo binário.
-3. **Baselines:** acaso, regressão logística e LightGBM.
-4. **Rede neural** com embeddings e experimentos de função de custo e otimizador.
-5. **Clusterização** (DBSCAN) e **risco por região**.
-6. **Interpretação** (importância por permutação).
-7. **Avaliação final no teste**, aberto uma única vez.
-8. **Experimentos extras:** várias sementes, validação temporal e ablação com `Number_of_Vehicles`.
-9. **Painel** em Gradio.
-
-### Métricas
-
-Acurácia não serve aqui: um modelo que sempre responde "leve" acerta 85,3% e é inútil. Usamos:
-
-- **PR-AUC** (referência: 0,147, a proporção de positivos) e **ROC-AUC**;
-- **captura no top k%**: que fração dos acidentes graves/fatais está entre os k% de maior risco estimado. Ao acaso, seria k%.
-
-## 5. Arquitetura da rede neural
+## 4. Como a rede funciona
 
 ```
-7 variáveis categóricas ──► Embedding (dim = min(16, (n+1)//2)) cada ──┐
-                                                                         ├─► concatenação (50)
-7 variáveis numéricas ───────────────────────────────────────────────────┘
-        │
-        ▼
-Linear(50→128) · ReLU · Dropout(0,3) · Linear(128→64) · ReLU · Dropout(0,3) · Linear(64→1)  ──► logit
+"não recebi meu pedido"
+      │  normalizar: minúsculas, sem acento → "nao recebi meu pedido"
+      ▼
+[ 3583, 4533, 3459, 3923, 0, 0, ... ]   índices do vocabulário (5.585 palavras, até 60 tokens)
+      │
+      ▼  Embedding (100 dimensões)        cada palavra vira um vetor aprendido
+      ▼  BiLSTM (64 por direção)          lê a frase nos dois sentidos, guardando o contexto
+      ▼  pooling: máximo ‖ média          resume a frase num vetor de tamanho fixo (256)
+      ▼  Dropout 0,4 → Linear → sigmoide
+   P(reclamação) = 1,00 ──► prioridade ALTA ──► motivo: Entrega / atraso
 ```
 
-- 21.902 parâmetros.
-- Adam (`lr=1e-3`), batch de 1.024, até 15 épocas, **early stopping** com paciência de 3, monitorado pelo PR-AUC na validação (os pesos da melhor época são restaurados).
-- `BCEWithLogitsLoss` (a saída é um logit; a sigmoide só é aplicada na predição). Sementes fixas.
+| Decisão | Por quê |
+|---|---|
+| Tirar acentos, manter "não" | Clientes escrevem "nao", "não" e "NÃO", e as três formas viram o mesmo token. A negação muda o sentido, então não usamos lista de stopwords. |
+| Vocabulário só do treino, mínimo de 2 ocorrências | Evita vazamento. Palavras raras viram `<UNK>`. |
+| Embedding aprendido do zero | Requisito do trabalho (modelo próprio). Palavras usadas em contextos parecidos ficam próximas ("péssimo" e "horrível"). |
+| BiLSTM | Lê a sequência em ordem: "não chegou" ≠ "chegou". Bidirecional para cada palavra ver o que vem antes e depois. |
+| Pooling máximo + média | O máximo pega o trecho mais forte ("veio quebrado"); a média, o tom geral. |
+| BCE com `pos_weight` ≈ 1,9 | Reclamações são 1/3 da base. Sem o peso, a rede tende a errar mais justamente na classe que interessa. |
+| Adam (lr 1e-3), lote 128, *gradient clipping* | Padrão estável para LSTM. |
+| *Early stopping* pelo F1 da validação (paciência 3) | Para quando a validação para de melhorar e guarda a melhor época (evita overfitting). |
+| Métrica principal: F1 e recall da classe reclamação | É a classe que o negócio quer encontrar. Acurácia engana em base desbalanceada. |
 
-![Curva de treinamento](figuras/curva_treino.png)
+Também treinamos uma **CNN 1D** (filtros de 2, 3 e 4 palavras). A arquitetura final foi escolhida pelo F1 médio na **validação** (BiLSTM 0,893, CNN 1D 0,889): **BiLSTM**. Total de **643.749 parâmetros**.
 
-### Experimentos (validação)
+![Curvas de treino](results/curvas_treino.png)
 
-| Rede | Função de custo / otimizador | PR-AUC | Probabilidade média prevista |
-|---|---|---|---|
-| 1 | BCE com `pos_weight` (5,82), Adam | 0,2150 | 0,483 |
-| **2** | **BCE sem pesos, Adam** | **0,2157** | **0,148** |
-| 3 | Focal loss (γ=2, α=0,75), Adam | 0,2151 | 0,432 |
-| 4 | BCE sem pesos, SGD com momentum (lr 0,05) | 0,2111 | n/d |
+## 5. Resultados (conjunto de teste, 4.647 comentários)
 
-Proporção real de graves/fatais: 0,1466. As diferenças de PR-AUC entre as redes 1, 2 e 3 são menores do que a variação entre sementes. O que muda é a **calibração**: peso de classe e focal loss superestimam a probabilidade (média ~0,43 a 0,48), e a Rede 2 acerta a média. Por isso a Rede 2 é o modelo final. O Adam chegou em 3 épocas ao patamar que o SGD (sem ajuste fino) levou 15 épocas para alcançar.
-
-## 6. Resultados
-
-### Avaliação final no conjunto de teste
-
-| Modelo | PR-AUC | ROC-AUC | Captura top 10% | Captura top 20% | Captura top 30% |
+| Modelo | F1 (reclamação) | Recall | Precisão | Acurácia | PR-AUC |
 |---|---|---|---|---|---|
-| Acaso | 0,146 | 0,500 | 10,0% | 20,2% | 30,0% |
-| Regressão logística | 0,214 | 0,615 | 18,0% | 31,6% | 43,6% |
-| LightGBM | 0,211 | 0,609 | 17,6% | 31,3% | 42,9% |
-| **Rede neural (Rede 2)** | **0,216** | **0,616** | **17,9%** | **31,5%** | **43,7%** |
+| **Rede BiLSTM** (escolhida) | 0,897 ± 0,001 | 0,927 ± 0,004 | 0,868 ± 0,002 | 0,927 ± 0,001 | 0,936 ± 0,003 |
+| Rede CNN 1D | 0,895 ± 0,003 | 0,931 ± 0,004 | 0,862 ± 0,008 | 0,925 ± 0,002 | 0,934 ± 0,005 |
+| Baseline (TF-IDF + LR) | 0,898 | 0,941 | 0,860 | 0,927 | 0,934 |
 
-- Os 10% de situações de maior risco estimado concentram **~18% dos acidentes graves e fatais**, quase o dobro do acaso; os 30% de maior risco concentram ~44%.
-- **Rede x regressão logística:** com 5 sementes, a rede fica em PR-AUC 0,2153 ± 0,0005 contra 0,2142 da regressão. A diferença é consistente, mas pequena demais para ter importância prática (bootstrap pareado no teste: IC 95% de [-0,0001; 0,0030]). Modelos mais complexos não extraíram mais sinal que o modelo linear; a vantagem da rede é ser um único modelo bem calibrado que alimenta o painel.
-- **Calibração:** em todos os 10 decis de risco, a probabilidade prevista acompanha a proporção real (de 7,1% previsto contra 7,5% real no decil mais baixo até 26,7% contra 26,3% no mais alto).
+Redes: média ± desvio de 3 sementes. Limiar 0,5.
 
-![Curva de ganho e calibração](figuras/ganho_calibracao.png)
+**Leitura honesta: a rede empata com o baseline.** É um resultado esperado, e explicamos por quê:
 
-### Experimentos extras (`src/experimentos.py`)
+- os comentários são **curtos** (mediana de 11 palavras), e expressões como "não recebi" e "veio quebrado" já aparecem como **bigramas** no TF-IDF;
+- com cerca de 22 mil exemplos, a rede aprende os embeddings do zero, sem conhecimento prévio da língua;
+- muitos erros vêm do **rótulo**, não do texto: o cliente elogia e dá nota 1, ou reclama e dá nota 5 (seção 6).
 
-Rede 2, 5 sementes, média ± desvio no teste ([detalhes](docs/resultados_experimentos.md)):
+Mesmo empatando, a rede acerta onde o baseline erra em **79** comentários, e o contrário acontece em 85. Ela é a base para as próximas etapas: transferência para outros canais, motivo aprendido e três classes.
 
-| Cenário | PR-AUC | ROC-AUC | Captura top 10% |
+![Matriz de confusão](results/matriz_confusao.png)
+![Curva PR](results/curva_pr.png)
+
+### Prioridade de atendimento
+
+Limiares definidos na **validação**: alta = a partir de onde pelo menos 95% são reclamações (p ≥ 0,97); baixa = abaixo de onde no máximo 2% são (p < 0,18). No teste:
+
+| Prioridade | % das mensagens | % que são reclamação | % de todas as reclamações |
 |---|---|---|---|
-| Divisão aleatória, dia da semana original | 0,2155 ± 0,0012 | 0,6161 ± 0,0009 | 17,9% |
-| Divisão aleatória, dia da semana corrigido | 0,2153 ± 0,0005 | 0,6159 ± 0,0007 | 17,9% |
-| **Temporal: treino 2007-2009, teste 2010** | **0,2020 ± 0,0010** | **0,6051 ± 0,0008** | **17,6%** |
-| Aleatória + `Number_of_Vehicles` | 0,2369 ± 0,0006 | 0,6539 ± 0,0005 | 19,3% |
+| Alta | 20,6% | 94,7% | 56,9% |
+| Média | 20,5% | 65,6% | 39,3% |
+| Baixa | 58,9% | 2,2% | 3,8% |
 
-- **Dia da semana:** a correção não muda as métricas (o calendário pesa pouco), mas deixa o modelo e o painel coerentes com o dia real.
-- **Validação temporal:** treinando só com o passado e testando no ano seguinte, o ROC-AUC cai de 0,616 para 0,605 e a captura no top 10% quase não muda. O padrão aprendido **se sustenta no tempo**.
-- **`Number_of_Vehicles`:** aumenta o ROC-AUC para 0,654, mas só é conhecido depois do acidente. Fica fora do painel de prevenção e é uma ideia para um uso diferente (triagem de ocorrências, seção 10).
+**Na prática:** respondendo primeiro a faixa alta, a equipe lê 21% das mensagens e já encontra **57% de todas as reclamações**, com quase nenhum alarme falso.
 
-### Pontos críticos e risco por região
+## 6. Análise de erros
 
-**DBSCAN sobre os acidentes graves/fatais do treino** (distância haversine). Varremos `eps` ∈ {200, 500, 1000, 2000} m e `minPts` ∈ {10, 20, 50}, avaliando silhouette e Davies-Bouldin (só sobre pontos em clusters). As melhores métricas vinham de configurações que cobriam menos de 1% dos pontos, então escolhemos **`eps` = 2000 m e `minPts` = 50**: 90 clusters, 34,5% dos pontos em clusters, silhouette 0,513 e Davies-Bouldin 0,298.
+Exemplos completos em [`results/erros.md`](results/erros.md). Padrões:
 
-**Os clusters marcam volume, não risco.** Na validação, 45,8% dos acidentes caem dentro dos clusters, mas a proporção de graves ali é **menor**:
+- **Falsos positivos:** o cliente relata um problema, mas dá nota alta porque foi resolvido ("atrasou um pouco, mas chegou certinho").
+- **Falsos negativos:** texto neutro ou positivo com nota 1 ou 2. A nota reflete algo que o texto não diz (frete, demora na resposta) ou o cliente marcou a nota errada.
+- Boa parte dos "erros" mais confiantes são **contradições entre texto e nota**. Exemplo: "Não foi entregue o meu pedido", com nota 5, conta como falso positivo, mas a rede está certa. É uma limitação do proxy, não da leitura do modelo.
+- **Erro real em frase mista:** "Chegou rápido, mas parou de funcionar no segundo dia" sai com 0,3%. "Chegou rápido" é um dos sinais mais fortes de elogio nos dados e pesa mais que o defeito. Frases com "mas" são um ponto a melhorar (mais dados ou um modelo pré-treinado).
+- **Onde a rede ganha:** "Pelo valor dele eu esperava um produto melhor." (nota 2) não tem palavra negativa óbvia. A rede dá 81% de reclamação, e o TF-IDF fica em 47%.
 
-| Validação | Graves/fatais |
-|---|---|
-| Global | 14,7% |
-| Dentro dos clusters | 13,1% |
-| Fora dos clusters | 16,0% |
+## 7. Motivo das reclamações (diferencial)
 
-Só 8,3% dos acidentes dentro dos clusters são rurais, contra 59,7% fora. Acidentes rurais têm proporção maior de graves (17,8% contra 12,9% nos urbanos).
+Não existe rótulo de motivo no dataset, então usamos **regras de palavras-chave** sobre o texto normalizado ([`src/motivos.py`](src/motivos.py)). São transparentes, porque o app mostra os termos encontrados, e fáceis de ajustar.
 
-**Risco por região** (células de ~5 km, taxa alisada): as regiões que parecem mais perigosas no treino continuam parecendo na validação.
+**Conferência com um dado independente:** o texto não sabe se o pedido atrasou, mas a tabela de pedidos sabe. Entre as reclamações detectadas no teste:
 
-| | Células | Spearman (treino × validação) | 20% de maior taxa no treino → validação | 20% de menor taxa → validação |
-|---|---|---|---|---|
-| Todas | 977 | 0,325 | 15,5% | 10,3% |
-| Urbanas | 920 | 0,302 | 14,9% | 10,0% |
-| Rurais | 337 | 0,373 | 18,5% | 9,2% |
+| Motivo | % das reclamações | Pedido atrasado ou não entregue |
+|---|---|---|
+| Entrega / atraso | 48,3% | 58,8% |
+| Pedido incompleto | 12,3% | 12,0% |
+| Outros / não identificado | 12,1% | 20,6% |
+| Produto diferente / errado | 11,6% | 5,1% |
+| Atendimento / reembolso | 8,1% | 50,0% |
+| Produto com defeito / qualidade | 7,6% | 4,7% |
 
-O padrão regional persiste dentro de áreas urbanas e rurais, então não é só o efeito "rural contra urbano".
+Nas reclamações classificadas como **Entrega / atraso**, 59% dos pedidos de fato atrasaram ou não foram entregues, contra 17% nos outros motivos. Isso mostra que a regra captura um problema real.
 
-![Mapa de risco regional](figuras/mapa_risco.png)
-
-### O que o modelo usa (importância por permutação, validação)
-
-| Bloco | Queda de PR-AUC |
-|---|---|
-| Localização (distrito, coordenadas, rural/urbano) | 0,0470 |
-| Condições da via e do ambiente (luz, tipo de via, superfície, clima) | 0,0300 |
-| Calendário (mês, dia da semana) | 0,0095 |
-| Tipo de veículo | 0,0000 |
-
-Na validação, a proporção de graves/fatais é de **23,1% sem iluminação pública contra 13,6% de dia**, e de **8,5% em rotatórias contra 15,6% em pistas simples**. O tipo de veículo não discrimina a gravidade neste dataset (motocicletas entre 14,0% e 15,2%, carros 14,6%), o que contraria estatísticas de trânsito em geral; por isso evitamos conclusões sobre veículos.
-
-## 7. Estrutura do repositório
-
-```
-├── app.py                         # painel Gradio (usa o modelo salvo em modelos/)
-├── notebooks/
-│   └── Trabalho_IA_G2_Acidentes_no_Reino_Unido.ipynb   # análise completa, com as saídas
-├── src/
-│   ├── dados.py                   # carga, limpeza, correção de datas, features, divisões
-│   ├── modelo.py                  # rede neural, treino com early stopping, métricas
-│   ├── treinar.py                 # treina o modelo final e gera modelos/ e figuras/
-│   └── experimentos.py            # sementes, validação temporal, ablação
-├── modelos/                       # rede_final.pt + artefatos (vocabulários, faixas, mapa, ranking)
-├── docs/
-│   ├── resultados_experimentos.md # saída de src/experimentos.py
-│   └── exemplo_lista.csv          # exemplo de entrada para a aba "Priorizar uma lista"
-├── figuras/                       # gráficos e prints do painel
-├── data/                          # coloque aqui o accident_data.csv (não versionado)
-└── requirements.txt
-```
+![Motivos](results/motivos.png)
 
 ## 8. Como executar
 
-Requisitos: Python 3.10+ e ~2 GB livres. CPU é suficiente.
-
-### Painel (sem precisar do dataset)
-
-O modelo treinado já está em `modelos/`.
+**Pré-requisito:** Python 3.10 a 3.12. No Windows, use `py -3.12` no lugar de `python`.
 
 ```bash
 git clone https://github.com/mellcs/Trabalho-IA2.git
 cd Trabalho-IA2
 pip install -r requirements.txt
-python app.py              # abre em http://127.0.0.1:7860
-python app.py --share      # opcional: link público temporário
+
+# só o app (usa o modelo já treinado em models/)
+python app.py                     # abre http://127.0.0.1:7860
+
+# reproduzir tudo do zero
+python -m src.baixar_dados        # baixa os CSVs da Olist para data/ (sem login)
+python -m src.treinar             # ~15 min em CPU; regrava models/ e results/
 ```
 
-### Reproduzir o treino e os experimentos
+**Google Colab:** abra [`notebooks/Trabalho2_IA2_Triagem_Reclamacoes.ipynb`](notebooks/Trabalho2_IA2_Triagem_Reclamacoes.ipynb). Ele clona o repositório, baixa os dados e roda tudo do começo ao fim.
 
-1. Baixe o dataset em <https://www.kaggle.com/datasets/deeplumiere/accident-analysis-dataset> e salve como `data/accident_data.csv`.
-2. Rode:
+| Pasta | Conteúdo |
+|---|---|
+| `src/` | `dados.py` (limpeza e divisão), `texto.py` (tokenização e vocabulário), `modelo.py` (BiLSTM, CNN e treino), `motivos.py`, `inferencia.py`, `treinar.py` (pipeline completo), `baixar_dados.py` |
+| `app.py` | App Gradio: um comentário, lote CSV e "como funciona" |
+| `models/` | `rede.pt`, `vocab.json`, `config.json`, `baseline.joblib` |
+| `results/` | gráficos, `metricas.json`, `resultados.md`, `erros.md`, `motivos.md`, prints do app |
+| `notebooks/` | notebook Colab ponta a ponta |
+| `docs/` | CSV de exemplo para o app, apresentação do pitch (HTML: abra no navegador, tecla F para tela cheia) e roteiro |
+| `tema1_acidentes/` | primeiro tema (acidentes no Reino Unido), mantido como histórico |
 
-```bash
-python -m src.treinar --csv data/accident_data.csv        # ~2 min: modelo final, modelos/ e figuras/
-python -m src.experimentos --csv data/accident_data.csv   # ~20 min: docs/resultados_experimentos.md
-```
-
-### Notebook no Google Colab
-
-1. Abra `notebooks/Trabalho_IA_G2_Acidentes_no_Reino_Unido.ipynb` no Colab (Arquivo → Abrir notebook → GitHub).
-2. Envie o CSV ao Colab (painel de arquivos à esquerda) com o nome `accident_data.csv`.
-3. **Ambiente de execução → Executar tudo.** A última célula instala o Gradio e abre a interface simples do notebook com link público.
-
-O modelo do painel é treinado por `src/treinar.py` com a mesma arquitetura, divisão e sementes do notebook (métricas iguais até a terceira casa decimal).
-
-Notas: sementes fixas (`random_state=42`, `torch.manual_seed(42)`); diferenças na quarta casa decimal podem aparecer conforme a versão das bibliotecas. Cada rede leva ~1 minuto em CPU. Se o Colab reiniciar a sessão e aparecer `NameError`, execute de novo desde o início.
+![App: lote CSV](results/app_lote.png)
 
 ## 9. Limitações
 
-- **Sinal fraco.** ROC-AUC de ~0,62. O dataset não traz as variáveis que mais determinam a gravidade (velocidade, idade, uso de cinto). O projeto serve para **priorizar risco**, não para prever um acidente.
-- **Associação, não causa.** A simulação "e se mudasse um fator?" mostra como o risco estimado muda, não garante o efeito de uma obra. Alguns resultados são contraintuitivos e conhecidos na literatura (pistas com gelo ou neve têm acidentes menos graves, provavelmente porque se dirige mais devagar).
-- **Dados antigos e com problemas.** Os acidentes são de 2007 a 2010, o `Index` está corrompido em ~36% das linhas e o bloco 2023-2025 foi excluído. O comportamento do tipo de veículo é inesperado.
-- **Localização aproximada.** O painel usa o centro dos acidentes do distrito, perdendo a variação dentro dele.
-- **Calibração nos extremos.** Verificada por decil; probabilidades acima de ~30% vêm de combinações raras e são extrapolação.
-- **Sem ajuste fino de hiperparâmetros.** A arquitetura e o LightGBM usaram valores fixos.
+- **Proxy:** a nota não é uma anotação manual do sentimento. Há contradições entre texto e nota.
+- **Domínio:** o modelo foi treinado em e-commerce (2016-2018). Mensagens de WhatsApp ou redes sociais têm gírias, emojis e abreviações diferentes. É preciso validar antes do uso real.
+- **Viés de amostra:** só 42% das avaliações têm comentário.
+- **Motivos por regra:** frases sem os termos-chave caem em "Outros" (12%), e uma reclamação com dois motivos recebe só o principal.
+- **Sem a nota 3:** mensagens neutras e mistas são forçadas para um dos lados.
 
-## 10. Impacto e próximos passos
+## 10. Próximos passos
 
-- **Uso real:** órgãos de trânsito podem usar o painel para escolher onde instalar iluminação, reforçar fiscalização em noites de fim de semana em vias rurais, ou ordenar uma lista de trechos candidatos a obras.
-- **Dados atuais:** treinar com os dados abertos oficiais do Reino Unido (STATS19, até o ano mais recente), que trazem também limite de velocidade e horário.
-- **Triagem de ocorrências:** um segundo modelo com variáveis conhecidas logo após o acidente (como `Number_of_Vehicles`, que sobe o ROC-AUC para 0,65) poderia ajudar a priorizar o envio de ambulâncias.
-- **Mapa interativo** com entrada por coordenadas, em vez do centro do distrito.
-- **Incerteza por região**, para marcar células com poucos acidentes.
+1. **Validar em outro canal:** anotar cerca de 500 mensagens reais de SAC ou WhatsApp de um lojista e medir F1 ali.
+2. **Modelo pré-treinado em português** (ex.: BERTimbau) para comparar com a rede do zero.
+3. **Motivo aprendido:** rotular uma amostra de reclamações por motivo e treinar um classificador multirrótulo no lugar das regras.
+4. **Integração:** ler a caixa de entrada (e-mail, WhatsApp Business API) e devolver a fila priorizada no sistema do lojista.
+5. **Três classes**, com um conjunto de neutros anotado à mão.

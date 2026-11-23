@@ -1,98 +1,84 @@
-"""Carga, auditoria, limpeza e preparação das features.
+"""Carga, limpeza e divisão dos dados de avaliações da Olist.
 
-Mesmo tratamento do notebook, com uma correção: o dataset tem as datas
-deslocadas em 12 anos (o Index começa com o ano real: 2007 -> 2019,
-2008 -> 2020, 2009 -> 2021, 2010 -> 2022). O dia da semana é calculado
-na data real (data - 12 anos); com a data do dataset ele fica errado em 1 dia.
+Etapas (cada uma registra quantas linhas sobram, para mostrar no README e no notebook):
+1. avaliações com comentário em texto;
+2. remoção de review_id repetido;
+3. remoção da nota 3 (neutra): no teste com 3 classes a classe neutra ficou com F1 muito
+   baixo, e o objetivo do produto é separar reclamação de não reclamação;
+4. remoção de textos duplicados (ex.: "ótimo" aparece centenas de vezes). Sem isso o mesmo
+   texto cairia no treino e no teste ao mesmo tempo (vazamento) e inflaria as métricas.
+   Textos iguais com rótulos diferentes são descartados.
+
+Alvo: negativo = 1 se a nota for 1 ou 2; negativo = 0 se a nota for 4 ou 5.
 """
-import numpy as np
+from pathlib import Path
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-CATS = ["Light_Conditions", "Road_Surface_Conditions", "Road_Type",
-        "Urban_or_Rural_Area", "Weather_Conditions", "Vehicle_Type", "District Area"]
-NUM = ["Latitude", "Longitude", "month_sin", "month_cos",
-       "dow_sin", "dow_cos", "is_weekend"]
-DESLOCAMENTO_ANOS = 12
+from src.texto import normalizar
+
+ARQ_AVALIACOES = "olist_order_reviews_dataset.csv"
+ARQ_PEDIDOS = "olist_orders_dataset.csv"
 
 
-def carregar(caminho_csv):
-    df = pd.read_csv(caminho_csv, low_memory=False)
-    df["Accident Date"] = pd.to_datetime(df["Accident Date"], errors="coerce", dayfirst=True)
-    return df
+def carregar(pasta="data"):
+    return pd.read_csv(Path(pasta) / ARQ_AVALIACOES)
 
 
-def limpar(df):
-    """Remove Index, duplicatas, o bloco 2023-2025 e linhas sem coordenadas."""
-    d = df.drop(columns=["Index"]).drop_duplicates()
-    d = d[d["Accident Date"] < "2023-01-01"].copy()
-    d = d.dropna(subset=["Latitude", "Longitude"])
-    for c in CATS:
-        d[c] = d[c].fillna("Unknown")
-    d["Urban_or_Rural_Area"] = d["Urban_or_Rural_Area"].replace("Unallocated", "Unknown")
-    d["y"] = d["Accident_Severity"].map({"Slight": 0, "Serious": 1, "Fatal": 2}).astype("int8")
-    d["grave"] = (d["y"] >= 1).astype("int8")
-    # data real do acidente (o dataset somou 12 anos ao ano original)
-    d["data_real"] = d["Accident Date"] - pd.DateOffset(years=DESLOCAMENTO_ANOS)
-    return d.reset_index(drop=True)
+def limpar(av):
+    """Devolve (base limpa, tabela com a contagem de cada etapa)."""
+    etapas = [("Avaliações no arquivo", len(av))]
+    txt = av["review_comment_message"].fillna("").str.strip()
+    d = av[txt != ""].copy()
+    d["texto"] = d["review_comment_message"].str.strip()
+    etapas.append(("Com comentário em texto", len(d)))
+
+    d = d.drop_duplicates("review_id")
+    etapas.append(("Sem review_id repetido", len(d)))
+
+    d = d[d["review_score"] != 3].copy()
+    etapas.append(("Sem a nota 3 (neutra)", len(d)))
+
+    d["negativo"] = (d["review_score"] <= 2).astype(int)
+    # texto normalizado (minúsculas, sem acento, espaços únicos) para achar duplicados
+    d["chave"] = d["texto"].map(normalizar)
+    d = d[d["chave"] != ""]
+    conflito = d.groupby("chave")["negativo"].transform("nunique") > 1
+    d = d[~conflito]
+    etapas.append(("Sem textos com rótulos conflitantes", len(d)))
+    d = d.drop_duplicates("chave").reset_index(drop=True)
+    etapas.append(("Sem textos duplicados (base final)", len(d)))
+
+    tab = pd.DataFrame(etapas, columns=["etapa", "linhas"])
+    return d[["review_id", "order_id", "review_score", "texto", "negativo"]], tab
 
 
-def features_calendario(d, corrigir_dia_semana=True):
-    base = d["data_real"] if corrigir_dia_semana else d["Accident Date"]
-    mes, dow = d["Accident Date"].dt.month, base.dt.dayofweek
-    d = d.copy()
-    d["month_sin"] = np.sin(2 * np.pi * mes / 12)
-    d["month_cos"] = np.cos(2 * np.pi * mes / 12)
-    d["dow_sin"] = np.sin(2 * np.pi * dow / 7)
-    d["dow_cos"] = np.cos(2 * np.pi * dow / 7)
-    d["is_weekend"] = (dow >= 5).astype("int8")
-    return d
+def dividir(d, semente=42):
+    """70% treino, 15% validação, 15% teste, estratificado pelo alvo.
 
-
-def dividir_aleatorio(d, semente=42):
-    """70/15/15 estratificado pela gravidade (divisão principal)."""
-    train, temp = train_test_split(d, test_size=0.30, stratify=d["y"], random_state=semente)
-    val, test = train_test_split(temp, test_size=0.50, stratify=temp["y"], random_state=semente)
-    return train, val, test
-
-
-def dividir_temporal(d, semente=42):
-    """Treina nos 3 primeiros anos e testa no último (verificação extra).
-
-    Treino/validação: 2007-2009 reais (2019-2021 no dataset), validação = 15% sorteado.
-    Teste: 2010 real (2022 no dataset).
+    A divisão é feita depois de remover os duplicados, então nenhum texto aparece
+    em duas partes. O teste só é usado uma vez, no final.
     """
-    passado = d[d["Accident Date"].dt.year <= 2021]
-    futuro = d[d["Accident Date"].dt.year == 2022]
-    train, val = train_test_split(passado, test_size=0.15, stratify=passado["y"],
-                                  random_state=semente)
-    return train, val, futuro
+    treino, resto = train_test_split(d, test_size=0.30, stratify=d["negativo"], random_state=semente)
+    val, teste = train_test_split(resto, test_size=0.50, stratify=resto["negativo"], random_state=semente)
+    return treino.reset_index(drop=True), val.reset_index(drop=True), teste.reset_index(drop=True)
 
 
-class Preparador:
-    """Vocabulários, média e desvio aprendidos só no treino. Código 0 = categoria nova."""
+def avaliacoes_com_pedidos(pasta="data"):
+    """Junta TODAS as avaliações (com ou sem texto) com a situação da entrega do pedido.
 
-    def __init__(self, num=NUM):
-        self.num = list(num)
-
-    def ajustar(self, train):
-        self.maps = {c: {v: i + 1 for i, v in enumerate(sorted(train[c].unique()))} for c in CATS}
-        self.mu = train[["Latitude", "Longitude"]].mean().to_dict()
-        self.sd = train[["Latitude", "Longitude"]].std().to_dict()
-        if "Number_of_Vehicles" in self.num:
-            self.mu["Number_of_Vehicles"] = float(train["Number_of_Vehicles"].mean())
-            self.sd["Number_of_Vehicles"] = float(train["Number_of_Vehicles"].std())
-        return self
-
-    @property
-    def vocab(self):
-        return [len(self.maps[c]) + 1 for c in CATS]
-
-    def transformar(self, part):
-        X_cat = np.stack([part[c].map(self.maps[c]).fillna(0).astype("int64").to_numpy()
-                          for c in CATS], axis=1)
-        X_num = part[self.num].astype("float64").copy()
-        for c in self.mu:
-            if c in X_num:
-                X_num[c] = (X_num[c].fillna(self.mu[c]) - self.mu[c]) / self.sd[c]
-        return X_cat, X_num.to_numpy("float32"), part["grave"].to_numpy()
+    Serve para medir o problema: quanto a reclamação cresce quando a entrega atrasa.
+    """
+    av = carregar(pasta)
+    ped = pd.read_csv(Path(pasta) / ARQ_PEDIDOS,
+                      parse_dates=["order_delivered_customer_date", "order_estimated_delivery_date"])
+    m = av.merge(ped[["order_id", "order_status", "order_delivered_customer_date",
+                      "order_estimated_delivery_date"]], on="order_id", how="left")
+    entregue = (m["order_status"] == "delivered") & m["order_delivered_customer_date"].notna()
+    atrasou = m["order_delivered_customer_date"].dt.normalize() > m["order_estimated_delivery_date"]
+    m["entrega"] = "Não entregue"
+    m.loc[entregue & ~atrasou, "entrega"] = "Entregue no prazo"
+    m.loc[entregue & atrasou, "entrega"] = "Entregue com atraso"
+    m["negativo"] = (m["review_score"] <= 2).astype(int)
+    return m
