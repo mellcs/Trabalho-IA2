@@ -5,6 +5,8 @@ Modalidade escolhida: **treinamento de rede neural**
 
 **Integrantes:** Mell Campos, Brayan Martins e Nicolas Marin.
 
+> **Atualização (23/11): estamos trocando de tema.** Com acidentes, o melhor modelo ficou em ROC-AUC 0,63, mesmo depois de juntar a base oficial do governo britânico. Por isso o grupo está migrando para um problema com impacto mais direto: identificar reclamações em avaliações de clientes de e-commerce brasileiro (PLN em português). O que foi feito, os resultados e o motivo da troca estão em **[HISTORICO_DO_PROJETO.md](HISTORICO_DO_PROJETO.md)**. Este README descreve o tema 1 (acidentes).
+
 ![Painel: consulta e simulação](figuras/app_consultar.png)
 
 ---
