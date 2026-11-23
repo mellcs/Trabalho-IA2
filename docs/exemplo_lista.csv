@@ -1,9 +1,9 @@
-local,distrito,iluminacao,tipo_via,area,superficie,clima,mes,dia_semana
-Estrada rural A (noite),Aberdeenshire,"Noite, sem iluminação pública",Pista simples,Rural,Molhada ou úmida,"Chuva, sem ventos fortes",12,Sábado
-Rotatória do centro,Birmingham,Dia (luz natural),Rotatória,Urbana,Seca,"Tempo bom, sem ventos fortes",7,Terça
-Avenida central (noite iluminada),Leeds,"Noite, com iluminação pública acesa",Pista dupla,Urbana,Molhada ou úmida,"Chuva, sem ventos fortes",11,Sexta
-Rodovia de acesso,Highland,Dia (luz natural),Pista simples,Rural,Geada ou gelo,"Tempo bom, sem ventos fortes",1,Domingo
-Rua comercial,Westminster,Dia (luz natural),Rua de mão única,Urbana,Seca,"Tempo bom, sem ventos fortes",5,Quarta
-Estrada vicinal (noite),Cornwall,"Noite, sem iluminação pública",Pista simples,Rural,Seca,"Tempo bom, sem ventos fortes",8,Sábado
-Anel viário,Manchester,"Noite, com iluminação pública acesa",Pista dupla,Urbana,Seca,"Tempo bom, sem ventos fortes",3,Quinta
-Alça de acesso industrial,Stoke-on-Trent,Dia (luz natural),Alça de acesso,Urbana,Molhada ou úmida,"Chuva, sem ventos fortes",10,Segunda
+local,distrito,iluminacao,tipo_via,area,superficie,clima,mes,dia_semana,limite_velocidade,hora,cruzamento,controle_cruzamento,classe_via
+Estrada rural A (noite),Aberdeenshire,"Noite, sem iluminação pública",Pista simples,Rural,Molhada ou úmida,"Chuva, sem ventos fortes",12,Sábado,60,23,Não é cruzamento,Sem cruzamento,Rodovia principal (A)
+Rotatória do centro,Birmingham,Dia (luz natural),Rotatória,Urbana,Seca,"Tempo bom, sem ventos fortes",7,Terça,30,14,Rotatória,Preferencial ou sem controle,Rodovia principal (A)
+Avenida central (noite iluminada),Leeds,"Noite, com iluminação pública acesa",Pista dupla,Urbana,Molhada ou úmida,"Chuva, sem ventos fortes",11,Sexta,40,21,Cruzamento de 4 vias,Semáforo,Rodovia principal (A)
+Rodovia de acesso,Highland,Dia (luz natural),Pista simples,Rural,Geada ou gelo,"Tempo bom, sem ventos fortes",1,Domingo,60,9,Não é cruzamento,Sem cruzamento,Rodovia principal (A)
+Rua comercial,Westminster,Dia (luz natural),Rua de mão única,Urbana,Seca,"Tempo bom, sem ventos fortes",5,Quarta,20,12,Cruzamento em T,Preferencial ou sem controle,Rua sem classificação
+Estrada vicinal (noite),Cornwall,"Noite, sem iluminação pública",Pista simples,Rural,Seca,"Tempo bom, sem ventos fortes",8,Sábado,60,2,Não é cruzamento,Sem cruzamento,Estrada local (C)
+Anel viário,Manchester,"Noite, com iluminação pública acesa",Pista dupla,Urbana,Seca,"Tempo bom, sem ventos fortes",3,Quinta,40,20,Rotatória,Preferencial ou sem controle,Rodovia principal (A)
+Alça de acesso industrial,Stoke-on-Trent,Dia (luz natural),Alça de acesso,Urbana,Molhada ou úmida,"Chuva, sem ventos fortes",10,Segunda,30,8,Alça de acesso,Preferencial ou sem controle,Rodovia secundária (B)

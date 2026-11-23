@@ -1,7 +1,11 @@
 """Treina o modelo final (Rede 2) e salva tudo o que o app precisa em modelos/.
 
-Uso:  python -m src.treinar --csv data/accident_data.csv
-Leva ~2 minutos em CPU. O app (app.py) só lê os arquivos salvos; não precisa do dataset.
+Uso:  python -m src.treinar --csv data/accident_data.csv --oficial data/Accidents0515.csv
+Leva ~3 minutos em CPU. O app (app.py) só lê os arquivos salvos; não precisa do dataset.
+
+Com --oficial, junta os dados oficiais (STATS19) e treina com limite de velocidade,
+horário, cruzamento e classe da via (modelo usado no painel). Sem --oficial, treina
+só com as colunas do dataset do Kaggle (versão do notebook).
 """
 import argparse
 import json
@@ -27,6 +31,7 @@ def taxa_alisada(s, n, p0, m=M_ALISAMENTO):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", default="data/accident_data.csv")
+    ap.add_argument("--oficial", default=None, help="caminho do Accidents0515.csv (STATS19)")
     ap.add_argument("--saida", default="modelos")
     a = ap.parse_args()
     out = Path(a.saida)
@@ -34,8 +39,14 @@ def main():
     Path("figuras").mkdir(exist_ok=True)
 
     d = dados.features_calendario(dados.limpar(dados.carregar(a.csv)), corrigir_dia_semana=True)
+    if a.oficial:
+        d = dados.juntar_oficial(d, a.oficial)
+        print(f"linhas casadas com os dados oficiais: {d['casou_oficial'].mean():.2%}")
+        cats, num = dados.CATS + dados.CATS_OFICIAIS, dados.NUM + dados.NUM_OFICIAIS
+    else:
+        cats, num = dados.CATS, dados.NUM
     train, val, test = dados.dividir_aleatorio(d)
-    prep = dados.Preparador().ajustar(train)
+    prep = dados.Preparador(num=num, cats=cats).ajustar(train)
     Xc_tr, Xn_tr, y_tr = prep.transformar(train)
     Xc_va, Xn_va, y_va = prep.transformar(val)
     Xc_te, Xn_te, y_te = prep.transformar(test)
@@ -78,9 +89,22 @@ def main():
     mp["taxa"] = taxa_alisada(mp["s"], mp["n"], p0tv)
     mp.round(5).to_csv(out / "celulas_risco.csv")
 
+    # Valores padrão das variáveis oficiais que não aparecem no painel,
+    # conforme o tipo de cruzamento (moda no treino)
+    padroes = {}
+    if a.oficial:
+        ocultas = ["2nd_Road_Class", "Pedestrian_Crossing-Human_Control",
+                   "Pedestrian_Crossing-Physical_Facilities", "Special_Conditions_at_Site",
+                   "Carriageway_Hazards"]
+        ok = train[train["casou_oficial"] == 1]
+        for jd, g in ok.groupby("Junction_Detail"):
+            padroes[jd] = {c: g[c].value_counts().index[0] for c in ocultas}
+        padroes["geral"] = {c: ok[c].value_counts().index[0] for c in ocultas}
+
     torch.save(modelo.state_dict(), out / "rede_final.pt")
     art = {
-        "cats": dados.CATS, "num": prep.num, "maps": prep.maps, "mu": prep.mu, "sd": prep.sd,
+        "versao": 2 if a.oficial else 1, "padroes_ocultos": padroes,
+        "cats": prep.cats, "num": prep.num, "maps": prep.maps, "mu": prep.mu, "sd": prep.sd,
         "vocab": prep.vocab, "cortes": cortes.tolist(),
         "taxa_decil": {int(k): float(v) for k, v in taxa_decil.items()},
         "media_geral": p0,

@@ -26,6 +26,7 @@ PASTA = Path(__file__).parent / "modelos"
 MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
          "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 DIAS = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
+HORAS = [f"{h:02d}h" for h in range(24)]
 
 PT = {
     "Light_Conditions": {"Daylight": "Dia (luz natural)",
@@ -47,10 +48,28 @@ PT = {
                            "Snowing + high winds": "Neve com ventos fortes",
                            "Fog or mist": "Neblina", "Other": "Outro"},
     "Urban_or_Rural_Area": {"Urban": "Urbana", "Rural": "Rural"},
+    # variáveis dos dados oficiais (códigos do STATS19)
+    "Speed_limit": {"20": "20 mph (32 km/h)", "30": "30 mph (48 km/h)", "40": "40 mph (64 km/h)",
+                    "50": "50 mph (80 km/h)", "60": "60 mph (97 km/h)", "70": "70 mph (113 km/h)"},
+    "Junction_Detail": {"0": "Não é cruzamento", "1": "Rotatória", "2": "Mini-rotatória",
+                        "3": "Cruzamento em T", "5": "Alça de acesso", "6": "Cruzamento de 4 vias",
+                        "7": "Mais de 4 vias", "8": "Entrada de garagem/propriedade",
+                        "9": "Outro cruzamento"},
+    "Junction_Control": {"0": "Sem cruzamento", "2": "Semáforo", "3": "Placa de pare",
+                         "4": "Preferencial ou sem controle", "1": "Agente de trânsito"},
+    "1st_Road_Class": {"1": "Autoestrada (Motorway)", "2": "Autoestrada A(M)",
+                       "3": "Rodovia principal (A)", "4": "Rodovia secundária (B)",
+                       "5": "Estrada local (C)", "6": "Rua sem classificação"},
 }
 NOME_FATOR = {"Light_Conditions": "Iluminação", "Road_Type": "Tipo de via",
               "Road_Surface_Conditions": "Superfície da pista",
-              "Weather_Conditions": "Clima", "Urban_or_Rural_Area": "Área"}
+              "Weather_Conditions": "Clima", "Urban_or_Rural_Area": "Área",
+              "Speed_limit": "Limite de velocidade", "Junction_Control": "Controle do cruzamento"}
+# fatores trocados na simulação "e se?"
+SIMULAR = ["Light_Conditions", "Speed_limit", "Junction_Control", "Road_Type",
+           "Road_Surface_Conditions", "Weather_Conditions"]
+OCULTAS = ["2nd_Road_Class", "Pedestrian_Crossing-Human_Control",
+           "Pedestrian_Crossing-Physical_Facilities", "Special_Conditions_at_Site", "Carriageway_Hazards"]
 
 
 # ---------------------------------------------------------------- modelo
@@ -65,30 +84,42 @@ class Preditor:
         self.celulas = pd.read_csv(pasta / "celulas_risco.csv")
         self.ranking = pd.read_csv(pasta / "distritos_risco.csv")
         self.distritos = sorted(a["distritos"])
+        self.oficial = "Speed_limit" in a["cats"]
 
-    def _linha(self, distrito, luz, via, area, superficie, clima, mes, dia):
+    def _linha(self, c):
+        """c: dicionário com o cenário (chaves = nomes das colunas, mais mes/dia/hora/distrito)."""
         a = self.art
-        loc = a["distritos"][distrito]
-        valores = {"Light_Conditions": luz, "Road_Surface_Conditions": superficie,
-                   "Road_Type": via, "Urban_or_Rural_Area": area,
-                   "Weather_Conditions": clima, "Vehicle_Type": "Car",  # sem efeito no modelo
-                   "District Area": distrito}
-        xc = [a["maps"][c].get(valores[c], 0) for c in a["cats"]]
-        m, dw = MESES.index(mes) + 1, DIAS.index(dia)
-        xn = [(loc["lat"] - a["mu"]["Latitude"]) / a["sd"]["Latitude"],
-              (loc["lon"] - a["mu"]["Longitude"]) / a["sd"]["Longitude"],
-              np.sin(2 * np.pi * m / 12), np.cos(2 * np.pi * m / 12),
-              np.sin(2 * np.pi * dw / 7), np.cos(2 * np.pi * dw / 7), float(dw >= 5)]
+        loc = a["distritos"][c["District Area"]]
+        v = dict(c)
+        v["Vehicle_Type"] = "Car"  # o tipo de veículo não tem efeito no modelo
+        if self.oficial:
+            pad = a["padroes_ocultos"].get(str(c.get("Junction_Detail", "0")), a["padroes_ocultos"]["geral"])
+            for k in OCULTAS:
+                v.setdefault(k, pad[k])
+        xc = [a["maps"][k].get(str(v[k]), 0) for k in a["cats"]]
+        m, dw = MESES.index(c["mes"]) + 1, DIAS.index(c["dia"])
+        num = {"Latitude": loc["lat"], "Longitude": loc["lon"],
+               "month_sin": np.sin(2 * np.pi * m / 12), "month_cos": np.cos(2 * np.pi * m / 12),
+               "dow_sin": np.sin(2 * np.pi * dw / 7), "dow_cos": np.cos(2 * np.pi * dw / 7),
+               "is_weekend": float(dw >= 5)}
+        if self.oficial:
+            h = HORAS.index(c["hora"]) + 0.5
+            num.update({"speed": float(c["Speed_limit"]), "hour_sin": np.sin(2 * np.pi * h / 24),
+                        "hour_cos": np.cos(2 * np.pi * h / 24), "hora_ok": 1.0})
+        xn = []
+        for k in a["num"]:
+            x = num[k]
+            if k in a["mu"]:
+                x = (x - a["mu"][k]) / a["sd"][k]
+            xn.append(x)
         return xc, xn
 
     @torch.no_grad()
-    def probabilidades(self, linhas):
+    def probabilidades(self, cenarios):
+        linhas = [self._linha(c) for c in cenarios]
         xc = torch.tensor([l[0] for l in linhas], dtype=torch.long)
         xn = torch.tensor([l[1] for l in linhas], dtype=torch.float32)
-        return torch.sigmoid(self.rede(xc, xn)).numpy()
-
-    def prob(self, *cenario):
-        return float(self.probabilidades([self._linha(*cenario)])[0])
+        return torch.sigmoid(self.rede(xc, xn)).numpy().astype(float)
 
     def faixa(self, p):
         return int(np.searchsorted(self.cortes, p)) + 1
@@ -108,16 +139,26 @@ def opcoes(coluna):
     return [(pt, en) for en, pt in PT[coluna].items()]
 
 
+def cenario(distrito, luz, via, area, superficie, clima, mes, dia,
+            velocidade="30", hora="18h", cruzamento="0", controle="0", classe="3"):
+    return {"District Area": distrito, "Light_Conditions": luz, "Road_Type": via,
+            "Urban_or_Rural_Area": area, "Road_Surface_Conditions": superficie,
+            "Weather_Conditions": clima, "mes": mes, "dia": dia, "Speed_limit": str(velocidade),
+            "hora": hora, "Junction_Detail": str(cruzamento), "Junction_Control": str(controle),
+            "1st_Road_Class": str(classe)}
+
+
 # ---------------------------------------------------------------- aba 1: consultar
-def consultar(distrito, luz, via, area, superficie, clima, mes, dia):
+def consultar(*args):
     pr = preditor()
-    if not distrito:
+    if not args[0]:
         return "Escolha um distrito.", None
-    cenario = [distrito, luz, via, area, superficie, clima, mes, dia]
-    p = pr.prob(*cenario)
+    c = cenario(*args)
+    p = float(pr.probabilidades([c])[0])
     fx = pr.faixa(p)
     media = pr.art["media_geral"]
-    real = pr.art["taxa_decil"][str(fx)] if str(fx) in pr.art["taxa_decil"] else pr.art["taxa_decil"][fx]
+    td = pr.art["taxa_decil"]
+    real = td[str(fx)] if str(fx) in td else td[fx]
     nivel = "ALTO" if fx >= 9 else ("MODERADO" if fx >= 6 else "BAIXO")
     texto = (f"## Risco {nivel}: {p:.1%} de chance de o acidente ser grave ou fatal\n"
              f"- Média de todos os acidentes: **{media:.1%}** (este cenário é "
@@ -128,21 +169,23 @@ def consultar(distrito, luz, via, area, superficie, clima, mes, dia):
              "Não é a previsão de um acidente específico._")
 
     # Simulação: troca um fator por vez e mede a variação
-    pos = {"Light_Conditions": 1, "Road_Type": 2, "Urban_or_Rural_Area": 3,
-           "Road_Surface_Conditions": 4, "Weather_Conditions": 5}
     alternativas, rotulos = [], []
-    for col, i in pos.items():
+    for col in SIMULAR:
+        if col in ("Speed_limit", "Junction_Control") and not pr.oficial:
+            continue
+        if col == "Junction_Control" and c["Junction_Detail"] == "0":
+            continue  # sem cruzamento, não faz sentido trocar o controle
         for en, pt in PT[col].items():
-            if en == cenario[i]:
+            if en == c[col] or (col == "Junction_Control" and en == "0"):
                 continue
-            c2 = list(cenario)
-            c2[i] = en
-            alternativas.append(pr._linha(*c2))
+            c2 = dict(c)
+            c2[col] = en
+            alternativas.append(c2)
             rotulos.append((NOME_FATOR[col], pt))
     ps = pr.probabilidades(alternativas)
     sim = pd.DataFrame(rotulos, columns=["Fator", "Novo valor"])
     sim["Risco"] = [f"{x:.1%}" for x in ps]
-    sim["Variação (p.p.)"] = np.round((ps.astype(float) - p) * 100, 1)
+    sim["Variação (p.p.)"] = np.round((ps - p) * 100, 1)
     sim = sim.sort_values("Variação (p.p.)").reset_index(drop=True)
     return texto, sim
 
@@ -181,15 +224,27 @@ def ranking(minimo, quantos):
 # ---------------------------------------------------------------- aba 3: priorizar lista
 COLUNAS_LISTA = ["local", "distrito", "iluminacao", "tipo_via", "area", "superficie",
                  "clima", "mes", "dia_semana"]
+COLUNAS_OPCIONAIS = {"limite_velocidade": ("Speed_limit", "30"), "hora": ("hora", "18h"),
+                     "cruzamento": ("Junction_Detail", "0"), "controle_cruzamento": ("Junction_Control", "0"),
+                     "classe_via": ("1st_Road_Class", "3")}
 
 
 def _valor(col, v):
-    """Aceita o valor original (inglês) ou o rótulo em português."""
+    """Aceita o valor original (código ou inglês) ou o rótulo em português."""
     v = str(v).strip()
     if col in PT:
         reverso = {pt.lower(): en for en, pt in PT[col].items()}
-        return reverso.get(v.lower(), v)
+        reverso.update({pt.split(" (")[0].lower(): en for en, pt in PT[col].items()})
+        if v.lower() in reverso:
+            return reverso[v.lower()]
+        if v.endswith(".0"):
+            v = v[:-2]
     return v
+
+
+def _hora(v):
+    v = str(v).strip().lower().replace("h", "").split(":")[0]
+    return f"{int(float(v)) % 24:02d}h" if v.replace(".", "").isdigit() else "18h"
 
 
 def priorizar(arquivo):
@@ -201,7 +256,7 @@ def priorizar(arquivo):
     faltando = [c for c in COLUNAS_LISTA if c not in lista.columns]
     if faltando:
         return None, None, f"Colunas faltando no CSV: {', '.join(faltando)}"
-    erros, linhas = [], []
+    erros, cens, idx = [], [], []
     for i, r in lista.iterrows():
         mes = MESES[int(r["mes"]) - 1] if str(r["mes"]).isdigit() else str(r["mes"]).capitalize()
         dia = str(r["dia_semana"]).capitalize()
@@ -211,16 +266,22 @@ def priorizar(arquivo):
         if mes not in MESES or dia not in DIAS:
             erros.append(f"linha {i + 2}: mês ou dia inválido")
             continue
-        linhas.append((i, pr._linha(r["distrito"], _valor("Light_Conditions", r["iluminacao"]),
-                                    _valor("Road_Type", r["tipo_via"]),
-                                    _valor("Urban_or_Rural_Area", r["area"]),
-                                    _valor("Road_Surface_Conditions", r["superficie"]),
-                                    _valor("Weather_Conditions", r["clima"]), mes, dia)))
-    if not linhas:
+        extra = {}
+        for col_csv, (campo, padrao) in COLUNAS_OPCIONAIS.items():
+            v = r[col_csv] if col_csv in lista.columns and pd.notna(r[col_csv]) else padrao
+            extra[campo] = _hora(v) if campo == "hora" else _valor(campo, v)
+        cens.append(cenario(r["distrito"], _valor("Light_Conditions", r["iluminacao"]),
+                            _valor("Road_Type", r["tipo_via"]), _valor("Urban_or_Rural_Area", r["area"]),
+                            _valor("Road_Surface_Conditions", r["superficie"]),
+                            _valor("Weather_Conditions", r["clima"]), mes, dia,
+                            extra["Speed_limit"], extra["hora"], extra["Junction_Detail"],
+                            extra["Junction_Control"], extra["1st_Road_Class"]))
+        idx.append(i)
+    if not cens:
         return None, None, "Nenhuma linha válida.\n" + "\n".join(erros)
-    ps = pr.probabilidades([l for _, l in linhas])
-    res = lista.loc[[i for i, _ in linhas]].copy()
-    res["risco_%"] = np.round(ps.astype(float) * 100, 1)
+    ps = pr.probabilidades(cens)
+    res = lista.loc[idx].copy()
+    res["risco_%"] = np.round(ps * 100, 1)
     res["faixa_1a10"] = [pr.faixa(p) for p in ps]
     res = res.sort_values("risco_%", ascending=False).reset_index(drop=True)
     res.insert(0, "prioridade", range(1, len(res) + 1))
@@ -238,12 +299,14 @@ def priorizar(arquivo):
 def sobre_md():
     a = preditor().art
     m = a["metricas_teste"]
+    extra = (" limite de velocidade, horário, tipo e controle do cruzamento e classe da via"
+             " (dados oficiais do Reino Unido),") if preditor().oficial else ""
     return f"""
 ### Como funciona
 Uma **rede neural (PyTorch)** com embeddings para as variáveis categóricas foi treinada com
 cerca de 460 mil acidentes reais do Reino Unido. Ela estima a probabilidade de um acidente
 ser **grave ou fatal** a partir de: distrito e localização, iluminação, tipo de via,
-área urbana/rural, superfície da pista, clima, mês e dia da semana.
+área urbana/rural, superfície da pista, clima,{extra} mês e dia da semana.
 
 ### Desempenho (conjunto de teste, nunca usado no treino)
 | Métrica | Valor | Referência ao acaso |
@@ -254,7 +317,7 @@ ser **grave ou fatal** a partir de: distrito e localização, iluminação, tipo
 | Graves/fatais capturados nos 20% de maior risco | {m['Captura top 20%']:.1%} | 20% |
 
 ### Limites
-- O sinal é fraco (ROC-AUC ~0,62): o dataset não tem velocidade, idade ou uso de cinto. Serve
+- O sinal é moderado: o dataset não tem velocidade real, idade ou uso de cinto. Serve
   para **priorizar**, não para prever um acidente.
 - Associação não é causa: a simulação mostra como o risco estimado muda, não garante o efeito
   de uma obra.
@@ -266,36 +329,54 @@ ser **grave ou fatal** a partir de: distrito e localização, iluminação, tipo
 def criar_app():
     pr = preditor()
     padrao = "Birmingham" if "Birmingham" in pr.distritos else pr.distritos[0]
+    rural = "Aberdeenshire" if "Aberdeenshire" in pr.distritos else padrao
     with gr.Blocks(title="Risco de acidentes graves") as demo:
         gr.Markdown("# Painel de risco de acidentes graves de trânsito\n"
                     "Apoio à decisão para gestores de trânsito: **onde e em quais condições** "
                     "um acidente tende a ser mais grave, para priorizar fiscalização, "
-                    "iluminação e obras.")
+                    "iluminação, limites de velocidade e obras.")
         with gr.Tab("1. Consultar e simular"):
             with gr.Row():
                 with gr.Column(scale=1):
                     distrito = gr.Dropdown(pr.distritos, value=padrao, label="Distrito")
+                    with gr.Row():
+                        area = gr.Dropdown(opcoes("Urban_or_Rural_Area"), value="Urban", label="Área")
+                        via = gr.Dropdown(opcoes("Road_Type"), value="Single carriageway", label="Tipo de via")
+                    entradas_extra = []
+                    if pr.oficial:
+                        with gr.Row():
+                            classe = gr.Dropdown(opcoes("1st_Road_Class"), value="3", label="Classe da via")
+                            vel = gr.Dropdown(opcoes("Speed_limit"), value="30", label="Limite de velocidade")
+                        with gr.Row():
+                            cruz = gr.Dropdown(opcoes("Junction_Detail"), value="0", label="Cruzamento")
+                            ctrl = gr.Dropdown(opcoes("Junction_Control"), value="0", label="Controle do cruzamento")
                     luz = gr.Dropdown(opcoes("Light_Conditions"), value="Daylight", label="Iluminação")
-                    via = gr.Dropdown(opcoes("Road_Type"), value="Single carriageway", label="Tipo de via")
-                    area = gr.Dropdown(opcoes("Urban_or_Rural_Area"), value="Urban", label="Área")
-                    sup = gr.Dropdown(opcoes("Road_Surface_Conditions"), value="Dry",
-                                      label="Superfície da pista")
-                    clima = gr.Dropdown(opcoes("Weather_Conditions"), value="Fine no high winds",
-                                        label="Clima")
-                    mes = gr.Dropdown(MESES, value="Julho", label="Mês")
-                    dia = gr.Dropdown(DIAS, value="Terça", label="Dia da semana")
+                    with gr.Row():
+                        sup = gr.Dropdown(opcoes("Road_Surface_Conditions"), value="Dry", label="Superfície da pista")
+                        clima = gr.Dropdown(opcoes("Weather_Conditions"), value="Fine no high winds", label="Clima")
+                    with gr.Row():
+                        mes = gr.Dropdown(MESES, value="Julho", label="Mês")
+                        dia = gr.Dropdown(DIAS, value="Terça", label="Dia da semana")
+                        if pr.oficial:
+                            hora = gr.Dropdown(HORAS, value="14h", label="Hora")
                     botao = gr.Button("Calcular risco", variant="primary")
                 with gr.Column(scale=1):
                     saida = gr.Markdown()
                     gr.Markdown("#### E se mudasse um fator? (mesmo cenário, trocando um item por vez)")
                     sim = gr.Dataframe(interactive=False)
             entradas = [distrito, luz, via, area, sup, clima, mes, dia]
+            if pr.oficial:
+                entradas += [vel, hora, cruz, ctrl, classe]
+                ex = [[rural, "Darkness - no lighting", "Single carriageway", "Rural", "Wet or damp",
+                       "Raining no high winds", "Dezembro", "Sábado", "60", "23h", "0", "0", "3"],
+                      [padrao, "Daylight", "Roundabout", "Urban", "Dry", "Fine no high winds",
+                       "Julho", "Terça", "30", "14h", "1", "4", "3"]]
+            else:
+                ex = [[rural, "Darkness - no lighting", "Single carriageway", "Rural", "Wet or damp",
+                       "Raining no high winds", "Dezembro", "Sábado"],
+                      [padrao, "Daylight", "Roundabout", "Urban", "Dry", "Fine no high winds", "Julho", "Terça"]]
             botao.click(consultar, entradas, [saida, sim])
-            rural = "Aberdeenshire" if "Aberdeenshire" in pr.distritos else padrao
-            gr.Examples([[rural, "Darkness - no lighting", "Single carriageway", "Rural",
-                          "Wet or damp", "Raining no high winds", "Dezembro", "Sábado"],
-                         [padrao, "Daylight", "Roundabout", "Urban", "Dry",
-                          "Fine no high winds", "Julho", "Terça"]], entradas)
+            gr.Examples(ex, entradas)
         with gr.Tab("2. Mapa e ranking de distritos"):
             with gr.Row():
                 with gr.Column():
@@ -314,8 +395,8 @@ def criar_app():
         with gr.Tab("3. Priorizar uma lista"):
             gr.Markdown("Envie um CSV com vários locais/situações (por exemplo, trechos que a "
                         "prefeitura quer avaliar). O painel devolve a lista **ordenada por risco**. "
-                        "Colunas: `" + "`, `".join(COLUNAS_LISTA) + "`. "
-                        "Veja `docs/exemplo_lista.csv`.")
+                        "Colunas: `" + "`, `".join(COLUNAS_LISTA) + "`; opcionais: `" +
+                        "`, `".join(COLUNAS_OPCIONAIS) + "`. Veja `docs/exemplo_lista.csv`.")
             arq = gr.File(label="CSV de entrada", file_types=[".csv"])
             exemplo = Path(__file__).parent / "docs" / "exemplo_lista.csv"
             if exemplo.exists():
