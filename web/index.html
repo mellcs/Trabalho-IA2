@@ -38,6 +38,10 @@
             <div>
               <h1 id="t-caixa">Caixa de entrada</h1>
               <p class="sub" id="caixa-resumo">Carregando mensagens…</p>
+              <div class="cab-extra">
+                <button class="btn btn-peq btn-vivo" id="b-vivo" aria-pressed="false"><span class="ponto-vivo"></span><span id="b-vivo-txt">Simular mensagens chegando</span></button>
+                <button class="btn btn-peq btn-fantasma" id="b-restaurar" title="Volta a caixa de demonstração ao estado inicial"><svg class="ic"><use href="#i-desfazer"/></svg><span>Restaurar demonstração</span></button>
+              </div>
             </div>
             <div class="acoes">
               <button class="btn" id="b-colar"><svg class="ic"><use href="#i-colar"/></svg><span>Colar<span class="lg"> mensagens</span></span></button>
@@ -72,7 +76,7 @@
           <div class="vazio">
             <svg class="ic grande"><use href="#i-caixa"/></svg>
             <b>Selecione uma mensagem</b>
-            <span>A fila já está em ordem: comece pelo topo. Use as setas ↑ ↓ para navegar.</span>
+            <span>A fila já está em ordem: comece pelo topo.<br>Atalhos: ↑ ↓ navegar · R resolver · C copiar resposta · / buscar</span>
           </div>
         </div>
       </div>

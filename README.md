@@ -37,7 +37,7 @@ Saber se **uma** mensagem é reclamação qualquer pessoa sabe lendo. O caro é 
 
 | Tela | O que faz |
 |---|---|
-| **Caixa de entrada** | Todas as mensagens (de qualquer canal) já analisadas pela rede e **ordenadas por prioridade**. Filtros por prioridade, motivo e canal, busca, importar CSV, colar várias mensagens e exportar a fila. As de prioridade baixa recebem **agradecimento automático com 1 clique**. |
+| **Caixa de entrada** | Todas as mensagens (de qualquer canal) já analisadas pela rede e **ordenadas por prioridade**. Filtros por prioridade, motivo e canal, busca, importar CSV, colar várias mensagens e exportar a fila. As de prioridade baixa recebem **agradecimento automático com 1 clique**. Para a demonstração, há um modo que **simula mensagens chegando ao vivo** e um botão para restaurar a caixa. Atalhos: ↑ ↓, R (resolver), C (copiar resposta), / (buscar). |
 | **Detalhe da mensagem** | As palavras que mais pesaram ficam **destacadas no próprio texto**. Mostra o motivo provável, o **prazo de resposta**, a **ação para a equipe** e uma **resposta sugerida** para revisar e enviar ("Copiar e resolver" passa para a próxima). Botão "A IA errou?" guarda a correção para o próximo treino. |
 | **Painel do lojista** | Reclamações por mês e por motivo, com **alertas automáticos** de alta brusca (ex.: entrega +86% em mar/2018), e uma **calculadora** de horas e dinheiro economizados. |
 | **Testar mensagem + API** | Analisa qualquer texto e mostra como integrar via HTTP (`POST /api/analisar`). |

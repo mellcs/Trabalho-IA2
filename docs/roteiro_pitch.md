@@ -3,7 +3,7 @@
 Apresentação: `docs/Apresentacao_Fila_Certa.html`. Abra no navegador, aperte **F** para tela cheia e use as **setas** (ou clique) para avançar. **B** apaga a tela.
 O canto superior direito de cada slide mostra quem fala. O total fica perto de 7 minutos; a demo é a parte mais longa.
 
-**Antes de começar:** rode `python app.py` e deixe o navegador aberto na Caixa de entrada. Se a demo falhar, os slides da demonstração têm prints do app real.
+**Antes de começar:** rode `python app.py`, clique em **Restaurar demonstração** (volta a caixa ao estado inicial, caso vocês tenham treinado a demo nesse computador) e deixe o navegador aberto na Caixa de entrada. Se a demo falhar, os slides da demonstração têm prints do app real.
 
 | Slides | Quem | Assunto |
 |---|---|---|
@@ -39,6 +39,8 @@ O canto superior direito de cada slide mostra quem fala. O total fica perto de 7
 1. **Caixa de entrada.**
    > Aqui chegaram 128 mensagens de vários canais. A rede já leu todas: as 38 urgentes estão no topo. E olhem esse aviso verde: 56 mensagens podem esperar, porque nessa faixa só 2% são reclamações. Com um clique, elas recebem um agradecimento automático.
    Clique em **Agradecer as 56** e depois em **Desfazer** no aviso.
+   > E numa loja de verdade as mensagens não param de chegar. Vou simular.
+   Clique em **Simular mensagens chegando**. A cada 3 segundos entra uma mensagem nova, já classificada; quando é urgente, aparece o aviso "Nova mensagem urgente". Depois de 2 ou 3 mensagens, clique de novo para parar.
 2. **Abrir a primeira mensagem.**
    > Ao abrir, a parte que pesou fica destacada no texto. A rede diz que é reclamação, prioridade alta, responder em até 2 horas. O motivo é entrega, e ela já diz o que fazer: consultar a transportadora. Embaixo, a resposta pronta. Eu reviso, clico em "Copiar e resolver" e ela já me leva para a próxima.
    Clique em **Copiar e resolver**.

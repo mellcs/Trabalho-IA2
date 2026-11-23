@@ -134,6 +134,14 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--coral);b
 .ok-ic{color:var(--verde);display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;margin-left:auto}
 .lista-vazia{padding:40px 16px;text-align:center;color:var(--mudo)}
 
+.cab-extra{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn-vivo .ponto-vivo{width:8px;height:8px;border-radius:50%;background:var(--mudo)}
+.btn-vivo[aria-pressed=true]{background:var(--coral-bg);border-color:#F3C2B1;color:var(--coral-tx)}
+.btn-vivo[aria-pressed=true] .ponto-vivo{background:var(--coral);animation:pisca 1s infinite}
+@keyframes pisca{50%{opacity:.25}}
+.item.nova{animation:chegou 2.4s ease}
+@keyframes chegou{0%{background:#FFE3D6;transform:translateY(-6px)}15%{transform:none}100%{background:var(--sup)}}
+
 /* ---------- detalhe ---------- */
 .col-detalhe{overflow:auto;background:var(--sup2);min-width:0}
 .vazio{height:100%;display:grid;place-content:center;justify-items:center;text-align:center;gap:8px;color:var(--mudo);padding:40px}

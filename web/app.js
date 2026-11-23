@@ -279,6 +279,8 @@
     const digitando = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
     if (e.key === "/" && caixaAtiva && !digitando) { e.preventDefault(); $("#f-busca").focus(); return; }
     if (e.key === "Escape") { fecharDetalhe(); if (digitando) document.activeElement.blur(); return; }
+    if (caixaAtiva && !digitando && S.sel && (e.key === "r" || e.key === "R")) { e.preventDefault(); $("#b-resolver")?.click(); return; }
+    if (caixaAtiva && !digitando && S.sel && (e.key === "c" || e.key === "C")) { e.preventDefault(); $("#b-copiar")?.click(); return; }
     if (!caixaAtiva || digitando || !["ArrowDown", "ArrowUp"].includes(e.key)) return;
     e.preventDefault();
     const l = filtradas(); if (!l.length) return;
@@ -287,6 +289,53 @@
     selecionar(l[i].id, false);
     $(`#lista .item[data-id="${CSS.escape(l[i].id)}"]`)?.scrollIntoView({ block: "nearest" });
   });
+
+
+  // ---------- simular mensagens chegando (demonstração ao vivo) ----------
+  const CHEGANDO = [
+    { canal: "WhatsApp", cliente: "Mariana T.", texto: "Oi, meu pedido era pra ter chegado ontem e até agora nada, o rastreio parou" },
+    { canal: "Instagram", cliente: "Rodrigo P.", texto: "Chegou certinho, produto lindo! Obrigado 😍" },
+    { canal: "E-mail", cliente: "Fernanda L.", texto: "Recebi a cafeteira com a tampa quebrada, preciso da troca urgente" },
+    { canal: "Avaliação", cliente: "Pedido #9b21f0", texto: "Ótimo, superou as expectativas" },
+    { canal: "Reclame Aqui", cliente: "Gustavo M.", texto: "Cancelei a compra há 10 dias e o estorno não caiu. Ninguém responde." },
+    { canal: "WhatsApp", cliente: "Aline S.", texto: "Pedi tamanho M e veio G, como faço pra trocar?" },
+    { canal: "SAC", cliente: "Eduardo C.", texto: "Tudo certo com o pedido, entrega rápida" },
+    { canal: "E-mail", cliente: "Patrícia R.", texto: "Comprei 3 unidades e só vieram 2 na caixa" },
+  ];
+  let vivoT = null, vivoI = 0;
+  function pararVivo() {
+    clearInterval(vivoT); vivoT = null;
+    $("#b-vivo").setAttribute("aria-pressed", "false");
+    $("#b-vivo-txt").textContent = vivoI >= CHEGANDO.length ? "Simular de novo" : "Simular mensagens chegando";
+  }
+  async function chegarUma() {
+    if (vivoI >= CHEGANDO.length) { pararVivo(); vivoI = 0; return; }
+    const m = { ...CHEGANDO[vivoI++], id: `sim-${Date.now()}`, data: "agora" };
+    try {
+      const [r] = await api("/api/lote", { mensagens: [m] });
+      S.msgs.unshift(r); desenharFiltros(); desenharCaixa();
+      const li = $(`#lista .item[data-id="${CSS.escape(r.id)}"]`);
+      if (li) { li.classList.add("nova"); li.scrollIntoView({ block: "nearest", behavior: "smooth" }); }
+      if (r.prioridade === "Alta") toast(`Nova mensagem urgente: ${esc(r.cliente)} (${esc(r.canal)}) · ${esc(r.motivo)}`);
+    } catch (e) { pararVivo(); toast("Erro na simulação: " + e.message); }
+  }
+  $("#b-vivo").onclick = () => {
+    if (vivoT) { pararVivo(); return; }
+    $("#b-vivo").setAttribute("aria-pressed", "true"); $("#b-vivo-txt").textContent = "Recebendo… (clique para parar)";
+    S.filtro.faixa = "pendentes"; chegarUma(); vivoT = setInterval(chegarUma, 3500);
+  };
+
+  // ---------- restaurar a demonstração ----------
+  $("#b-restaurar").onclick = async () => {
+    pararVivo(); vivoI = 0;
+    S.resolvidas.clear(); S.correcoes = {}; S.importadas = []; S.cache.clear(); salvar();
+    S.filtro = { faixa: "pendentes", motivo: "", canal: "", busca: "" };
+    $("#f-busca").value = "";
+    S.msgs = await api("/api/caixa");
+    desenharFiltros(); desenharCaixa(); fecharDetalhe();
+    const p = filtradas()[0]; if (p && matchMedia("(min-width:901px)").matches) selecionar(p.id, false);
+    toast("Demonstração restaurada: caixa de entrada como no início.");
+  };
 
   // agradecer automaticamente as de prioridade baixa
   $("#b-agradecer").onclick = () => {
