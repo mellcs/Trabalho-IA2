@@ -7,7 +7,7 @@ Modalidade: **treinamento de rede neural** (PLN em português, PyTorch)
 
 > Começamos o trabalho com outro tema (gravidade de acidentes de trânsito no Reino Unido) e trocamos porque o melhor modelo ficou em ROC-AUC 0,63. O que foi feito e o motivo da troca estão em [HISTORICO_DO_PROJETO.md](HISTORICO_DO_PROJETO.md), e o código antigo está em [`tema1_acidentes/`](tema1_acidentes/).
 
-![App: análise de um comentário](results/app_comentario.png)
+![Fila Certa: caixa de entrada](results/app_caixa.png)
 
 ---
 
@@ -31,26 +31,32 @@ Quando a entrega falha, a chance de reclamação fica **6,6× maior**. São exat
 
 ![Atraso x reclamação](results/atraso_reclamacao.png)
 
-## 2. A solução
+## 2. A solução: Fila Certa
 
-Uma **rede neural treinada do zero** lê a mensagem do cliente em português e devolve, em menos de um segundo:
+Saber se **uma** mensagem é reclamação qualquer pessoa sabe lendo. O caro é **ler todas** para achar as poucas que precisam de resposta urgente, e saber o que fazer com cada uma. A Fila Certa é uma **caixa de entrada que se organiza sozinha**:
 
-1. **se é reclamação**, com a probabilidade;
-2. a **prioridade de atendimento** (alta, média ou baixa);
-3. o **motivo provável**: entrega/atraso, defeito/qualidade, produto diferente, pedido incompleto, atendimento/reembolso;
-4. **as palavras que mais pesaram** na decisão, para a equipe confiar (ou não) no resultado.
+| Tela | O que faz |
+|---|---|
+| **Caixa de entrada** | Todas as mensagens (de qualquer canal) já analisadas pela rede e **ordenadas por prioridade**. Filtros por prioridade, motivo e canal, busca, importar CSV, colar várias mensagens e exportar a fila. As de prioridade baixa recebem **agradecimento automático com 1 clique**. |
+| **Detalhe da mensagem** | As palavras que mais pesaram ficam **destacadas no próprio texto**. Mostra o motivo provável, o **prazo de resposta**, a **ação para a equipe** e uma **resposta sugerida** para revisar e enviar ("Copiar e resolver" passa para a próxima). Botão "A IA errou?" guarda a correção para o próximo treino. |
+| **Painel do lojista** | Reclamações por mês e por motivo, com **alertas automáticos** de alta brusca (ex.: entrega +86% em mar/2018), e uma **calculadora** de horas e dinheiro economizados. |
+| **Testar mensagem + API** | Analisa qualquer texto e mostra como integrar via HTTP (`POST /api/analisar`). |
 
-Num **lote** de mensagens (CSV), o app devolve a fila ordenada por prioridade e o resumo dos problemas mais frequentes.
+O app é web (FastAPI + HTML/CSS/JS sem framework), funciona **no computador, no tablet e no celular** e roda sem internet depois de instalado.
+
+![Detalhe de uma reclamação](results/app_caixa.png)
 
 **Valor gerado:**
 
 | Para quem | Valor |
 |---|---|
-| Equipe de atendimento | Lê primeiro quem está insatisfeito. Na faixa **alta** (21% das mensagens), **95%** são reclamações de verdade. |
-| Lojista | Vê qual problema se repete e corrige a causa (trocar de transportadora, revisar fornecedor ou anúncio). |
+| Equipe de atendimento | Lê primeiro quem está insatisfeito. Lendo só alta + média (41% das mensagens), encontra **96% das reclamações**. Na faixa **alta** (21% das mensagens), **95%** são reclamações de verdade. |
+| Lojista | Vê qual problema se repete (e quando ele dispara) e corrige a causa: transportadora, fornecedor ou anúncio. |
 | Cliente | Recebe resposta mais rápida, o que reduz avaliação negativa pública e cliente perdido. |
 
-Na faixa **baixa** (59% das mensagens) só 2,2% são reclamações. São mensagens que podem esperar ou receber uma resposta automática de agradecimento.
+Na faixa **baixa** (59% das mensagens) só 2,2% são reclamações. Essas recebem uma resposta automática de agradecimento.
+
+![Painel do lojista](results/app_painel.png)
 
 ### Por que treinar com avaliações que já têm nota?
 
@@ -185,26 +191,29 @@ cd Trabalho-IA2
 pip install -r requirements.txt
 
 # só o app (usa o modelo já treinado em models/)
-python app.py                     # abre http://127.0.0.1:7860
+python app.py                     # abre http://127.0.0.1:7860 no navegador
+                                  # (--host 0.0.0.0 para abrir no celular pelo Wi-Fi)
 
 # reproduzir tudo do zero
 python -m src.baixar_dados        # baixa os CSVs da Olist para data/ (sem login)
 python -m src.treinar             # ~15 min em CPU; regrava models/ e results/
+python -m src.preparar_demo       # regrava a caixa de demonstração e o painel
 ```
 
 **Google Colab:** abra [`notebooks/Trabalho2_IA2_Triagem_Reclamacoes.ipynb`](notebooks/Trabalho2_IA2_Triagem_Reclamacoes.ipynb). Ele clona o repositório, baixa os dados e roda tudo do começo ao fim.
 
 | Pasta | Conteúdo |
 |---|---|
-| `src/` | `dados.py` (limpeza e divisão), `texto.py` (tokenização e vocabulário), `modelo.py` (BiLSTM, CNN e treino), `motivos.py`, `inferencia.py`, `treinar.py` (pipeline completo), `baixar_dados.py` |
-| `app.py` | App Gradio: um comentário, lote CSV e "como funciona" |
-| `models/` | `rede.pt`, `vocab.json`, `config.json`, `baseline.joblib` |
+| `src/` | `dados.py` (limpeza e divisão), `texto.py` (tokenização e vocabulário), `modelo.py` (BiLSTM, CNN e treino), `motivos.py`, `inferencia.py` (inclui a explicação por palavra), `respostas.py` (prazo, ação e resposta sugerida), `treinar.py` (pipeline completo), `preparar_demo.py` (caixa de demonstração e painel), `baixar_dados.py` |
+| `app.py` | Servidor (FastAPI) e API: `/api/analisar`, `/api/lote`, `/api/caixa`, `/api/painel` |
+| `web/` | Interface: caixa de entrada, detalhe, painel, testar e como funciona (responsiva) |
+| `models/` | `rede.pt`, `vocab.json`, `config.json`, `baseline.joblib`, `caixa_demo.json`, `painel.json` |
 | `results/` | gráficos, `metricas.json`, `resultados.md`, `erros.md`, `motivos.md`, prints do app |
 | `notebooks/` | notebook Colab ponta a ponta |
 | `docs/` | CSV de exemplo para o app, apresentação do pitch (HTML: abra no navegador, tecla F para tela cheia) e roteiro |
 | `tema1_acidentes/` | primeiro tema (acidentes no Reino Unido), mantido como histórico |
 
-![App: lote CSV](results/app_lote.png)
+![No celular](results/app_celular.png)
 
 ## 9. Limitações
 

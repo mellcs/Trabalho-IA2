@@ -1,0 +1,1026 @@
+[
+ {
+  "id": "c0",
+  "canal": "WhatsApp",
+  "cliente": "Carla M.",
+  "texto": "Boa tarde, comprei dia 02 e até agora nada do pedido, o rastreio não atualiza faz uma semana",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c1",
+  "canal": "E-mail",
+  "cliente": "João P.",
+  "texto": "Recebi o liquidificador com a jarra trincada. Quero a troca o quanto antes.",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c2",
+  "canal": "Instagram",
+  "cliente": "Ana L.",
+  "texto": "Amei a bolsa, chegou antes do prazo e bem embalada!",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c3",
+  "canal": "Reclame Aqui",
+  "cliente": "Rafael S.",
+  "texto": "Pedi a cor azul e veio preta. Totalmente diferente do anúncio.",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c4",
+  "canal": "SAC",
+  "cliente": "Bruna T.",
+  "texto": "Já mandei três e-mails e ninguém responde, quero o reembolso do meu dinheiro",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c5",
+  "canal": "WhatsApp",
+  "cliente": "Diego R.",
+  "texto": "Comprei 2 unidades e só veio uma na caixa",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c6",
+  "canal": "E-mail",
+  "cliente": "Lucas F.",
+  "texto": "Produto ok, entrega rápida, recomendo a loja",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c7",
+  "canal": "Instagram",
+  "cliente": "Paula V.",
+  "texto": "o tênis parou de funcionar a luz depois de dois dias de uso",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c8",
+  "canal": "WhatsApp",
+  "cliente": "Marcos A.",
+  "texto": "Chegou certinho, obrigado pela atenção",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c9",
+  "canal": "Reclame Aqui",
+  "cliente": "Júlia C.",
+  "texto": "Paguei e o pedido foi cancelado sem explicação. Até agora não estornaram.",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c10",
+  "canal": "SAC",
+  "cliente": "Pedro H.",
+  "texto": "Gostei do produto, mas a caixa veio um pouco amassada",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c11",
+  "canal": "E-mail",
+  "cliente": "Sofia B.",
+  "texto": "A entrega atrasou 10 dias e ninguém da transportadora deu satisfação",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c12",
+  "canal": "Instagram",
+  "cliente": "Thiago N.",
+  "texto": "Qualidade excelente, superou minhas expectativas",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c13",
+  "canal": "WhatsApp",
+  "cliente": "Larissa G.",
+  "texto": "o produto é falsificado não é original como diz no site",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c14",
+  "canal": "SAC",
+  "cliente": "Felipe O.",
+  "texto": "Recebi tudo, mas faltou o manual de instruções",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c15",
+  "canal": "Reclame Aqui",
+  "cliente": "Camila R.",
+  "texto": "Não recebi meu pedido e a loja não responde as mensagens",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c16",
+  "canal": "E-mail",
+  "cliente": "Bruno K.",
+  "texto": "Muito bom, já é a terceira vez que compro",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "c17",
+  "canal": "WhatsApp",
+  "cliente": "Renata D.",
+  "texto": "veio quebrado o vidro do porta retrato",
+  "nota": null,
+  "data": "hoje"
+ },
+ {
+  "id": "eb52c9ea90",
+  "canal": "Avaliação",
+  "cliente": "Pedido #37b2da",
+  "texto": "Película do Fusor Lexmark E250 260 350 460 so chegou as peliculas falta a unidade de cilindro.",
+  "nota": 1,
+  "data": "21/03/2018"
+ },
+ {
+  "id": "a007eac729",
+  "canal": "Avaliação",
+  "cliente": "Pedido #fb746a",
+  "texto": "O produto nao é o mesmo da foto, a qualidade é pessima, muito mal acabado, faltam furos para instalar o aparelho, sugiro retirar esse fornecedor do site da lannister. estou devolvendo",
+  "nota": 1,
+  "data": "06/03/2018"
+ },
+ {
+  "id": "606cdc31dd",
+  "canal": "Avaliação",
+  "cliente": "Pedido #39b4b4",
+  "texto": "E uma compra secura eu gastei muito de compra nessa empresa",
+  "nota": 5,
+  "data": "01/03/2018"
+ },
+ {
+  "id": "51ba061bc0",
+  "canal": "Avaliação",
+  "cliente": "Pedido #54467f",
+  "texto": "O produto e igual a foto do site. So achei que demora mtu p entregar.",
+  "nota": 4,
+  "data": "10/03/2018"
+ },
+ {
+  "id": "8cee1986b6",
+  "canal": "Avaliação",
+  "cliente": "Pedido #e3e81e",
+  "texto": "Parabéns as Lojas lannister . Sempre com bons produtos,ótimo atendimento e entrega rápida",
+  "nota": 5,
+  "data": "03/03/2018"
+ },
+ {
+  "id": "2ea3039b2b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #71c948",
+  "texto": "Entrega rápida dentro do prazo",
+  "nota": 5,
+  "data": "28/03/2018"
+ },
+ {
+  "id": "aed28228ca",
+  "canal": "Avaliação",
+  "cliente": "Pedido #3602a8",
+  "texto": "Muito atraso na entrega, sem Feedback com cliente. Espero nunca mais precisar comprar algo nesta loja. Não recomendaria nunca está loja! Estou até com medo de não receber o produto !\r\nIndignado!!!",
+  "nota": 1,
+  "data": "23/03/2018"
+ },
+ {
+  "id": "ad7e66e073",
+  "canal": "Avaliação",
+  "cliente": "Pedido #f3da3b",
+  "texto": "a capa era de galaxy note 8 e veiod e galaxy s8\r\nnao serve no celular",
+  "nota": 1,
+  "data": "29/03/2018"
+ },
+ {
+  "id": "8e203b9e8b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #5a909d",
+  "texto": "n sei oq esta acontecendo, se a culpa é dos correios ou n ja passou do prazo de entrega e nd ainda ja esta a 11 dias parado so em um lugar ate a data de hj 26/03/2018 n sei oq fazer",
+  "nota": 2,
+  "data": "25/03/2018"
+ },
+ {
+  "id": "7a71d6106c",
+  "canal": "Avaliação",
+  "cliente": "Pedido #6d6c3a",
+  "texto": "NAO TENHO COMO RECOMENDAR POIS ATE AGORA NAO RECEBI O PRODUTO",
+  "nota": 1,
+  "data": "17/03/2018"
+ },
+ {
+  "id": "4f538107c1",
+  "canal": "Avaliação",
+  "cliente": "Pedido #34de5f",
+  "texto": "as cores nao sao da propaganda",
+  "nota": 1,
+  "data": "09/03/2018"
+ },
+ {
+  "id": "d9f8eed446",
+  "canal": "Avaliação",
+  "cliente": "Pedido #7ec0af",
+  "texto": "O produto foi entregue no prazo, o guarda chuva é excelente com muita qualidade.",
+  "nota": 5,
+  "data": "17/03/2018"
+ },
+ {
+  "id": "12252bcc7a",
+  "canal": "Avaliação",
+  "cliente": "Pedido #325c1a",
+  "texto": "Recebi a película, agora só falta receber o telefone celular para testá-la.",
+  "nota": 4,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "7c2013da5d",
+  "canal": "Avaliação",
+  "cliente": "Pedido #ace923",
+  "texto": "Ainda n recebi a entrega",
+  "nota": 2,
+  "data": "22/03/2018"
+ },
+ {
+  "id": "45f17d4d64",
+  "canal": "Avaliação",
+  "cliente": "Pedido #ffec1a",
+  "texto": "Amo comprar no baratheon, sempre recebemos os produtos antes do prazo da entrega. As ofertas cabe em nossos bolsos.",
+  "nota": 4,
+  "data": "29/03/2018"
+ },
+ {
+  "id": "b18204ed1b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #a402af",
+  "texto": "É a primeira vez que um produto não chega no prazo",
+  "nota": 2,
+  "data": "08/03/2018"
+ },
+ {
+  "id": "5407e1832e",
+  "canal": "Avaliação",
+  "cliente": "Pedido #0207f5",
+  "texto": "O processo de compra foi super rápido e a entrega aconteceu no prazo. Quanto ao produto ainda nao utilizei e não posso avaliar, mas o serviço da lannister foi muito bom.",
+  "nota": 5,
+  "data": "20/03/2018"
+ },
+ {
+  "id": "26688029b9",
+  "canal": "Avaliação",
+  "cliente": "Pedido #756746",
+  "texto": "Adorei o relogio muito bem embalado.",
+  "nota": 5,
+  "data": "22/03/2018"
+ },
+ {
+  "id": "66528eaecb",
+  "canal": "Avaliação",
+  "cliente": "Pedido #0eb6a1",
+  "texto": "Amei como sempre vem tudo embalado.. Não. Amostra como. Outros loja... Super feliz no início até o. Recebendo. Do. Produto nota 10000👍",
+  "nota": 5,
+  "data": "20/03/2018"
+ },
+ {
+  "id": "b3de70c89b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #55d400",
+  "texto": "Excelente mochila, entrega super rápida. Super recomendo essa loja!",
+  "nota": 5,
+  "data": "22/03/2018"
+ },
+ {
+  "id": "a3326c6050",
+  "canal": "Avaliação",
+  "cliente": "Pedido #c7d2e4",
+  "texto": "Só foi entregue o cartucho da tinta preta. Falta o outro cartucho da tinta colorida. Entretanto, a cobrança foi dos 2 cartuchos e ainda foi duplicado o valor do frete.",
+  "nota": 1,
+  "data": "17/03/2018"
+ },
+ {
+  "id": "3253578b1c",
+  "canal": "Avaliação",
+  "cliente": "Pedido #d4c9b6",
+  "texto": "Minha entrega voltou estou com dificuldades de recebe-la novamente.\r\nMotivo foi digitado numero errado do predio para a entrega.",
+  "nota": 4,
+  "data": "23/03/2018"
+ },
+ {
+  "id": "15ffd49b9a",
+  "canal": "Avaliação",
+  "cliente": "Pedido #410f65",
+  "texto": "Muito bom nao fica froxo onde conecta firme",
+  "nota": 5,
+  "data": "18/03/2018"
+ },
+ {
+  "id": "2b8725e08e",
+  "canal": "Avaliação",
+  "cliente": "Pedido #3e9e43",
+  "texto": "Entrega rápida antes do prazo",
+  "nota": 5,
+  "data": "08/03/2018"
+ },
+ {
+  "id": "dd4750c38a",
+  "canal": "Avaliação",
+  "cliente": "Pedido #986581",
+  "texto": "Não é a primeira vez que compro nas lannister e na hora da compra dão um prazo pra entrega e depois estendem o prazo bem mais....demorou muito pra chegar, além do prazo estipulado na hora da compra",
+  "nota": 4,
+  "data": "10/03/2018"
+ },
+ {
+  "id": "d925a04055",
+  "canal": "Avaliação",
+  "cliente": "Pedido #4e5d78",
+  "texto": "Excelente produto, conforme o anúncio",
+  "nota": 5,
+  "data": "17/03/2018"
+ },
+ {
+  "id": "14751e478d",
+  "canal": "Avaliação",
+  "cliente": "Pedido #790512",
+  "texto": "Poderia avaliar melhor, quando meu produto for entregue, pois até a presente data não foi\r\n\r\nSilvania",
+  "nota": 1,
+  "data": "22/03/2018"
+ },
+ {
+  "id": "64b29c0326",
+  "canal": "Avaliação",
+  "cliente": "Pedido #bf5099",
+  "texto": "Recebi um e-mail da lannister.com perguntando se o produto tinha sido entregue, mas, até o momento não foi.",
+  "nota": 1,
+  "data": "16/03/2018"
+ },
+ {
+  "id": "368722f2ee",
+  "canal": "Avaliação",
+  "cliente": "Pedido #19f876",
+  "texto": "Prazo ruim, sem retorno.",
+  "nota": 1,
+  "data": "25/03/2018"
+ },
+ {
+  "id": "7b00c72b69",
+  "canal": "Avaliação",
+  "cliente": "Pedido #e7741e",
+  "texto": "Muito bom ... a transportadora dentro do prazo ótimo.",
+  "nota": 5,
+  "data": "13/03/2018"
+ },
+ {
+  "id": "3fd5c81297",
+  "canal": "Avaliação",
+  "cliente": "Pedido #c9ae6f",
+  "texto": "Compra foi tranquila. Entrega aconteceu antes do prazo.",
+  "nota": 5,
+  "data": "07/03/2018"
+ },
+ {
+  "id": "cc1462425d",
+  "canal": "Avaliação",
+  "cliente": "Pedido #6ee722",
+  "texto": "Gostei do produto. Veio certinho e bem embalado. Até vieram alguns a mais. Recomendo!",
+  "nota": 5,
+  "data": "27/03/2018"
+ },
+ {
+  "id": "2e4c310193",
+  "canal": "Avaliação",
+  "cliente": "Pedido #1864e4",
+  "texto": "COMPREI DOIS SO ENTREGARAM 1",
+  "nota": 2,
+  "data": "14/03/2018"
+ },
+ {
+  "id": "d804b275b5",
+  "canal": "Avaliação",
+  "cliente": "Pedido #1b20dd",
+  "texto": "Recebi outro perfume e não o emcomendado",
+  "nota": 1,
+  "data": "03/03/2018"
+ },
+ {
+  "id": "d8dfba7596",
+  "canal": "Avaliação",
+  "cliente": "Pedido #43124f",
+  "texto": "Pedi 4 unidades do produto e recebi só 3 até o momento é o aplicativo acusa que eu já recebi o produto. Lamentável é absurdo. Onde reclamo?",
+  "nota": 1,
+  "data": "30/03/2018"
+ },
+ {
+  "id": "f3bd714ba4",
+  "canal": "Avaliação",
+  "cliente": "Pedido #89e023",
+  "texto": "Produto nao foi entregue no prazo.. solicito o estorno do valor ja pago...",
+  "nota": 1,
+  "data": "28/03/2018"
+ },
+ {
+  "id": "73d9889828",
+  "canal": "Avaliação",
+  "cliente": "Pedido #58a2de",
+  "texto": "Me parece que os Correios perderam o produto. Não posso culpar a loja. Só espero que possam cobrar os Correios e reenviar o produto da maneira mais rápida possível, uma vez que tenho necessidade dele.",
+  "nota": 1,
+  "data": "31/03/2018"
+ },
+ {
+  "id": "634679fb40",
+  "canal": "Avaliação",
+  "cliente": "Pedido #845198",
+  "texto": "qualidade.",
+  "nota": 5,
+  "data": "02/03/2018"
+ },
+ {
+  "id": "88c2ca4a14",
+  "canal": "Avaliação",
+  "cliente": "Pedido #5c2049",
+  "texto": "Estou sem trabalha por que o meu kit de tesouras fio de navalha não chego e eu quero receber sou cliente a tanto tempo e acontece isso comigo como vai ficar minha cituaçao",
+  "nota": 2,
+  "data": "17/03/2018"
+ },
+ {
+  "id": "503f504e7d",
+  "canal": "Avaliação",
+  "cliente": "Pedido #f6ed68",
+  "texto": "Não recebi o produto favor me informe quando chegará",
+  "nota": 1,
+  "data": "22/03/2018"
+ },
+ {
+  "id": "bbb8299958",
+  "canal": "Avaliação",
+  "cliente": "Pedido #8e6942",
+  "texto": "Produto de boa qualidade. Só a entrega q demorou um pouco",
+  "nota": 5,
+  "data": "17/03/2018"
+ },
+ {
+  "id": "156aa45f91",
+  "canal": "Avaliação",
+  "cliente": "Pedido #b97647",
+  "texto": "acabei de usar uma bateria está tudo perfeito obrigada",
+  "nota": 5,
+  "data": "09/03/2018"
+ },
+ {
+  "id": "6e385535a7",
+  "canal": "Avaliação",
+  "cliente": "Pedido #aaeaac",
+  "texto": "vale o custo benefício",
+  "nota": 4,
+  "data": "10/03/2018"
+ },
+ {
+  "id": "2c4382abe2",
+  "canal": "Avaliação",
+  "cliente": "Pedido #0b7acd",
+  "texto": "Faltaram duas embalagens",
+  "nota": 1,
+  "data": "22/03/2018"
+ },
+ {
+  "id": "8a51942eae",
+  "canal": "Avaliação",
+  "cliente": "Pedido #ac811e",
+  "texto": "recomendo quem estiver a procura.",
+  "nota": 5,
+  "data": "08/03/2018"
+ },
+ {
+  "id": "59c286c1e4",
+  "canal": "Avaliação",
+  "cliente": "Pedido #2ff0c3",
+  "texto": "A entrega foi prejudicada em função da greve dos correios.",
+  "nota": 4,
+  "data": "18/03/2018"
+ },
+ {
+  "id": "7fb985b85b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #64607b",
+  "texto": "Só recebi um item do pedido",
+  "nota": 1,
+  "data": "21/03/2018"
+ },
+ {
+  "id": "37e59505ef",
+  "canal": "Avaliação",
+  "cliente": "Pedido #2ed2bc",
+  "texto": "Ótimo produto é foi entregue antes do prazo.",
+  "nota": 5,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "a9dd71a622",
+  "canal": "Avaliação",
+  "cliente": "Pedido #4e5746",
+  "texto": "Muita demora na entrega do produto.\r\nNão compraria novamente!",
+  "nota": 2,
+  "data": "23/03/2018"
+ },
+ {
+  "id": "0f67d495e5",
+  "canal": "Avaliação",
+  "cliente": "Pedido #553e31",
+  "texto": "O produto é bom, mas a lannister deve estar fazendo uma promoção às avessas, pois paguei 2 mas recebi só 1, já fiz a reclamação no site mas até agora nada!",
+  "nota": 1,
+  "data": "17/03/2018"
+ },
+ {
+  "id": "a21048517a",
+  "canal": "Avaliação",
+  "cliente": "Pedido #f4a9a8",
+  "texto": "Chega a ser irritante o fato de você comprar um produto para dar de presente de aniversário , que no caso é hoje dia 18/03/2018 , e o produto com data de chegada 16/03/2018 não chegar a tempo .",
+  "nota": 1,
+  "data": "18/03/2018"
+ },
+ {
+  "id": "5a5c8c8ec3",
+  "canal": "Avaliação",
+  "cliente": "Pedido #b68f6e",
+  "texto": "Fácil instalação",
+  "nota": 5,
+  "data": "08/03/2018"
+ },
+ {
+  "id": "2b37b92cb3",
+  "canal": "Avaliação",
+  "cliente": "Pedido #3cf732",
+  "texto": "O produto não foi entregue, fiz uma reclamação e nem responderam.",
+  "nota": 1,
+  "data": "25/03/2018"
+ },
+ {
+  "id": "64f782222b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #c05223",
+  "texto": "Excelente atendimento. Entregue antes do prazo.",
+  "nota": 5,
+  "data": "09/03/2018"
+ },
+ {
+  "id": "d314664021",
+  "canal": "Avaliação",
+  "cliente": "Pedido #8deef2",
+  "texto": "Comprei 4 itens, porém, chegou somente 1, o pior é que com a nota fiscal dos 4 que eu havia comprado como se naquela embalagem estivesse todos itens. \r\n\r\nDemora na resolução do problema ocorrido.",
+  "nota": 1,
+  "data": "06/03/2018"
+ },
+ {
+  "id": "8de316eaa5",
+  "canal": "Avaliação",
+  "cliente": "Pedido #7e7216",
+  "texto": "Ótimo produto. Chegou antes do previsto.",
+  "nota": 5,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "ac46b41dca",
+  "canal": "Avaliação",
+  "cliente": "Pedido #789f80",
+  "texto": "O produto foi entregue super rápido, de ótima qualidade",
+  "nota": 5,
+  "data": "02/03/2018"
+ },
+ {
+  "id": "93f529187a",
+  "canal": "Avaliação",
+  "cliente": "Pedido #f1c5f3",
+  "texto": "Comprei um produto e recebi um inferior. Quero receber o que comprei. \r\nComprei um inflator recarregável e recebi um normal diferença de 50% do calor. Absurdo. Quero receber o que comprei",
+  "nota": 1,
+  "data": "02/03/2018"
+ },
+ {
+  "id": "1945397d4c",
+  "canal": "Avaliação",
+  "cliente": "Pedido #92560d",
+  "texto": "Chegou muito rápido!!! Vou comprar mais vezes!",
+  "nota": 5,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "5e728b72bb",
+  "canal": "Avaliação",
+  "cliente": "Pedido #d6a6ab",
+  "texto": "péssima entrega",
+  "nota": 2,
+  "data": "10/03/2018"
+ },
+ {
+  "id": "ed6f0fe022",
+  "canal": "Avaliação",
+  "cliente": "Pedido #c99274",
+  "texto": "Adorei o brinde!",
+  "nota": 5,
+  "data": "27/03/2018"
+ },
+ {
+  "id": "134fea88f2",
+  "canal": "Avaliação",
+  "cliente": "Pedido #a63792",
+  "texto": "Meu produto não foi entregue. Recebi email que vieram na minha casa e não tinha ninguém. Eu passei o dia todo em casa e não apareceu ninguém",
+  "nota": 1,
+  "data": "29/03/2018"
+ },
+ {
+  "id": "1fa1b1af26",
+  "canal": "Avaliação",
+  "cliente": "Pedido #b290e4",
+  "texto": "O produto chegou muito antes do previsto e em boas condições de armazenamento.",
+  "nota": 5,
+  "data": "23/03/2018"
+ },
+ {
+  "id": "a13a58c392",
+  "canal": "Avaliação",
+  "cliente": "Pedido #d010fa",
+  "texto": "Por favor gostaria de saber da minha entrega",
+  "nota": 1,
+  "data": "31/03/2018"
+ },
+ {
+  "id": "7b85c6acad",
+  "canal": "Avaliação",
+  "cliente": "Pedido #33a3ed",
+  "texto": "Minha opinião é que se comprei o produto ele tinha que ser entregue e não receber um notificação que seria dado como entregue o produto...então a empresa me devolva meu dinheiro!!",
+  "nota": 1,
+  "data": "21/03/2018"
+ },
+ {
+  "id": "072c636f45",
+  "canal": "Avaliação",
+  "cliente": "Pedido #b43a43",
+  "texto": "Gostei das toalhas, tamanho bom , cores vivas. Recomendo",
+  "nota": 5,
+  "data": "08/03/2018"
+ },
+ {
+  "id": "be5a9eec72",
+  "canal": "Avaliação",
+  "cliente": "Pedido #db7598",
+  "texto": "Já uso está marca de travesseiro há uns 20 anos, adoro. Altura ideal, macio e confortável",
+  "nota": 5,
+  "data": "20/03/2018"
+ },
+ {
+  "id": "84b99cccd6",
+  "canal": "Avaliação",
+  "cliente": "Pedido #a97db9",
+  "texto": "Tem que cumprir com a data da entrega fiquei decepcionada por atrasar tanto era um presente de aniversário",
+  "nota": 1,
+  "data": "21/03/2018"
+ },
+ {
+  "id": "c239d18d7e",
+  "canal": "Avaliação",
+  "cliente": "Pedido #80a2b0",
+  "texto": "produto foi entregue com umas das alças com problemas (está faltando 1 pino de fixação)",
+  "nota": 1,
+  "data": "11/03/2018"
+ },
+ {
+  "id": "c7e989d7ac",
+  "canal": "Avaliação",
+  "cliente": "Pedido #69b7bc",
+  "texto": "Muito bonito e o que eu esperava",
+  "nota": 5,
+  "data": "28/03/2018"
+ },
+ {
+  "id": "d92fc2e31e",
+  "canal": "Avaliação",
+  "cliente": "Pedido #93b63d",
+  "texto": "Tudo dentro do prazo estabelecido.",
+  "nota": 5,
+  "data": "08/03/2018"
+ },
+ {
+  "id": "87a806f818",
+  "canal": "Avaliação",
+  "cliente": "Pedido #0d541e",
+  "texto": "Só precisam melhorar a logística de entrega, para que a encomenda possa ser entregue mais rápido.",
+  "nota": 4,
+  "data": "07/03/2018"
+ },
+ {
+  "id": "8a3dcc7508",
+  "canal": "Avaliação",
+  "cliente": "Pedido #69a416",
+  "texto": "Infelizmente, o produto veio errado. Pedi chocolate e veio chocolate amargo. Mas o produto é excelente.",
+  "nota": 1,
+  "data": "02/03/2018"
+ },
+ {
+  "id": "f3e832f728",
+  "canal": "Avaliação",
+  "cliente": "Pedido #92c006",
+  "texto": "Exatamente o que esperava... Prazo e qualidade. Recomendo.",
+  "nota": 5,
+  "data": "09/03/2018"
+ },
+ {
+  "id": "1403627a16",
+  "canal": "Avaliação",
+  "cliente": "Pedido #c80bee",
+  "texto": "Prazo de entrega poderia ser menor.",
+  "nota": 4,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "6a8132c279",
+  "canal": "Avaliação",
+  "cliente": "Pedido #f3acc2",
+  "texto": "Produto muito bonito. A entrega foi super rápida. Adorei",
+  "nota": 5,
+  "data": "03/03/2018"
+ },
+ {
+  "id": "6f4376b10b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #e1b623",
+  "texto": "Excelente produto. Entrega rápida!",
+  "nota": 5,
+  "data": "14/03/2018"
+ },
+ {
+  "id": "525137f4bf",
+  "canal": "Avaliação",
+  "cliente": "Pedido #3e67a8",
+  "texto": "Como sempre a entrega antes do prazo e um ótimo atendimento",
+  "nota": 5,
+  "data": "28/03/2018"
+ },
+ {
+  "id": "4123b03bb5",
+  "canal": "Avaliação",
+  "cliente": "Pedido #637b63",
+  "texto": "otina loja recomendo a todos estão de parabéns pela eficiência.",
+  "nota": 5,
+  "data": "28/03/2018"
+ },
+ {
+  "id": "602931e451",
+  "canal": "Avaliação",
+  "cliente": "Pedido #d28915",
+  "texto": "comprei duas cadeiras porem foi entregue apenas uma",
+  "nota": 1,
+  "data": "10/03/2018"
+ },
+ {
+  "id": "9a6e76480d",
+  "canal": "Avaliação",
+  "cliente": "Pedido #bddbf3",
+  "texto": "A luminária é muito bonita e possui boa vedação contra chuva e insetos. Agora só falta eu instalar na minha área para torná-la mais bonita graças a esse adereço.",
+  "nota": 4,
+  "data": "27/03/2018"
+ },
+ {
+  "id": "54048bb2c5",
+  "canal": "Avaliação",
+  "cliente": "Pedido #d52140",
+  "texto": "Não recebi o produto e a loja nem se quer me dar uma satisfação",
+  "nota": 1,
+  "data": "29/03/2018"
+ },
+ {
+  "id": "9c21503946",
+  "canal": "Avaliação",
+  "cliente": "Pedido #7e54f2",
+  "texto": "Muito bom, e por ser dupla face é muito versátil",
+  "nota": 5,
+  "data": "05/03/2018"
+ },
+ {
+  "id": "85fdf2e27a",
+  "canal": "Avaliação",
+  "cliente": "Pedido #02f2f6",
+  "texto": "parabens, espero fazer outras compras.",
+  "nota": 5,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "9e30f51719",
+  "canal": "Avaliação",
+  "cliente": "Pedido #30aa5b",
+  "texto": "veio faltando o carregador portatil",
+  "nota": 5,
+  "data": "28/03/2018"
+ },
+ {
+  "id": "05a12569f5",
+  "canal": "Avaliação",
+  "cliente": "Pedido #951670",
+  "texto": "O prazo de entrega venceu a 2 dias e ainda não recebi o produto. Já enviei e-mail para essa loja parceira das lannister.com mas eles não respondem.",
+  "nota": 1,
+  "data": "09/03/2018"
+ },
+ {
+  "id": "cbf1fefc3c",
+  "canal": "Avaliação",
+  "cliente": "Pedido #8ddf10",
+  "texto": "bom dia , recebir meu produto antes do prazo e estou muito satisfeita com a compra obg !",
+  "nota": 5,
+  "data": "09/03/2018"
+ },
+ {
+  "id": "20cb3fcd5a",
+  "canal": "Avaliação",
+  "cliente": "Pedido #543698",
+  "texto": "Atendimento muito bom estão de parabéns em tudo",
+  "nota": 5,
+  "data": "01/03/2018"
+ },
+ {
+  "id": "17a87c6d26",
+  "canal": "Avaliação",
+  "cliente": "Pedido #3b80f5",
+  "texto": "Faz mais de 15 dias que fiz uma compra e nada do produto chegar. Mas receber que é bom eles receberam! Agora tenho que correr atrás de empresa, é o fim mesmo viu...",
+  "nota": 1,
+  "data": "15/03/2018"
+ },
+ {
+  "id": "efaf9c6385",
+  "canal": "Avaliação",
+  "cliente": "Pedido #0381dc",
+  "texto": "Não foi entregue dentro do prazo prometido.",
+  "nota": 4,
+  "data": "16/03/2018"
+ },
+ {
+  "id": "538f8c8887",
+  "canal": "Avaliação",
+  "cliente": "Pedido #fcf50b",
+  "texto": "Comprei um Toner CF 360X HP 508X PRETO ORIGINAL de ALTO RENDIMENTO, porém me entregaram um Toner CF360A HP 508A PRETO de BAIXO RENDIMENTO, e ainda fui testar o toner e esta com defeito.",
+  "nota": 1,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "31292f5345",
+  "canal": "Avaliação",
+  "cliente": "Pedido #4248cc",
+  "texto": "RECOMENDO , PORÉM FIZ O PEDIDO DE TRES LUMINARIAS E ATE HOJE CHEGARAM SOMENTE 2",
+  "nota": 5,
+  "data": "23/03/2018"
+ },
+ {
+  "id": "2810bafe05",
+  "canal": "Avaliação",
+  "cliente": "Pedido #7f7307",
+  "texto": "Recomendadíssimo\r\nChegou bem antes do prazo\r\nExcelente\r\nParabéns",
+  "nota": 5,
+  "data": "10/03/2018"
+ },
+ {
+  "id": "0b65c77a15",
+  "canal": "Avaliação",
+  "cliente": "Pedido #fc72ef",
+  "texto": "Estou extremamente decepcionado. Isso nunca havia acontecido",
+  "nota": 1,
+  "data": "23/03/2018"
+ },
+ {
+  "id": "fb023be480",
+  "canal": "Avaliação",
+  "cliente": "Pedido #b06112",
+  "texto": "Entrega rápida e bem antes do previsto, estou bem satisfeita!",
+  "nota": 5,
+  "data": "14/03/2018"
+ },
+ {
+  "id": "4e8d04490f",
+  "canal": "Avaliação",
+  "cliente": "Pedido #a31ecd",
+  "texto": "Sempre compro nas lojas lannister... foi a primeira vez que não recebi o produto q comprei. Inclusive já faz quase dois meses q comprei. Sempre entregam antes do prazo. Já venceu o prazo da entrega",
+  "nota": 1,
+  "data": "08/03/2018"
+ },
+ {
+  "id": "43149f150b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #055bb5",
+  "texto": "Comprei 02. Unidades só recebi 01",
+  "nota": 2,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "1183a732a4",
+  "canal": "Avaliação",
+  "cliente": "Pedido #dce46d",
+  "texto": "Foi a primeira vez que comprei pela internet, mesmo desconfiada resolvi arriscar.Espero que meu problema se resolva o mais rápido possível,pra futuramente poder fazer novas compras.Aguardo resposta.",
+  "nota": 1,
+  "data": "31/03/2018"
+ },
+ {
+  "id": "b737f3286b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #9e90d3",
+  "texto": "Recebi o produto certo antes do prazo terminar.",
+  "nota": 5,
+  "data": "29/03/2018"
+ },
+ {
+  "id": "9e7a9f3f7b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #0d604e",
+  "texto": "Não tenho nada a declarar pq cancelei a compra no dia 13/02/2018 e não recebi nenhuma entrega",
+  "nota": 1,
+  "data": "01/03/2018"
+ },
+ {
+  "id": "2708b1adb1",
+  "canal": "Avaliação",
+  "cliente": "Pedido #ae3818",
+  "texto": "Estou aguardando entrega do uns 2 meses, ainda me envia email perguntado o recebimento, caso nos nao respondemos , sera considerado entregue.",
+  "nota": 1,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "f5672c2a4b",
+  "canal": "Avaliação",
+  "cliente": "Pedido #8772c5",
+  "texto": "Produto entregue super rápido e atendeu as expectativas.",
+  "nota": 5,
+  "data": "24/03/2018"
+ },
+ {
+  "id": "90137a875f",
+  "canal": "Avaliação",
+  "cliente": "Pedido #478c98",
+  "texto": "Entrega antes do prazo estimado",
+  "nota": 5,
+  "data": "13/03/2018"
+ },
+ {
+  "id": "180424d0b7",
+  "canal": "Avaliação",
+  "cliente": "Pedido #95d01a",
+  "texto": "competente",
+  "nota": 5,
+  "data": "12/03/2018"
+ },
+ {
+  "id": "058df5dc21",
+  "canal": "Avaliação",
+  "cliente": "Pedido #69379a",
+  "texto": "To esperando até agora meu relógio, mais 2 dias cancelo a compra.",
+  "nota": 1,
+  "data": "31/03/2018"
+ },
+ {
+  "id": "a731158269",
+  "canal": "Avaliação",
+  "cliente": "Pedido #1a9eb3",
+  "texto": "devolvido ao Correio por engano da Portaria",
+  "nota": 4,
+  "data": "31/03/2018"
+ },
+ {
+  "id": "6b8dde91be",
+  "canal": "Avaliação",
+  "cliente": "Pedido #0a9c63",
+  "texto": "Chegou apenas o Bebe Conforto (PP401984324BR), não tendo sido entregues o Carrinho e a Base (PP401984338BR e PP401984341BR) \r\naté o momento.\r\nNão deveriam usar os Correios e sim alguma transpotadora",
+  "nota": 1,
+  "data": "22/03/2018"
+ },
+ {
+  "id": "bbda519729",
+  "canal": "Avaliação",
+  "cliente": "Pedido #468196",
+  "texto": "recebi no tempo certo.obrigado.",
+  "nota": 5,
+  "data": "15/03/2018"
+ },
+ {
+  "id": "775c98df8f",
+  "canal": "Avaliação",
+  "cliente": "Pedido #713eda",
+  "texto": "NÂO RECEBI A COMPRA CORRETAMENTE. POREM ATE AGORA RECEBI OS PRODUTOS INCOMPLETOS.",
+  "nota": 1,
+  "data": "02/03/2018"
+ },
+ {
+  "id": "5270574b82",
+  "canal": "Avaliação",
+  "cliente": "Pedido #a82dcb",
+  "texto": "Paguei pelo Kit completo:shampoo,condicionador e ativador de cachos e recebi apenas o ativador de cachos,isso tá errado",
+  "nota": 1,
+  "data": "25/03/2018"
+ }
+]

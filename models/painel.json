@@ -1,0 +1,347 @@
+{
+ "periodo": [
+  "2017-02",
+  "2018-08"
+ ],
+ "mensagens": 4647,
+ "reclamacoes": 1688,
+ "faixas": {
+  "Alta": 956,
+  "Média": 953,
+  "Baixa": 2738
+ },
+ "motivos": {
+  "Entrega / atraso": 816,
+  "Produto com defeito / qualidade": 128,
+  "Produto diferente / errado": 196,
+  "Pedido incompleto": 208,
+  "Atendimento / reembolso": 136,
+  "Outros / não identificado": 204
+ },
+ "serie": [
+  {
+   "mes": "2017-02",
+   "mensagens": 60,
+   "reclamacoes": 18,
+   "alta": 8,
+   "por_motivo": {
+    "Entrega / atraso": 6,
+    "Produto com defeito / qualidade": 1,
+    "Produto diferente / errado": 5,
+    "Pedido incompleto": 2,
+    "Atendimento / reembolso": 1,
+    "Outros / não identificado": 3
+   }
+  },
+  {
+   "mes": "2017-03",
+   "mensagens": 115,
+   "reclamacoes": 36,
+   "alta": 23,
+   "por_motivo": {
+    "Entrega / atraso": 19,
+    "Produto com defeito / qualidade": 4,
+    "Produto diferente / errado": 2,
+    "Pedido incompleto": 3,
+    "Atendimento / reembolso": 2,
+    "Outros / não identificado": 6
+   }
+  },
+  {
+   "mes": "2017-04",
+   "mensagens": 91,
+   "reclamacoes": 35,
+   "alta": 18,
+   "por_motivo": {
+    "Entrega / atraso": 17,
+    "Produto com defeito / qualidade": 3,
+    "Produto diferente / errado": 4,
+    "Pedido incompleto": 4,
+    "Atendimento / reembolso": 2,
+    "Outros / não identificado": 5
+   }
+  },
+  {
+   "mes": "2017-05",
+   "mensagens": 162,
+   "reclamacoes": 51,
+   "alta": 25,
+   "por_motivo": {
+    "Entrega / atraso": 27,
+    "Produto com defeito / qualidade": 2,
+    "Produto diferente / errado": 9,
+    "Pedido incompleto": 7,
+    "Atendimento / reembolso": 5,
+    "Outros / não identificado": 1
+   }
+  },
+  {
+   "mes": "2017-06",
+   "mensagens": 148,
+   "reclamacoes": 54,
+   "alta": 29,
+   "por_motivo": {
+    "Entrega / atraso": 16,
+    "Produto com defeito / qualidade": 9,
+    "Produto diferente / errado": 8,
+    "Pedido incompleto": 7,
+    "Atendimento / reembolso": 6,
+    "Outros / não identificado": 8
+   }
+  },
+  {
+   "mes": "2017-07",
+   "mensagens": 166,
+   "reclamacoes": 51,
+   "alta": 29,
+   "por_motivo": {
+    "Entrega / atraso": 19,
+    "Produto com defeito / qualidade": 4,
+    "Produto diferente / errado": 10,
+    "Pedido incompleto": 6,
+    "Atendimento / reembolso": 4,
+    "Outros / não identificado": 8
+   }
+  },
+  {
+   "mes": "2017-08",
+   "mensagens": 200,
+   "reclamacoes": 51,
+   "alta": 29,
+   "por_motivo": {
+    "Entrega / atraso": 22,
+    "Produto com defeito / qualidade": 4,
+    "Produto diferente / errado": 6,
+    "Pedido incompleto": 6,
+    "Atendimento / reembolso": 6,
+    "Outros / não identificado": 7
+   }
+  },
+  {
+   "mes": "2017-09",
+   "mensagens": 179,
+   "reclamacoes": 54,
+   "alta": 29,
+   "por_motivo": {
+    "Entrega / atraso": 26,
+    "Produto com defeito / qualidade": 5,
+    "Produto diferente / errado": 6,
+    "Pedido incompleto": 6,
+    "Atendimento / reembolso": 2,
+    "Outros / não identificado": 9
+   }
+  },
+  {
+   "mes": "2017-10",
+   "mensagens": 234,
+   "reclamacoes": 75,
+   "alta": 41,
+   "por_motivo": {
+    "Entrega / atraso": 39,
+    "Produto com defeito / qualidade": 6,
+    "Produto diferente / errado": 11,
+    "Pedido incompleto": 8,
+    "Atendimento / reembolso": 3,
+    "Outros / não identificado": 8
+   }
+  },
+  {
+   "mes": "2017-11",
+   "mensagens": 221,
+   "reclamacoes": 82,
+   "alta": 41,
+   "por_motivo": {
+    "Entrega / atraso": 38,
+    "Produto com defeito / qualidade": 10,
+    "Produto diferente / errado": 4,
+    "Pedido incompleto": 14,
+    "Atendimento / reembolso": 6,
+    "Outros / não identificado": 10
+   }
+  },
+  {
+   "mes": "2017-12",
+   "mensagens": 355,
+   "reclamacoes": 153,
+   "alta": 94,
+   "por_motivo": {
+    "Entrega / atraso": 95,
+    "Produto com defeito / qualidade": 6,
+    "Produto diferente / errado": 6,
+    "Pedido incompleto": 15,
+    "Atendimento / reembolso": 13,
+    "Outros / não identificado": 18
+   }
+  },
+  {
+   "mes": "2018-01",
+   "mensagens": 324,
+   "reclamacoes": 117,
+   "alta": 73,
+   "por_motivo": {
+    "Entrega / atraso": 49,
+    "Produto com defeito / qualidade": 8,
+    "Produto diferente / errado": 17,
+    "Pedido incompleto": 18,
+    "Atendimento / reembolso": 14,
+    "Outros / não identificado": 11
+   }
+  },
+  {
+   "mes": "2018-02",
+   "mensagens": 283,
+   "reclamacoes": 119,
+   "alta": 69,
+   "por_motivo": {
+    "Entrega / atraso": 62,
+    "Produto com defeito / qualidade": 2,
+    "Produto diferente / errado": 12,
+    "Pedido incompleto": 16,
+    "Atendimento / reembolso": 14,
+    "Outros / não identificado": 13
+   }
+  },
+  {
+   "mes": "2018-03",
+   "mensagens": 356,
+   "reclamacoes": 184,
+   "alta": 112,
+   "por_motivo": {
+    "Entrega / atraso": 115,
+    "Produto com defeito / qualidade": 4,
+    "Produto diferente / errado": 11,
+    "Pedido incompleto": 26,
+    "Atendimento / reembolso": 13,
+    "Outros / não identificado": 15
+   }
+  },
+  {
+   "mes": "2018-04",
+   "mensagens": 357,
+   "reclamacoes": 156,
+   "alta": 95,
+   "por_motivo": {
+    "Entrega / atraso": 93,
+    "Produto com defeito / qualidade": 11,
+    "Produto diferente / errado": 13,
+    "Pedido incompleto": 17,
+    "Atendimento / reembolso": 13,
+    "Outros / não identificado": 9
+   }
+  },
+  {
+   "mes": "2018-05",
+   "mensagens": 338,
+   "reclamacoes": 111,
+   "alta": 63,
+   "por_motivo": {
+    "Entrega / atraso": 37,
+    "Produto com defeito / qualidade": 15,
+    "Produto diferente / errado": 19,
+    "Pedido incompleto": 16,
+    "Atendimento / reembolso": 5,
+    "Outros / não identificado": 19
+   }
+  },
+  {
+   "mes": "2018-06",
+   "mensagens": 324,
+   "reclamacoes": 107,
+   "alta": 54,
+   "por_motivo": {
+    "Entrega / atraso": 38,
+    "Produto com defeito / qualidade": 8,
+    "Produto diferente / errado": 20,
+    "Pedido incompleto": 17,
+    "Atendimento / reembolso": 6,
+    "Outros / não identificado": 18
+   }
+  },
+  {
+   "mes": "2018-07",
+   "mensagens": 278,
+   "reclamacoes": 79,
+   "alta": 41,
+   "por_motivo": {
+    "Entrega / atraso": 23,
+    "Produto com defeito / qualidade": 10,
+    "Produto diferente / errado": 12,
+    "Pedido incompleto": 10,
+    "Atendimento / reembolso": 11,
+    "Outros / não identificado": 13
+   }
+  },
+  {
+   "mes": "2018-08",
+   "mensagens": 417,
+   "reclamacoes": 144,
+   "alta": 77,
+   "por_motivo": {
+    "Entrega / atraso": 69,
+    "Produto com defeito / qualidade": 14,
+    "Produto diferente / errado": 20,
+    "Pedido incompleto": 10,
+    "Atendimento / reembolso": 10,
+    "Outros / não identificado": 21
+   }
+  }
+ ],
+ "alertas": [
+  {
+   "mes": "2017-10",
+   "motivo": "Entrega / atraso",
+   "antes": 26,
+   "depois": 39,
+   "alta": 0.5
+  },
+  {
+   "mes": "2017-12",
+   "motivo": "Entrega / atraso",
+   "antes": 38,
+   "depois": 95,
+   "alta": 1.5
+  },
+  {
+   "mes": "2018-03",
+   "motivo": "Entrega / atraso",
+   "antes": 62,
+   "depois": 115,
+   "alta": 0.855
+  },
+  {
+   "mes": "2018-08",
+   "motivo": "Entrega / atraso",
+   "antes": 23,
+   "depois": 69,
+   "alta": 2.0
+  }
+ ],
+ "faixas_teste": {
+  "Alta": {
+   "comentarios": 956,
+   "fracao": 0.2057241230901657,
+   "taxa_reclamacao": 0.946652719665272,
+   "fracao_das_reclamacoes": 0.5691823899371069
+  },
+  "Média": {
+   "comentarios": 953,
+   "fracao": 0.20507854529804176,
+   "taxa_reclamacao": 0.6558237145855194,
+   "fracao_das_reclamacoes": 0.39308176100628933
+  },
+  "Baixa": {
+   "comentarios": 2738,
+   "fracao": 0.5891973316117926,
+   "taxa_reclamacao": 0.02191380569758948,
+   "fracao_das_reclamacoes": 0.03773584905660377
+  }
+ },
+ "metricas_teste": {
+  "F1 (reclamação)": 0.8950579621720561,
+  "Recall (reclamação)": 0.9226415094339623,
+  "Precisão (reclamação)": 0.8690758293838863,
+  "Acurácia": 0.9259737465031203,
+  "PR-AUC": 0.9333578286400215,
+  "ROC-AUC": 0.9713132865492744
+ }
+}
