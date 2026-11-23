@@ -104,7 +104,11 @@ O projeto completo está na raiz do repositório (ver [README.md](README.md)). R
   - o motivo provável;
   - as palavras que mais pesaram na decisão.
 
-  Um app em Gradio analisa um comentário ou um lote em CSV.
+  O produto é um app web próprio (FastAPI + interface responsiva) com:
+  - uma caixa de entrada priorizada;
+  - o detalhe de cada mensagem, com resposta sugerida;
+  - um painel com alertas automáticos e uma calculadora de economia;
+  - uma API para integração.
 - **Dados:** 30.977 comentários depois da limpeza, sem nota 3 e sem textos duplicados. O alvo é a nota (1–2 = reclamação, 4–5 = não). O uso pensado é em mensagens que chegam sem nota.
 - **Resultado no teste:** F1 0,895 e recall 0,923 na classe reclamação. A rede empata com o baseline TF-IDF + regressão logística, e isso está discutido no README.
 - **Valor:** a faixa de prioridade alta reúne 21% das mensagens, das quais 95% são reclamações, e cobre 57% de todas as reclamações.

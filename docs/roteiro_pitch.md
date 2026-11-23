@@ -1,77 +1,89 @@
-# Roteiro do pitch: Fila Certa (até 7 minutos)
+# Roteiro do pitch: Fila Certa
 
-Apresentação: `docs/Apresentacao_Fila_Certa.html`. Abra no navegador e use **F** para tela cheia e as **setas** para avançar.
-Teclas úteis: **B** apaga a tela, **Z** zera o cronômetro (aparece no canto a partir do slide 1).
+Apresentação: `docs/Apresentacao_Fila_Certa.html`. Abra no navegador, aperte **F** para tela cheia e use as **setas** (ou clique) para avançar. **B** apaga a tela.
+O canto superior direito de cada slide mostra quem fala. O total fica perto de 7 minutos; a demo é a parte mais longa.
 
-| Slide | Quem | Tempo | Acumulado |
-|---|---|---|---|
-| Capa + 01 Problema | Mell | 1:00 | 1:00 |
-| 02 Solução | Mell | 0:50 | 1:50 |
-| 03 Como funciona | Nicolas | 1:00 | 2:50 |
-| 04 Demonstração | Brayan | 2:00 | 4:50 |
-| 05 Resultados | Nicolas | 0:50 | 5:40 |
-| 06 Valor | Brayan | 0:40 | 6:20 |
-| 07 Impacto e próximos passos + final | Mell | 0:40 | 7:00 |
+**Antes de começar:** rode `python app.py` e deixe o navegador aberto na Caixa de entrada. Se a demo falhar, os slides da demonstração têm prints do app real.
+
+| Slides | Quem | Assunto |
+|---|---|---|
+| 1, 2 e 3 | **Mell** | Capa, a Ana e o mercado, dados reais e a virada |
+| 4 e 5 | **Brayan** | A solução e a demonstração ao vivo |
+| 6 e 7 | **Nicolas** | Como a rede funciona e os resultados |
+| 8 e 9 | **Brayan** | Valor para quem usa e como vira negócio |
+| 10 e 11 | **Mell** | Próximos passos, limitações e encerramento |
 
 ---
 
-## Capa + 01 Problema (Mell, ~1 min)
+## Mell: slides 1, 2 e 3
 
-> Pensem numa loja online pequena. Todo dia chegam dezenas, às vezes centenas, de mensagens: avaliação, WhatsApp, e-mail, Instagram. A maioria é "amei, recomendo". Mas no meio estão o "meu pedido não chegou" e o "veio quebrado", e ninguém consegue ler tudo na hora.
+**Slide 1 (capa)**
+> Boa tarde. Nós somos a Mell, o Brayan e o Nicolas, e vamos apresentar a Fila Certa: uma caixa de entrada que lê as mensagens dos clientes e coloca as reclamações no topo, já com o motivo e a resposta.
+
+**Slide 2 (a Ana)**
+> Imaginem a Ana. Ela tem uma loja online e vende sozinha. Todo dia chegam mensagens pelo WhatsApp, e-mail, marketplace, Instagram, Reclame Aqui. A maioria é "amei, chegou certinho". Mas no meio estão o "meu pedido não chegou" e o "veio quebrado". Quando ela acha essa mensagem, o cliente já desistiu e já falou mal da loja.
 >
-> Fomos ver isso nos dados reais da Olist, um marketplace brasileiro: 100 mil pedidos. Quando a entrega chega no prazo, **9,6%** dos clientes reclamam. Quando atrasa, são **63%**, ou seja 6,6 vezes mais. E quando o pedido nem chega, 78%.
+> E a Ana não é exceção: o Brasil tem 1,9 milhão de lojas virtuais, e 87,5% são de pequeno porte. E cerca de 80% dos consumidores já desistiram de uma compra por causa de atendimento ruim.
+
+**Slide 3 (dados reais)**
+> Fomos ver isso nos dados reais da Olist, um marketplace brasileiro, com 100 mil pedidos. Quando a entrega chega no prazo, 9,6% dos clientes reclamam. Quando atrasa, 63%. Quando nem chega, 78%. Ou seja, quando a entrega falha, o cliente escreve.
 >
-> Esse cliente escreve, espera resposta, não recebe e não volta. E o lojista nem fica sabendo que o problema era a transportadora.
+> E aqui está o ponto principal: o difícil não é saber se uma mensagem é reclamação. Lendo, qualquer um sabe. O caro é ler todas para achar as poucas urgentes, e saber o que fazer com cada uma. Brayan.
 
-## 02 Solução (Mell, ~50 s)
+## Brayan: slides 4 e 5
 
-> A Fila Certa resolve isso. Você cola a mensagem do cliente e a IA devolve três coisas: se é reclamação, com que prioridade responder e qual o motivo provável (entrega, defeito, produto errado, pedido incompleto ou atendimento).
+**Slide 4 (a solução)**
+> A Fila Certa é uma caixa de entrada que se organiza sozinha. Ela faz quatro coisas. **Prioriza:** uma rede neural lê cada mensagem e coloca as urgentes no topo. **Explica:** mostra o motivo e destaca as palavras que pesaram. **Sugere a resposta:** prazo, ação e um texto pronto para revisar. E **avisa** quando algo começa a dar errado.
+
+**Slide 5 (demonstração ao vivo)** — troque para o navegador com o app.
+1. **Caixa de entrada.**
+   > Aqui chegaram 128 mensagens de vários canais. A rede já leu todas: as 38 urgentes estão no topo. E olhem esse aviso verde: 56 mensagens podem esperar, porque nessa faixa só 2% são reclamações. Com um clique, elas recebem um agradecimento automático.
+   Clique em **Agradecer as 56** e depois em **Desfazer** no aviso.
+2. **Abrir a primeira mensagem.**
+   > Ao abrir, a parte que pesou fica destacada no texto. A rede diz que é reclamação, prioridade alta, responder em até 2 horas. O motivo é entrega, e ela já diz o que fazer: consultar a transportadora. Embaixo, a resposta pronta. Eu reviso, clico em "Copiar e resolver" e ela já me leva para a próxima.
+   Clique em **Copiar e resolver**.
+3. **Painel.** Clique em **Painel** no menu.
+   > No painel, o lojista vê o que mais gera reclamação e recebe alertas. Nos dados reais, em março de 2018 as reclamações de entrega subiram 86% em um mês. O painel avisa antes de virar crise. E aqui a calculadora: com 150 mensagens por dia, a equipe economiza cerca de 65 horas por mês.
+4. **Testar (opcional, se sobrar tempo).** Clique em **Testar mensagem**, cole algo que o professor sugerir e clique em **Analisar**.
+5. **Celular (opcional).** Avance o slide para mostrar a versão de celular.
+> Nicolas, como a rede faz isso?
+
+## Nicolas: slides 6 e 7
+
+**Slide 6 (como funciona)**
+> A rede é nossa, treinada do zero em PyTorch. O texto é normalizado: minúsculas, sem acento. Cada palavra vira um número do vocabulário, que tem 5.585 palavras, e depois um vetor de 100 dimensões, o embedding, que a rede aprende. Uma BiLSTM lê a frase nos dois sentidos, guardando o contexto, e devolve a probabilidade de ser reclamação.
 >
-> Uma pergunta que vocês devem estar pensando: "mas no Olist o cliente já deu a nota". Exatamente. Usamos a nota **só para ensinar a rede**: nota 1 e 2 é reclamação, 4 e 5 não. O uso real é nas mensagens que **chegam sem nota**: WhatsApp, e-mail, SAC, Reclame Aqui.
-
-## 03 Como funciona (Nicolas, ~1 min)
-
-> Por dentro, é uma rede neural que nós treinamos do zero, em PyTorch. O texto é normalizado: minúsculas, sem acento. Mantemos o "não", porque "chegou" e "não chegou" são opostos.
+> Quatro decisões importantes. O "não" fica, porque "chegou" e "não chegou" são opostos. Como só um terço da base é reclamação, usamos peso de classe na perda. Early stopping, para a rede não decorar o treino. E sem vazamento: tiramos os duplicados antes de dividir, e o teste só foi aberto no final.
 >
-> Cada palavra vira um número do vocabulário (5.585 palavras) e depois um vetor, o embedding, que a rede aprende. A rede BiLSTM lê a frase e devolve a probabilidade de ser reclamação.
+> Das 100 mil avaliações, 41 mil têm texto. Tirando a nota 3 e os duplicados, sobram 31 mil, divididos em treino, validação e teste.
+
+**Slide 7 (resultados)**
+> Em 4.647 mensagens que a rede nunca viu, ela encontra 92% das reclamações.
 >
-> Sobre os dados: das 100 mil avaliações, 41.726 têm texto. Tiramos a nota 3, que é neutra e confunde o modelo (F1 de 0,27 num teste com três classes), e os textos duplicados, como "ótimo" repetido centenas de vezes. Sobram 30.977. Dividimos em treino, validação e teste, e o teste só foi aberto no final.
+> Sendo honestos: o modelo clássico, TF-IDF com regressão logística, chega praticamente no mesmo número. As mensagens são curtas e "não recebi" já é um par de palavras que ele captura. A rede ganha quando o sentido não está numa palavra só: "Pelo valor dele eu esperava um produto melhor" a rede pega, e o clássico erra.
 >
-> Como reclamação é só um terço da base, usamos peso de classe na perda. A métrica principal é o F1 e o recall da reclamação, porque é a classe que interessa achar.
+> E ela erra também: "Chegou rápido, mas parou de funcionar" sai como elogio, porque "chegou rápido" pesa muito. E alguns erros nem são erros: "Não foi entregue o meu pedido", com nota 5. O rótulo é que está errado. Brayan.
 
-## 04 Demonstração (Brayan, ~2 min)
+## Brayan: slides 8 e 9
 
-Abra o app antes do pitch (`python app.py`) e deixe a aba aberta. Se falhar, avance os passos do slide 4, que mostram prints do app real.
+**Slide 8 (valor)**
+> O resultado prático: a Ana lê só 41% das mensagens, as de prioridade alta e média, e encontra 96% das reclamações. As outras 59% recebem um agradecimento automático. Na calculadora, são cerca de 65 horas por mês, uns 1.600 reais. E os motivos são confiáveis: nas reclamações classificadas como entrega, 59% dos pedidos realmente atrasaram ou não chegaram, contra 17% nos outros motivos.
 
-1. **Reclamação clara:** clique no 1º exemplo ("Comprei faz duas semanas e até agora não chegou…").
-   > Probabilidade alta, prioridade **alta**, motivo **entrega**. Embaixo aparecem as palavras que mais pesaram: "não", "chegou". A equipe vê *por que* a IA decidiu.
-2. **Elogio:** 2º exemplo ("Produto excelente, chegou antes do prazo…").
-   > Prioridade **baixa**: pode esperar ou receber um agradecimento automático.
-3. **Caso misto:** 3º exemplo ("O produto é bonito, mas veio uma peça a menos e a cor é diferente da foto").
-   > "Bonito" puxa para elogio e "diferente" puxa para reclamação. A rede dá 96%, mas fica na prioridade **média**, a faixa em que vale uma leitura humana. Motivo: produto diferente.
-4. **Lote:** aba 2, clique no exemplo do CSV e em "Analisar lote".
-   > Aqui são mensagens de WhatsApp, e-mail e Reclame Aqui, que não têm nota nenhuma. A IA devolve a fila ordenada por prioridade e o gráfico dos motivos. O lojista vê na hora que o problema mais frequente é a entrega.
-
-## 05 Resultados (Nicolas, ~50 s)
-
-> Em 4.647 comentários que a rede nunca viu, ela encontra **92% das reclamações**, com F1 de 0,90.
+**Slide 9 (negócio)**
+> Como isso vira negócio: uma assinatura mensal por volume de mensagens, para as lojas pequenas e médias que não têm equipe de SAC. A entrada é por integrações: WhatsApp Business, e-mail, marketplaces. A API já existe no app.
 >
-> Sendo honestos: um modelo clássico, TF-IDF com regressão logística, chega praticamente no mesmo número. Os comentários são curtos e expressões como "não recebi" já são capturadas como bigramas. Muitos erros nem são da leitura: o cliente escreve um elogio e dá nota 1. O exemplo do slide mostra isso.
+> E um ponto importante: não é um chatbot. A Fila Certa não responde sozinha. Ela decide a ordem, explica e prepara a resposta, mas quem envia é uma pessoa. Mell.
+
+## Mell: slides 10 e 11
+
+**Slide 10 (próximos passos)**
+> Os próximos passos são: fazer um piloto com um lojista real, retreinar com as correções que a equipe marca no botão "A IA errou?", conectar o WhatsApp Business e comparar com um modelo pré-treinado em português.
 >
-> A rede tem a vantagem nas frases em que o contexto importa e é a base para evoluir para outros canais.
+> E as limitações que assumimos: a nota é um proxy, o treino foi com e-commerce de 2016 a 2018, o motivo é por regras de palavras e só 42% dos clientes escrevem comentário.
 
-## 06 Valor (Brayan, ~40 s)
+**Slide 11 (encerramento)**
+> Fila Certa: a reclamação certa, no topo da fila. O código está no GitHub, pelo QR code. Obrigado!
 
-> Na prática: se a equipe ler primeiro só a faixa de prioridade alta, ela lê **21%** das mensagens e já encontra **57% de todas as reclamações**, e 95% do que ela lê é reclamação de verdade.
->
-> E os motivos são confiáveis: conferimos com a tabela de pedidos. Nas mensagens que a IA classificou como "entrega", 59% dos pedidos de fato atrasaram ou não chegaram. Nos outros motivos, só 17%.
+---
 
-## 07 Impacto e próximos passos (Mell, ~40 s)
-
-> O mesmo sistema serve para qualquer loja e qualquer canal. Os próximos passos são: validar com mensagens reais de WhatsApp e SAC de um lojista, integrar com a caixa de entrada e testar um modelo pré-treinado em português.
->
-> As limitações estão assumidas: a nota é um proxy, o treino foi em e-commerce e o motivo é por regras.
->
-> Fila Certa: a reclamação certa no topo da fila. Obrigado!
-
-Perguntas prováveis e respostas: [`perguntas_pitch.md`](perguntas_pitch.md).
+Perguntas prováveis e respostas curtas: [`perguntas_pitch.md`](perguntas_pitch.md).
